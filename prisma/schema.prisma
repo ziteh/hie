@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Prisma ORM schema
+// https://www.prisma.io/docs/orm/prisma-schema/overview
+// https://www.prisma.io/docs/orm/reference/database-features
 
 generator client {
   provider = "prisma-client-js"
@@ -13,8 +11,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String  @unique
+model Tag {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  type         String
+  star         Boolean        @default(false)
+  backColor    String?
+  textColor    String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  children     TagRelation[]  @relation("Parent")
+  parents      TagRelation[]  @relation("Child")
+  ItemRelation ItemRelation[]
+}
+
+model Item {
+  id           Int            @id @default(autoincrement())
+  path         String         @unique
+  name         String?
+  star         Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ItemRelation ItemRelation[]
+}
+
+model TagRelation {
+  id       Int @id @default(autoincrement())
+  parent   Tag @relation("Parent", fields: [parentId], references: [id])
+  parentId Int
+  child    Tag @relation("Child", fields: [childId], references: [id])
+  childId  Int
+}
+
+model ItemRelation {
+  id     Int  @id @default(autoincrement())
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  Int
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
 }
