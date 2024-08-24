@@ -13,6 +13,8 @@ tags:
     description: Operations related to tag relation
   - name: Items
     description: Operations related to items
+  - name: Items relation
+    description: Operations related to item relation
 paths:
   /api/tags:
     $ref: "./tags.yaml"
@@ -53,3 +55,5 @@ paths:
     $ref: "./items.yaml"
   /api/tags/relation:
     $ref: "./tags_relation.yaml"
+  /api/items/relation:
+    $ref: "./items_relation.yaml"
