@@ -28,6 +28,8 @@ model Tag {
 model Item {
   id           Int            @id @default(autoincrement())
   path         String         @unique
+  basePath     Path           @relation(fields: [basePathId], references: [id])
+  basePathId   Int
   name         String?
   star         Boolean        @default(false)
   createdAt    DateTime       @default(now())
@@ -49,4 +51,11 @@ model ItemRelation {
   tagId  Int
   item   Item @relation(fields: [itemId], references: [id])
   itemId Int
+}
+
+model Path {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  path String
+  Item Item[]
 }
