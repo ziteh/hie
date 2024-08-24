@@ -1,10 +1,18 @@
-import Image from "next/image";
-import TagButton from "./components/tag/Button";
+import { Box, Drawer, Toolbar, Typography } from "@mui/material";
+import Sidebar from "@/app/components/sidebar";
+import Topbar from "@/app/components/topbar";
 
 export default async function Page() {
   return (
     <div>
-      <TagButton />
+      <Box sx={{ display: "flex" }}>
+        <Topbar />
+        <Sidebar />
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <Toolbar />
+          Main
+        </Box>
+      </Box>
     </div>
   );
 }
