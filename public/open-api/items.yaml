@@ -11,7 +11,7 @@ post:
           properties:
             path:
               type: string
-            basePathId:
+            folderId:
               type: integer
             name:
               type: string
@@ -35,7 +35,7 @@ patch:
               type: integer
             path:
               type: string
-            basePathId:
+            folderId:
               type: integer
             name:
               type: string
@@ -78,7 +78,7 @@ get:
                   type: integer
                 path:
                   type: string
-                basePathId:
+                folderId:
                   type: integer
                 name:
                   type: string
