@@ -1,5 +1,6 @@
 import Image from "next/image";
-import CreateTagButton from "./components/CreateTagButton";
+import CreateTagButton from "@/app/components/CreateTagButton";
+import UpdateTagButton from "@/app/components/UpdateTagButton";
 
 export default async function Page() {
   const imageUrl = "/api/image";
@@ -10,6 +11,7 @@ export default async function Page() {
       <Image src={imageUrl} width={500} height={500} alt="Dynamic Image" />
 
       <CreateTagButton />
+      <UpdateTagButton />
     </div>
   );
 }

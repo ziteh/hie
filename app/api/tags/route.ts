@@ -4,7 +4,7 @@ import { prisma } from "@/src/db/prisma";
 export async function POST(request: Request) {
   try {
     const { name, type, star, backColor, textColor } = await request.json();
-    console.log("Received data:", { name, type, star, backColor, textColor });
+    console.debug("Received data:", { name, type, star, backColor, textColor });
 
     const tag = await prisma.tag.create({
       data: { name, type, star, backColor, textColor },
@@ -36,6 +36,28 @@ export async function DELETE(request: Request) {
     return NextResponse.json(deletedTag);
   } catch (error) {
     console.error("Error deleting tag:", error);
+    return NextResponse.json({ error: "Error deleting tag" }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const { id, name, type, star, backColor, textColor } = await request.json();
+
+    const tag = await prisma.tag.update({
+      where: { id },
+      data: {
+        name,
+        type,
+        star,
+        backColor,
+        textColor,
+      },
+    });
+
+    return NextResponse.json(tag);
+  } catch (error) {
+    console.error("Error update tag:", error);
     return NextResponse.json({ error: "Error deleting tag" }, { status: 500 });
   }
 }

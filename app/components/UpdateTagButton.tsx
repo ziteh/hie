@@ -1,17 +1,17 @@
 "use client";
 
 import { Button } from "@mui/material";
-import { createTag } from "@/src/tags";
+import { updateTag } from "@/src/tags";
 import { TagType } from "@/src/db/types";
 
 export default function CreateTagButton() {
   return (
     <Button
       onClick={() => {
-        createTag("Test", TagType.Normal);
+        updateTag(1, "Test222", TagType.Normal);
       }}
     >
-      Create Tag
+      Update Tag
     </Button>
   );
 }
