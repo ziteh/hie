@@ -91,3 +91,39 @@ export async function updateTag(
     console.error("Error during fetch:", error);
   }
 }
+
+export async function getTag(tagId: number) {
+  try {
+    const response = await fetch(`${apiUrl}/${tagId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    console.debug("Tag get:", data);
+  } catch (error) {
+    console.error("Error during fetch:", error);
+  }
+}
+
+export async function listTag() {
+  try {
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    console.debug("Tag get:", data);
+  } catch (error) {
+    console.error("Error during fetch:", error);
+  }
+}

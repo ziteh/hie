@@ -61,3 +61,12 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Error deleting tag" }, { status: 500 });
   }
 }
+
+export async function GET() {
+  try {
+    const tags = await prisma.tag.findMany();
+    return NextResponse.json(tags);
+  } catch (error) {
+    return NextResponse.json({ error: "Error fetching tags" }, { status: 500 });
+  }
+}
