@@ -1,7 +1,7 @@
 post:
-  summary: Create a new item
+  summary: Create a new path
   tags:
-    - Items
+    - Paths
   requestBody:
     required: true
     content:
@@ -9,21 +9,17 @@ post:
         schema:
           type: object
           properties:
-            path:
-              type: string
-            basePathId:
-              type: integer
             name:
               type: string
-            star:
-              type: boolean
+            path:
+              type: string
   responses:
     "201":
-      description: Item created successfully
+      description: Path created successfully
 patch:
-  summary: Update item
+  summary: Update a path
   tags:
-    - Items
+    - Paths
   requestBody:
     required: true
     content:
@@ -33,21 +29,17 @@ patch:
           properties:
             id:
               type: integer
-            path:
-              type: string
-            basePathId:
-              type: integer
             name:
               type: string
-            star:
-              type: boolean
+            path:
+              type: string
   responses:
     "200":
-      description: Item updated successfully
+      description: Path updated successfully
 delete:
-  summary: Delete a item
+  summary: Delete a path
   tags:
-    - Items
+    - Paths
   requestBody:
     required: true
     content:
@@ -59,14 +51,14 @@ delete:
               type: integer
   responses:
     "204":
-      description: Item deleted successfully
+      description: Path deleted successfully
 get:
-  summary: List all items
+  summary: List all paths
   tags:
-    - Items
+    - Paths
   responses:
     "200":
-      description: A list of items
+      description: A list of paths
       content:
         application/json:
           schema:
@@ -76,11 +68,7 @@ get:
               properties:
                 id:
                   type: integer
-                path:
-                  type: string
-                basePathId:
-                  type: integer
                 name:
                   type: string
-                star:
-                  type: boolean
+                path:
+                  type: string
