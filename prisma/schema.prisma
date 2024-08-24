@@ -12,29 +12,35 @@ datasource db {
 }
 
 model Tag {
-  id           Int            @id @default(autoincrement())
-  name         String         @unique
-  type         String
-  starred      Boolean        @default(false)
-  backColor    String?
-  textColor    String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  children     TagRelation[]  @relation("Parent")
-  parents      TagRelation[]  @relation("Child")
-  ItemRelation ItemRelation[]
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  type      String
+  starred   Boolean @default(false)
+  textColor String?
+  backColor String?
+
+  items    ItemRelation[]
+  parent   TagRelation?   @relation("Child")
+  children TagRelation[]  @relation("Parent")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Item {
-  id           Int            @id @default(autoincrement())
-  path         String         @unique
-  basePath     Path           @relation(fields: [basePathId], references: [id])
-  basePathId   Int
-  name         String?
-  starred      Boolean        @default(false)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  ItemRelation ItemRelation[]
+  id       Int     @id @default(autoincrement())
+  path     String
+  folder   Folder  @relation(fields: [folderId], references: [id])
+  folderId Int
+  name     String?
+  starred  Boolean @default(false)
+
+  tags ItemRelation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([path, folderId])
 }
 
 model TagRelation {
@@ -42,7 +48,7 @@ model TagRelation {
   parent   Tag @relation("Parent", fields: [parentId], references: [id])
   parentId Int
   child    Tag @relation("Child", fields: [childId], references: [id])
-  childId  Int
+  childId  Int @unique // Ensure a tag can only have one parent
 }
 
 model ItemRelation {
@@ -53,9 +59,9 @@ model ItemRelation {
   itemId Int
 }
 
-model Path {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-  path String
-  Item Item[]
+model Folder {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  path  String @unique
+  items Item[]
 }
