@@ -6,8 +6,8 @@ export async function createTag(
   name: string,
   type: TagType,
   star?: boolean,
-  backColor?: string,
-  textColor?: string
+  textColor?: string,
+  backColor?: string
 ): Promise<void> {
   try {
     const response = await fetch(apiUrl, {
