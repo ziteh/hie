@@ -9,6 +9,8 @@ servers:
 tags:
   - name: Tags
     description: Operations related to tags
+  - name: Tags relation
+    description: Operations related to tag relation
   - name: Items
     description: Operations related to items
 paths:
@@ -49,4 +51,5 @@ paths:
           description: Tag not found
   /api/items:
     $ref: "./items.yaml"
-  /api/items/{id}:
+  /api/tags/relation:
+    $ref: "./tags_relation.yaml"
