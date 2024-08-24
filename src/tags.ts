@@ -5,7 +5,7 @@ const apiUrl = "/api/tags";
 export async function createTag(
   name: string,
   type: TagType,
-  star?: boolean,
+  starred?: boolean,
   textColor?: string,
   backColor?: string
 ): Promise<void> {
@@ -16,7 +16,7 @@ export async function createTag(
       body: JSON.stringify({
         name: name,
         type: type,
-        star: star,
+        starred: starred,
         backColor: backColor,
         textColor: textColor,
       }),
@@ -63,7 +63,7 @@ export async function updateTag(
   tagId: number,
   name: string,
   type: TagType,
-  star?: boolean,
+  starred?: boolean,
   backColor?: string,
   textColor?: string
 ) {
@@ -75,7 +75,7 @@ export async function updateTag(
         id: tagId,
         name: name,
         type: type,
-        star: star,
+        starred: starred,
         backColor: backColor,
         textColor: textColor,
       }),

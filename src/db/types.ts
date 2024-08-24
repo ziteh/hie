@@ -9,7 +9,7 @@ export interface Tag {
   id: number;
   name: string;
   type: TagType;
-  star: boolean;
+  starred: boolean;
   backColor?: string;
   textColor?: string;
   createdAt?: Date;
@@ -25,7 +25,7 @@ export interface Item {
   basePath?: Path;
   basePathId: number;
   name?: string;
-  star: boolean;
+  starred: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   itemRelations?: ItemRelation[];

@@ -13,7 +13,7 @@ post:
               type: string
             type:
               type: string
-            star:
+            starred:
               type: boolean
             backColor:
               type: string
@@ -39,7 +39,7 @@ patch:
               type: string
             type:
               type: string
-            star:
+            starred:
               type: boolean
             backColor:
               type: string
@@ -84,7 +84,7 @@ get:
                   type: string
                 type:
                   type: string
-                star:
+                starred:
                   type: boolean
                 backColor:
                   type: string

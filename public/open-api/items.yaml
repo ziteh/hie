@@ -15,7 +15,7 @@ post:
               type: integer
             name:
               type: string
-            star:
+            starred:
               type: boolean
   responses:
     "201":
@@ -39,7 +39,7 @@ patch:
               type: integer
             name:
               type: string
-            star:
+            starred:
               type: boolean
   responses:
     "200":
@@ -82,5 +82,5 @@ get:
                   type: integer
                 name:
                   type: string
-                star:
+                starred:
                   type: boolean

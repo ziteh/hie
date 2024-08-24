@@ -3,11 +3,11 @@ import { prisma } from "@/src/db/prisma";
 
 export async function POST(request: Request) {
   try {
-    const { path, basePathId, name, star } = await request.json();
-    console.debug("Received data:", { path, name, star });
+    const { path, basePathId, name, starred } = await request.json();
+    console.debug("Received data:", { path, name, starred });
 
     const item = await prisma.item.create({
-      data: { path, basePathId, name, star },
+      data: { path, basePathId, name, starred },
     });
 
     return NextResponse.json(item);
@@ -19,11 +19,11 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const { id, basePathId, path, name, star } = await request.json();
+    const { id, basePathId, path, name, starred } = await request.json();
 
     const item = await prisma.item.update({
       where: { id },
-      data: { path, basePathId, name, star },
+      data: { path, basePathId, name, starred },
     });
 
     return NextResponse.json(item);

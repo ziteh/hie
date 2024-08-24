@@ -3,7 +3,7 @@ const apiUrl = "/api/items";
 export async function createItem(
   path: string,
   name?: string,
-  star?: boolean
+  starred?: boolean
 ): Promise<void> {
   try {
     const response = await fetch(apiUrl, {
@@ -12,7 +12,7 @@ export async function createItem(
       body: JSON.stringify({
         path: path,
         name: name,
-        star: star,
+        starred: starred,
       }),
     });
 
@@ -38,7 +38,7 @@ export async function updateItem(
   id: number,
   path: string,
   name?: string,
-  star?: boolean
+  starred?: boolean
 ) {
   try {
     const response = await fetch(apiUrl, {
@@ -48,7 +48,7 @@ export async function updateItem(
         id: id,
         path: path,
         name: name,
-        star: star,
+        starred: starred,
       }),
     });
 

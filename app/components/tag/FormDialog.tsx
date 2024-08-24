@@ -37,10 +37,10 @@ export default function FormDialog(props: Props) {
 
     const name = formJson.name;
     const type = formJson.type;
-    const star = formJson.star === "on";
+    const starred = formJson.starred === "on";
     const textColor = formJson.textColor || undefined;
     const backColor = formJson.backColor || undefined;
-    await createTag(name, type, star, textColor, backColor);
+    await createTag(name, type, starred, textColor, backColor);
 
     handleClose();
   };
@@ -58,7 +58,7 @@ export default function FormDialog(props: Props) {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <FormControlLabel control={<Switch name="star" />} label="Star" />
+            <FormControlLabel control={<Switch name="starred" />} label="Star" />
           </Grid>
           <Grid item xs={12}>
             <TextField
