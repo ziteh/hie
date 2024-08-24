@@ -14,12 +14,18 @@ dependencies:
   '@emotion/styled':
     specifier: ^11.13.0
     version: 11.13.0(@emotion/react@11.13.3)(@types/react@18.3.4)(react@18.3.1)
+  '@mui/icons-material':
+    specifier: ^5.16.7
+    version: 5.16.7(@mui/material@5.16.7)(@types/react@18.3.4)(react@18.3.1)
   '@mui/material':
     specifier: ^5.16.7
     version: 5.16.7(@emotion/react@11.13.3)(@emotion/styled@11.13.0)(@types/react@18.3.4)(react-dom@18.3.1)(react@18.3.1)
   '@mui/material-nextjs':
     specifier: ^5.16.6
     version: 5.16.6(@emotion/cache@11.13.1)(@mui/material@5.16.7)(@types/react@18.3.4)(next@14.2.6)(react@18.3.1)
+  '@mui/x-tree-view':
+    specifier: ^7.14.0
+    version: 7.14.0(@emotion/react@11.13.3)(@emotion/styled@11.13.0)(@mui/material@5.16.7)(@types/react@18.3.4)(react-dom@18.3.1)(react@18.3.1)
   '@prisma/client':
     specifier: ^5.18.0
     version: 5.18.0(prisma@5.18.0)
@@ -455,6 +461,23 @@ packages:
     resolution: {integrity: sha512-RtsCt4Geed2/v74sbihWzzRs+HsIQCfclHeORh5Ynu2fS4icIKozcSubwuG7vtzq2uW3fOR1zITSP84TNt2GoQ==}
     dev: false
 
+  /@mui/icons-material@5.16.7(@mui/material@5.16.7)(@types/react@18.3.4)(react@18.3.1):
+    resolution: {integrity: sha512-UrGwDJCXEszbDI7yV047BYU5A28eGJ79keTCP4cc74WyncuVrnurlmIRxaHL8YK+LI1Kzq+/JM52IAkNnv4u+Q==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@mui/material': ^5.0.0
+      '@types/react': ^17.0.0 || ^18.0.0
+      react: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.25.4
+      '@mui/material': 5.16.7(@emotion/react@11.13.3)(@emotion/styled@11.13.0)(@types/react@18.3.4)(react-dom@18.3.1)(react@18.3.1)
+      '@types/react': 18.3.4
+      react: 18.3.1
+    dev: false
+
   /@mui/material-nextjs@5.16.6(@emotion/cache@11.13.1)(@mui/material@5.16.7)(@types/react@18.3.4)(next@14.2.6)(react@18.3.1):
     resolution: {integrity: sha512-Y64ybP5Pmy+GCUcu3SuMnc25CqFwBQkRn6XNXyhvc1mhR48Iq0oFKjoO5ncqfhm58OwPClIRW2tecP/PTdGNJw==}
     engines: {node: '>=12.0.0'}
@@ -615,6 +638,51 @@ packages:
       prop-types: 15.8.1
       react: 18.3.1
       react-is: 18.3.1
+    dev: false
+
+  /@mui/x-internals@7.14.0(@types/react@18.3.4)(react@18.3.1):
+    resolution: {integrity: sha512-+qWIHLgt2vgH6bKmf7IwRvS86UbZRWKAdDY/yTQJaqzCzyesUvQhD+WRxe1kpdCK8UE061S9/Ju7hLkM4kjRNA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.25.4
+      '@mui/utils': 5.16.6(@types/react@18.3.4)(react@18.3.1)
+      react: 18.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
+  /@mui/x-tree-view@7.14.0(@emotion/react@11.13.3)(@emotion/styled@11.13.0)(@mui/material@5.16.7)(@types/react@18.3.4)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-j1sK0tLrsiCu0FxwTJQkVm2nbLYc1tRLwmPDAXcQ3nuzGDzn0x/IA28dBjxse/+oNy4j2cpJz3k/mSz/a4ZLjA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@emotion/react': ^11.9.0
+      '@emotion/styled': ^11.8.1
+      '@mui/material': ^5.15.14
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      '@emotion/styled':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.25.4
+      '@emotion/react': 11.13.3(@types/react@18.3.4)(react@18.3.1)
+      '@emotion/styled': 11.13.0(@emotion/react@11.13.3)(@types/react@18.3.4)(react@18.3.1)
+      '@mui/material': 5.16.7(@emotion/react@11.13.3)(@emotion/styled@11.13.0)(@types/react@18.3.4)(react-dom@18.3.1)(react@18.3.1)
+      '@mui/system': 5.16.7(@emotion/react@11.13.3)(@emotion/styled@11.13.0)(@types/react@18.3.4)(react@18.3.1)
+      '@mui/utils': 5.16.6(@types/react@18.3.4)(react@18.3.1)
+      '@mui/x-internals': 7.14.0(@types/react@18.3.4)(react@18.3.1)
+      '@types/react-transition-group': 4.4.11
+      clsx: 2.1.1
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-transition-group: 4.4.5(react-dom@18.3.1)(react@18.3.1)
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /@next/env@14.2.6:

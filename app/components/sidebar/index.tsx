@@ -13,6 +13,7 @@ import {
   Toolbar,
   IconButton,
 } from "@mui/material";
+import TreeView from "./treeview";
 
 const drawerWidth = 240;
 const collapsedWidth = 80;
@@ -51,16 +52,7 @@ export default function Sidebar() {
           ))}
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <TreeView />
       </Box>
       <Box
         sx={{
