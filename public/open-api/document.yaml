@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Hie API
+  description: API document of Hie
+  version: 0.1.0
+servers:
+  - url: http://localhost:3000
+    description: Local server
+tags:
+  - name: Tags
+    description: Operations related to tags
+  - name: Items
+    description: Operations related to items
+paths:
+  /api/tags:
+    $ref: "./tags.yaml"
+  /api/tags/{tagId}:
+    get:
+      summary: Get a specific tag by ID
+      tags:
+        - Tags
+      parameters:
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A specific tag
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  type:
+                    type: string
+                  star:
+                    type: boolean
+                  backColor:
+                    type: string
+                  textColor:
+                    type: string
+        "404":
+          description: Tag not found
+  /api/items:
+    $ref: "./items.yaml"
+  /api/items/{id}:

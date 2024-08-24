@@ -1,0 +1,42 @@
+post:
+  summary: Create a new item
+  tags:
+    - Items
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            path:
+              type: string
+            name:
+              type: string
+            star:
+              type: boolean
+  responses:
+    "201":
+      description: Item created successfully
+get:
+  summary: List all items
+  tags:
+    - Items
+  responses:
+    "200":
+      description: A list of items
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                path:
+                  type: string
+                name:
+                  type: string
+                star:
+                  type: boolean
