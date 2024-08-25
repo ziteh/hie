@@ -1,6 +1,6 @@
-import { TagType } from "@/src/db/types";
+import { TagType, Tag } from "@/src/db/types";
 
-const apiUrl = "/api/tags";
+const apiUrl = "http://localhost:3140/api/tags"; // TODO
 
 export async function createTag(
   name: string,
@@ -92,9 +92,27 @@ export async function updateTag(
   }
 }
 
-export async function getTag(tagId: number) {
+export async function getTag(
+  id: number,
+  includeChildren: boolean,
+  includeParent: boolean,
+  includeItems: boolean
+): Promise<Tag | null> {
+  let params: string[] = [];
+  if (includeChildren) {
+    params.push("children");
+  }
+  if (includeParent) {
+    params.push("parent");
+  }
+  if (includeItems) {
+    params.push("items");
+  }
+  const paramsString = params.join(",");
+  const url = `${apiUrl}/${id}?include=${paramsString}`;
+
   try {
-    const response = await fetch(`${apiUrl}/${tagId}`, {
+    const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -103,16 +121,34 @@ export async function getTag(tagId: number) {
       throw new Error("Network response was not ok");
     }
 
-    const data = await response.json();
+    const data: Tag = await response.json();
     console.debug("Tag get:", data);
+    return data;
   } catch (error) {
     console.error("Error during fetch:", error);
+    return null;
   }
 }
 
-export async function listTag() {
+export async function listTag(
+  includeChildren: boolean,
+  includeParent: boolean,
+  includeItems: boolean
+): Promise<Tag[]> {
+  let params: string[] = [];
+  if (includeChildren) {
+    params.push("children");
+  }
+  if (includeParent) {
+    params.push("parent");
+  }
+  if (includeItems) {
+    params.push("items");
+  }
+  const paramsString = params.join(",");
+
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(`${apiUrl}?include=${paramsString}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -121,9 +157,11 @@ export async function listTag() {
       throw new Error("Network response was not ok");
     }
 
-    const data = await response.json();
+    const data: Tag[] = await response.json();
     console.debug("Tag get:", data);
+    return data;
   } catch (error) {
     console.error("Error during fetch:", error);
+    return [];
   }
 }

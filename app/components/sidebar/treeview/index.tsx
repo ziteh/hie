@@ -88,7 +88,12 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(
   );
 });
 
-export default function TreeView() {
+interface Props {
+  items: TreeViewBaseItem[];
+}
+
+export default async function TreeView(props: Props) {
+  const { items } = props;
   const handleNodeSelect = (event: React.SyntheticEvent, nodeId: string) => {
     console.log(`Selected node ID: ${nodeId}`);
   };
@@ -97,7 +102,7 @@ export default function TreeView() {
     <Box sx={{ minHeight: 200, minWidth: 250 }}>
       <RichTreeView
         defaultExpandedItems={["3"]}
-        items={ITEMS}
+        items={items}
         slots={{ item: CustomTreeItem }}
         onItemClick={handleNodeSelect}
       />
