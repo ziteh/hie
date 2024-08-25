@@ -4,5 +4,8 @@
     "workbench.editor.customLabels.patterns": {
         "**/route.*": "${dirname}.${extname} (${filename})",
         "**/index.*": "${dirname}.${extname} (${filename})"
-    }
+    },
+    "cSpell.words": [
+        "zustand"
+    ]
 }

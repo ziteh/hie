@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Divider,
@@ -16,16 +16,20 @@ import {
 import TreeView from "./treeview";
 import { TreeViewBaseItem } from "@mui/x-tree-view";
 
+import { useTagTreeState } from "@/app/store/tagTree";
+
 const drawerWidth = 240;
 const collapsedWidth = 80;
 
-interface Props {
-  items: TreeViewBaseItem[];
-}
+export default function Sidebar() {
+  const [open, setOpen] = React.useState(true);
+  const { tagTreeItems, clearTagTree, updateTagTree } = useTagTreeState(
+    (s) => s
+  );
 
-export default function Sidebar(props: Props) {
-  const { items } = props;
-  const [open, setOpen] = useState(true);
+  React.useEffect(() => {
+    updateTagTree();
+  }, []);
 
   const handleToggle = () => {
     setOpen(!open);
@@ -58,7 +62,7 @@ export default function Sidebar(props: Props) {
           ))}
         </List>
         <Divider />
-        <TreeView items={items} />
+        <TreeView items={tagTreeItems} />
       </Box>
       <Box
         sx={{
