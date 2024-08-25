@@ -14,11 +14,17 @@ import {
   IconButton,
 } from "@mui/material";
 import TreeView from "./treeview";
+import { TreeViewBaseItem } from "@mui/x-tree-view";
 
 const drawerWidth = 240;
 const collapsedWidth = 80;
 
-export default function Sidebar() {
+interface Props {
+  items: TreeViewBaseItem[];
+}
+
+export default function Sidebar(props: Props) {
+  const { items } = props;
   const [open, setOpen] = useState(true);
 
   const handleToggle = () => {
@@ -52,7 +58,7 @@ export default function Sidebar() {
           ))}
         </List>
         <Divider />
-        <TreeView />
+        <TreeView items={items} />
       </Box>
       <Box
         sx={{
