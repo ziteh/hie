@@ -15,8 +15,8 @@ export interface Tag {
   createdAt?: Date;
   updatedAt?: Date;
   children?: TagRelation[];
-  parents?: TagRelation[];
-  itemRelations?: ItemRelation[];
+  parent?: TagRelation[];
+  items?: ItemRelation[];
 }
 
 export interface Item {

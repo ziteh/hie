@@ -31,6 +31,17 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: include
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [children, parent, items]
+          required: false
+          description: Specify which related data to include (children, parent, items)
+          style: form
+          explode: false
       responses:
         "200":
           description: A specific tag

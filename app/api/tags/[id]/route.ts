@@ -2,12 +2,20 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/src/db/prisma";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
+  const url = new URL(request.url);
+  const paramString = url.searchParams.get("include") || "";
+  const paramsInclude = paramString.split(",");
   try {
     const tag = await prisma.tag.findUnique({
       where: { id: Number(params.id) },
+      include: {
+        children: paramsInclude.includes("children"),
+        parent: paramsInclude.includes("parent"),
+        items: paramsInclude.includes("items"),
+      },
     });
 
     if (!tag) {
