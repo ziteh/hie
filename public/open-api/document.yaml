@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  title: Hie API
+  description: API document of Hie
+  version: 0.1.0
+servers:
+  - url: http://localhost:3140
+    description: Local server
+tags:
+  - name: Tags
+    description: Operations related to tags
+  - name: Tags relation
+    description: Operations related to tag relation
+  - name: Items
+    description: Operations related to items
+  - name: Items relation
+    description: Operations related to item relation
+  - name: Folders
+    description: Operations related to folders
+paths:
+  /api/tags:
+    $ref: "./tags.yaml"
+  /api/tags/{tagId}:
+    get:
+      summary: Get a specific tag by ID
+      tags:
+        - Tags
+      parameters:
+        - name: tagId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: include
+          schema:
+            type: array
+            items:
+              type: string
+              enum: [children, parent, items]
+          required: false
+          description: Specify which related data to include (children, parent, items)
+          style: form
+          explode: false
+      responses:
+        "200":
+          description: A specific tag
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  type:
+                    type: string
+                  starred:
+                    type: boolean
+                  backColor:
+                    type: string
+                  textColor:
+                    type: string
+        "404":
+          description: Tag not found
+  /api/items:
+    $ref: "./items.yaml"
+  /api/tags/relation:
+    $ref: "./tags_relation.yaml"
+  /api/items/relation:
+    $ref: "./items_relation.yaml"
+  /api/folders:
+    $ref: "./folders.yaml"

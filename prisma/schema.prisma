@@ -1,0 +1,67 @@
+// Prisma ORM schema
+// https://www.prisma.io/docs/orm/prisma-schema/overview
+// https://www.prisma.io/docs/orm/reference/database-features
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Tag {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  type      String
+  starred   Boolean @default(false)
+  textColor String?
+  backColor String?
+
+  items    ItemRelation[]
+  parent   TagRelation?   @relation("Child")
+  children TagRelation[]  @relation("Parent")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Item {
+  id       Int     @id @default(autoincrement())
+  path     String
+  folder   Folder  @relation(fields: [folderId], references: [id])
+  folderId Int
+  name     String?
+  starred  Boolean @default(false)
+
+  tags ItemRelation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([path, folderId])
+}
+
+model TagRelation {
+  id       Int @id @default(autoincrement())
+  parent   Tag @relation("Parent", fields: [parentId], references: [id])
+  parentId Int
+  child    Tag @relation("Child", fields: [childId], references: [id])
+  childId  Int @unique // Ensure a tag can only have one parent
+}
+
+model ItemRelation {
+  id     Int  @id @default(autoincrement())
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  Int
+  item   Item @relation(fields: [itemId], references: [id])
+  itemId Int
+}
+
+model Folder {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  path  String @unique
+  items Item[]
+}
