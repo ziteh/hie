@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { loadImage } from "@/app/lib/imageLoader";
 
 interface Props {
   path: string;
@@ -11,15 +12,11 @@ export default function ImageLoader(props: Props) {
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
-    if (path) {
-      fetch(`/api/image?path=${encodeURIComponent(path)}`)
-        .then((response) => response.blob())
-        .then((blob) => {
-          const url = URL.createObjectURL(blob);
-          setImageSrc(url);
-        })
-        .catch((error) => console.error("Error loading image:", error));
-    }
+    loadImage(path).then((url) => {
+      if (url !== null) {
+        setImageSrc(url);
+      }
+    });
   }, [path]);
 
   return (
