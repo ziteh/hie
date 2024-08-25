@@ -3,7 +3,7 @@ import { prisma } from "@/src/db/prisma";
 
 export async function POST(request: Request) {
   try {
-    const { path, basePathId: folderId, name, starred } = await request.json();
+    const { path, folderId, name, starred } = await request.json();
     console.debug("Received data:", { path, name, starred });
 
     const item = await prisma.item.create({

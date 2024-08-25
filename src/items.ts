@@ -1,3 +1,5 @@
+import { Item } from "@/src/db/types";
+
 const apiUrl = "/api/items";
 
 export async function createItem(
@@ -63,7 +65,7 @@ export async function updateItem(
   }
 }
 
-export async function getItem(id: number) {
+export async function getItem(id: number): Promise<Item | null> {
   try {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: "GET",
@@ -74,10 +76,12 @@ export async function getItem(id: number) {
       throw new Error("Network response was not ok");
     }
 
-    const data = await response.json();
+    const data: Item = await response.json();
     console.debug("Item get:", data);
+    return data;
   } catch (error) {
     console.error("Error during fetch:", error);
+    return null;
   }
 }
 
