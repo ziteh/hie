@@ -24,7 +24,7 @@ const collapsedWidth = 80;
 
 const NavList = [
   { label: "Home", url: "/explorer" },
-  { label: "Settings", url: "/settings" },
+  { label: "Database", url: "/database" },
   { label: "Docs", url: "/api/docs" },
 ];
 
