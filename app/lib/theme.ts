@@ -20,6 +20,11 @@ const theme = createTheme({
         variant: "outlined",
       },
     },
+    MuiSkeleton: {
+      defaultProps: {
+        variant: "rounded",
+      },
+    },
   },
 });
 

@@ -2,13 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { loadImage } from "@/app/lib/imageLoader";
+import { Skeleton } from "@mui/material";
 
 interface Props {
   path: string;
+  alt?: string;
+  width?: number;
+  height?: number;
 }
 
 export default function ImageLoader(props: Props) {
-  const { path } = props;
+  const { path, alt, width, height } = props;
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
@@ -24,11 +28,13 @@ export default function ImageLoader(props: Props) {
       {imageSrc ? (
         <img
           src={imageSrc}
-          alt={"img"}
+          alt={alt}
+          width={width}
+          height={height}
           loading="lazy"
         />
       ) : (
-        <p>No image selected</p>
+        <Skeleton width={width} height={height} />
       )}
     </div>
   );

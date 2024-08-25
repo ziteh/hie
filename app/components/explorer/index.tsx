@@ -8,17 +8,17 @@ import { getItem } from "@/app/lib/items";
 import { Item } from "@/app/lib/db/types";
 import { ImageList, ImageListItem } from "@mui/material";
 
+const size = 250;
+
 export default function Explorer() {
   const subscribeSelected = useTagTreeState((s) => s.subscribeSelected);
-  const [id, setId] = useState(0);
-  const [img, setImg] = useState<string[]>([]);
+  const [imagePaths, setImagePaths] = useState<string[]>([]);
 
   useEffect(() => {
     subscribeSelected(onSelected);
   }, []);
 
   const onSelected = async (id: number) => {
-    setId(id);
     const tag = await getTag(id, true, true, true);
     if (tag === null) return;
     if (!tag.items) return;
@@ -37,15 +37,19 @@ export default function Explorer() {
 
       const paths = items.map((i) => i!.path);
       console.log(paths);
-      setImg(paths);
+      setImagePaths(paths);
     } catch (err) {}
   };
 
   return (
     <div>
-      {img.map((p) => (
-        <ImageLoader path={p} />
-      ))}
+      <ImageList cols={4} gap={6}>
+        {imagePaths.map((path, index) => (
+          <ImageListItem key={index}>
+            <ImageLoader path={path} width={size} height={size} />
+          </ImageListItem>
+        ))}
+      </ImageList>
     </div>
   );
 }
