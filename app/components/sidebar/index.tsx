@@ -23,7 +23,7 @@ const collapsedWidth = 80;
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
-  const { tagTreeItems, clearTagTree, updateTagTree } = useTagTreeState(
+  const { tagTreeItems, updateTagTree, updateSelectedTagId } = useTagTreeState(
     (s) => s
   );
 
@@ -31,8 +31,12 @@ export default function Sidebar() {
     updateTagTree();
   }, []);
 
-  const handleTagSelect = (event: React.SyntheticEvent, nodeId: string) => {
-    console.log(`Selected node ID: ${nodeId}`);
+  const handleTagSelect = (event: React.SyntheticEvent, id: string) => {
+    try {
+      updateSelectedTagId(Number(id));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleToggle = () => {
