@@ -6,6 +6,7 @@
         "**/index.*": "${dirname}.${extname} (${filename})"
     },
     "cSpell.words": [
+        "Topbar",
         "zustand"
     ]
 }
