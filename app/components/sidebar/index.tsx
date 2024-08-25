@@ -31,6 +31,10 @@ export default function Sidebar() {
     updateTagTree();
   }, []);
 
+  const handleTagSelect = (event: React.SyntheticEvent, nodeId: string) => {
+    console.log(`Selected node ID: ${nodeId}`);
+  };
+
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -62,7 +66,7 @@ export default function Sidebar() {
           ))}
         </List>
         <Divider />
-        <TreeView items={tagTreeItems} />
+        <TreeView items={tagTreeItems} onItemClick={handleTagSelect} />
       </Box>
       <Box
         sx={{

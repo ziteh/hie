@@ -90,13 +90,11 @@ const CustomTreeItem = React.forwardRef(function CustomTreeItem(
 
 interface Props {
   items: TreeViewBaseItem[];
+  onItemClick?: (event: React.SyntheticEvent, id: string) => void;
 }
 
 export default function TreeView(props: Props) {
-  const { items } = props;
-  const handleNodeSelect = (event: React.SyntheticEvent, nodeId: string) => {
-    console.log(`Selected node ID: ${nodeId}`);
-  };
+  const { items, onItemClick } = props;
 
   return (
     <Box sx={{ minHeight: 200, minWidth: 250 }}>
@@ -104,7 +102,7 @@ export default function TreeView(props: Props) {
         defaultExpandedItems={["3"]}
         items={items}
         slots={{ item: CustomTreeItem }}
-        onItemClick={handleNodeSelect}
+        onItemClick={onItemClick}
       />
     </Box>
   );
