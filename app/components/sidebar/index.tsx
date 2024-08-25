@@ -23,9 +23,8 @@ const collapsedWidth = 80;
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
-  const { tagTreeItems, updateTagTree, updateSelectedTagId } = useTagTreeState(
-    (s) => s
-  );
+  const { tagTreeItems, updateTagTree, updateSelectedTagId } =
+    useTagTreeState();
 
   React.useEffect(() => {
     updateTagTree();

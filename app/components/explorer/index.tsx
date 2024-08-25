@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useTagTreeState } from "@/app/store/tagTree";
+import ImageLoader from "./imageLoader";
 
 export default function Explorer() {
   const subscribeSelected = useTagTreeState((s) => s.subscribeSelected);
@@ -15,5 +16,11 @@ export default function Explorer() {
     setId(id);
   };
 
-  return <div>{id}</div>;
+  return (
+    <div>
+      {id}
+
+      <ImageLoader path="C:/Users/wk415/Pictures/Z-Hex Logo_V 2.2(Fin_W)-04.png" />
+    </div>
+  );
 }
