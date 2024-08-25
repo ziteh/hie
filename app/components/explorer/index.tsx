@@ -33,10 +33,7 @@ export default function Explorer() {
       );
 
       items = items.filter((item) => item !== null);
-      console.log(items);
-
       const paths = items.map((i) => i!.path);
-      console.log(paths);
       setImagePaths(paths);
     } catch (err) {}
   };
