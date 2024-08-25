@@ -92,7 +92,7 @@ interface Props {
   items: TreeViewBaseItem[];
 }
 
-export default async function TreeView(props: Props) {
+export default function TreeView(props: Props) {
   const { items } = props;
   const handleNodeSelect = (event: React.SyntheticEvent, nodeId: string) => {
     console.log(`Selected node ID: ${nodeId}`);
