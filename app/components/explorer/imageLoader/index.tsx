@@ -21,7 +21,15 @@ export default function ImageLoader(props: Props) {
 
   return (
     <div>
-      {imageSrc ? <img src={imageSrc} alt={"img"} /> : <p>No image selected</p>}
+      {imageSrc ? (
+        <img
+          src={imageSrc}
+          alt={"img"}
+          loading="lazy"
+        />
+      ) : (
+        <p>No image selected</p>
+      )}
     </div>
   );
 }
