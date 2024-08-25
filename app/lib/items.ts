@@ -1,4 +1,4 @@
-import { Item } from "@/src/db/types";
+import { Item } from "@/app/lib/db/types";
 
 const apiUrl = "/api/items";
 

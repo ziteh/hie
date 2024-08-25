@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { TreeViewBaseItem } from "@mui/x-tree-view/models";
-import { generateTagTree } from "@/src/tagTreeGenerator";
+import { generateTagTree } from "@/app/lib/tagTreeGenerator";
 
 export interface TagTreeState {
   tagTreeItems: TreeViewBaseItem[];

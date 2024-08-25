@@ -3,8 +3,8 @@
 import React from "react";
 import { useTagTreeState } from "@/app/store/tagTree";
 import ImageLoader from "./imageLoader";
-import { getTag } from "@/src/tags";
-import { getItem } from "@/src/items";
+import { getTag } from "@/app/lib/tags";
+import { getItem } from "@/app/lib/items";
 
 export default function Explorer() {
   const subscribeSelected = useTagTreeState((s) => s.subscribeSelected);

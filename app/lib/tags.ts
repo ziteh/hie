@@ -1,4 +1,4 @@
-import { TagType, Tag } from "@/src/db/types";
+import { TagType, Tag } from "@/app/lib/db/types";
 
 const apiUrl = "http://localhost:3140/api/tags"; // TODO
 

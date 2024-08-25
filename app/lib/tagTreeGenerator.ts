@@ -1,6 +1,6 @@
 import { TreeViewBaseItem } from "@mui/x-tree-view/models";
-import { listTag, getTag } from "@/src/tags";
-import { Tag } from "@/src/db/types";
+import { listTag, getTag } from "@/app/lib/tags";
+import { Tag } from "@/app/lib/db/types";
 
 export async function generateTagTree(): Promise<TreeViewBaseItem[]> {
   let treeItems: TreeViewBaseItem[] = [];

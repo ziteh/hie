@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@mui/material";
-import { getTag } from "@/src/tags";
-import { TagType } from "@/src/db/types";
+import { getTag } from "@/app/lib/tags";
+import { TagType } from "@/app/lib/db/types";
 
 export default function CreateTagButton() {
   return (

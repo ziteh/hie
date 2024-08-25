@@ -1,6 +1,6 @@
 "use client";
 
-import { Tag, TagType } from "@/src/db/types";
+import { Tag, TagType } from "@/app/lib/db/types";
 import {
   Button,
   Dialog,
@@ -14,7 +14,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import { createTag } from "@/src/tags";
+import { createTag } from "@/app/lib/tags";
 
 interface Props {
   open: boolean;
