@@ -1,6 +1,7 @@
 import { Box, Toolbar } from "@mui/material";
 import Sidebar from "@/app/components/sidebar";
 import Topbar from "@/app/components/topbar";
+import Explorer from "@/app/components/explorer";
 
 export default async function Page() {
   return (
@@ -10,7 +11,7 @@ export default async function Page() {
         <Sidebar />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-          Main
+          <Explorer />
         </Box>
       </Box>
     </div>

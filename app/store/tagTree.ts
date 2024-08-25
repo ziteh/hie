@@ -4,15 +4,18 @@ import { generateTagTree } from "@/src/tagTreeGenerator";
 
 export interface TagTreeState {
   tagTreeItems: TreeViewBaseItem[];
-  selectedTagId: number;
   clearTagTree: () => void;
   updateTagTree: () => void;
+
+  selectedTagId: number;
   updateSelectedTagId: (id: number) => void;
+
+  selectedCallback: (id: number) => void;
+  subscribeSelected: (callback: (id: number) => void) => void;
 }
 
 export const useTagTreeState = create<TagTreeState>()((set, get) => ({
   tagTreeItems: [],
-  selectedTagId: 0,
   clearTagTree: () => set({ tagTreeItems: [] }),
   updateTagTree: async () => {
     const items = await generateTagTree();
@@ -20,8 +23,16 @@ export const useTagTreeState = create<TagTreeState>()((set, get) => ({
 
     console.debug("Store TagTree: ", get());
   },
+
+  selectedTagId: 0,
   updateSelectedTagId: (id) => {
     set({ selectedTagId: id });
+    get().selectedCallback(id);
     console.debug("Store TagTree selected ID: ", id);
+  },
+
+  selectedCallback: (id) => {},
+  subscribeSelected: (callback) => {
+    set({ selectedCallback: callback });
   },
 }));
