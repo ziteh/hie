@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Box, Tabs, Tab } from "@mui/material";
+import DatabaseTable from "./databaseTable";
 
 const TabItems = ["Tag", "Item", "Folder"];
 
@@ -46,7 +47,7 @@ export default function Page() {
 
       {TabItems.map((item, index) => (
         <CustomTabPanel value={tabIndex} index={index}>
-          {item}
+          <DatabaseTable />
         </CustomTabPanel>
       ))}
     </Box>
