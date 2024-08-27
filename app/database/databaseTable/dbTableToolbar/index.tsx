@@ -6,10 +6,11 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 
 interface Props {
   numSelected: number;
+  title:string;
 }
 
 export default function DbTableToolbar(props: Props) {
-  const { numSelected } = props;
+  const { numSelected ,title } = props;
 
   return (
     <Toolbar
@@ -41,7 +42,7 @@ export default function DbTableToolbar(props: Props) {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          {title}
         </Typography>
       )}
       {numSelected > 0 ? (

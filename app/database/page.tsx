@@ -28,6 +28,32 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
+const data1: [number, string, number, number, number, number][] = [
+  [1, "tag1", 1, 1, 2, 3],
+  [2, "tag2", 2, 2, 39, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+  [3, "tag3", 3, 3, 9, 1],
+];
+
 export default function Page() {
   const [tabIndex, setTabIndex] = React.useState(0);
 
@@ -39,15 +65,15 @@ export default function Page() {
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tabIndex} onChange={handleChange}>
-          {TabItems.map((item) => (
-            <Tab label={item} />
+          {TabItems.map((item, index) => (
+            <Tab label={item} key={index} />
           ))}
         </Tabs>
       </Box>
 
       {TabItems.map((item, index) => (
-        <CustomTabPanel value={tabIndex} index={index}>
-          <DatabaseTable />
+        <CustomTabPanel value={tabIndex} index={index} key={index}>
+          <DatabaseTable rows={data1} />
         </CustomTabPanel>
       ))}
     </Box>
