@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import DatabaseTable from "./databaseTable";
+import { listTag } from "@/app/lib/tags";
 
 const TabItems = ["Tag", "Item", "Folder"];
 
@@ -56,10 +57,38 @@ const data1: [number, string, number, number, number, number][] = [
 
 export default function Page() {
   const [tabIndex, setTabIndex] = React.useState(0);
+  const [tags, setTags] = React.useState<
+    [number, string, string, string, string, string][]
+  >([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
+
+  React.useEffect(() => {
+    listTag(true, true, false).then((data) => {
+      const tagList: [number, string, string, string, string, string][] =
+        data.map((item) => {
+          const updateDate = item.updatedAt
+            ? new Date(item.updatedAt).toISOString()
+            : "N/A";
+
+          const createDate = item.createdAt
+            ? new Date(item.createdAt).toISOString()
+            : "N/A";
+
+          return [
+            item.id,
+            item.name,
+            item.type,
+            item.parent ? "Has parent" : "No parent",
+            updateDate,
+            createDate,
+          ];
+        });
+      setTags(tagList);
+    });
+  }, []);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -73,7 +102,7 @@ export default function Page() {
 
       {TabItems.map((item, index) => (
         <CustomTabPanel value={tabIndex} index={index} key={index}>
-          <DatabaseTable rows={data1} />
+          <DatabaseTable rows={tags} />
         </CustomTabPanel>
       ))}
     </Box>
