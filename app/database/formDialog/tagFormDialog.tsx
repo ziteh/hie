@@ -22,7 +22,7 @@ interface Props {
   onClose: () => void;
 }
 
-export default function FormDialog(props: Props) {
+export default function TagFormDialog(props: Props) {
   const { open, data, onClose } = props;
 
   const handleClose = () => {
@@ -58,7 +58,10 @@ export default function FormDialog(props: Props) {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <FormControlLabel control={<Switch name="starred" />} label="Star" />
+            <FormControlLabel
+              control={<Switch name="starred" />}
+              label="Star"
+            />
           </Grid>
           <Grid item xs={12}>
             <TextField

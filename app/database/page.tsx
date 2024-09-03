@@ -1,11 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { Box, Tabs, Tab } from "@mui/material";
+import { Box, Tabs, Tab, Button } from "@mui/material";
 import DatabaseTable from "./databaseTable";
 import { listTag } from "@/app/lib/tags";
 import { listItem } from "@/app/lib/items";
 import { HeadCell, TagRow, ItemRow } from "./databaseTable/types";
+import TagFormDialog from "./formDialog/tagFormDialog";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -87,8 +88,19 @@ const itemHeader: HeadCell[] = [
 
 export default function Page() {
   const [tabIndex, setTabIndex] = React.useState(0);
+
   const [tags, setTags] = React.useState<TagRow[]>([]);
   const [items, setItems] = React.useState<ItemRow[]>([]);
+
+  const [tagFormOpen, setTagFormOpen] = React.useState(false);
+
+  const handleTagFormOpen = () => {
+    setTagFormOpen(true);
+  };
+
+  const handleTagFormClose = () => {
+    setTagFormOpen(false);
+  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -151,11 +163,15 @@ export default function Page() {
       </Box>
 
       <CustomTabPanel value={tabIndex} index={0} key={0}>
+        <Button onClick={handleTagFormOpen}>New Tag</Button>
+        <TagFormDialog open={tagFormOpen} onClose={handleTagFormClose} />
         <DatabaseTable heads={tagHeader} rows={tags} />
       </CustomTabPanel>
+
       <CustomTabPanel value={tabIndex} index={1} key={1}>
         <DatabaseTable heads={itemHeader} rows={items} />
       </CustomTabPanel>
+
       <CustomTabPanel value={tabIndex} index={2} key={2}>
         <DatabaseTable heads={tagHeader} rows={tags} />
       </CustomTabPanel>
