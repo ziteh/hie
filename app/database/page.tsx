@@ -89,8 +89,11 @@ const itemHeader: HeadCell[] = [
 export default function Page() {
   const [tabIndex, setTabIndex] = React.useState(0);
 
-  const [tags, setTags] = React.useState<TagRow[]>([]);
-  const [items, setItems] = React.useState<ItemRow[]>([]);
+  const [tagRows, setTagRows] = React.useState<TagRow[]>([]);
+  const [itemRows, setItemRows] = React.useState<ItemRow[]>([]);
+
+  const [tags, setTags] = React.useState<Tag[]>([]);
+  const [items, setItems] = React.useState<Item[]>([]);
 
   const [tagFormOpen, setTagFormOpen] = React.useState(false);
 
@@ -108,6 +111,8 @@ export default function Page() {
 
   React.useEffect(() => {
     listTag(true, true, false).then((data) => {
+      setTags(data);
+
       const tagList: TagRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()
@@ -126,10 +131,12 @@ export default function Page() {
           createDate,
         ];
       });
-      setTags(tagList);
+      setTagRows(tagList);
     });
 
     listItem().then((data) => {
+      setItems(data);
+
       const itemList: ItemRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()
@@ -148,7 +155,7 @@ export default function Page() {
           createDate,
         ];
       });
-      setItems(itemList);
+      setItemRows(itemList);
     });
   }, []);
 
@@ -164,16 +171,16 @@ export default function Page() {
 
       <CustomTabPanel value={tabIndex} index={0} key={0}>
         <Button onClick={handleTagFormOpen}>New Tag</Button>
-        <TagFormDialog open={tagFormOpen} onClose={handleTagFormClose} />
-        <DatabaseTable heads={tagHeader} rows={tags} />
+        <TagFormDialog existingTags={tags} open={tagFormOpen} onClose={handleTagFormClose} />
+        <DatabaseTable heads={tagHeader} rows={tagRows} />
       </CustomTabPanel>
 
       <CustomTabPanel value={tabIndex} index={1} key={1}>
-        <DatabaseTable heads={itemHeader} rows={items} />
+        <DatabaseTable heads={itemHeader} rows={itemRows} />
       </CustomTabPanel>
 
       <CustomTabPanel value={tabIndex} index={2} key={2}>
-        <DatabaseTable heads={tagHeader} rows={tags} />
+        <DatabaseTable heads={tagHeader} rows={tagRows} />
       </CustomTabPanel>
     </Box>
   );

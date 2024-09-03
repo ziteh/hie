@@ -17,13 +17,14 @@ import {
 import { createTag } from "@/app/lib/tags";
 
 interface Props {
-  open: boolean;
+  existingTags: Tag[];
   data?: Tag;
+  open: boolean;
   onClose: () => void;
 }
 
 export default function TagFormDialog(props: Props) {
-  const { open, data, onClose } = props;
+  const { existingTags, data, open, onClose } = props;
 
   const handleClose = () => {
     onClose();
@@ -83,6 +84,20 @@ export default function TagFormDialog(props: Props) {
             >
               <MenuItem value={TagType.Normal}>Normal</MenuItem>
               <MenuItem value={TagType.Category}>Category</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item xs={12}>
+            <Select
+              labelId="parent-label"
+              label="Parent"
+              name="parent"
+              fullWidth
+            >
+              {existingTags.map((tag) => (
+                <MenuItem value={tag.id} key={tag.id}>
+                  {tag.name}
+                </MenuItem>
+              ))}
             </Select>
           </Grid>
           <Grid item xs={6}>
