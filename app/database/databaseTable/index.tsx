@@ -12,7 +12,7 @@ import {
   Checkbox,
   TablePagination,
 } from "@mui/material";
-import { Order, Data, createData } from "@/app/database/databaseTable/types";
+import { Order, Data, HeadCell } from "@/app/database/databaseTable/types";
 import DbTableHead from "./dbTableHead";
 import DbTableToolbar from "./dbTableToolbar";
 
@@ -37,12 +37,13 @@ function getComparator<T>(
 
 interface Props<T extends readonly any[]> {
   rows: T[];
+  heads: HeadCell[];
 }
 
 export default function DatabaseTable<T extends readonly any[]>(
   props: Props<T>
 ) {
-  const { rows } = props;
+  const { rows, heads } = props;
 
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof T[number] & string>(
@@ -127,6 +128,7 @@ export default function DatabaseTable<T extends readonly any[]>(
             size={dense ? "small" : "medium"}
           >
             <DbTableHead
+              heads={heads}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}

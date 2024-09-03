@@ -85,7 +85,7 @@ export async function getItem(id: number): Promise<Item | null> {
   }
 }
 
-export async function listItem() {
+export async function listItem(): Promise<Item[]> {
   try {
     const response = await fetch(apiUrl, {
       method: "GET",
@@ -98,8 +98,10 @@ export async function listItem() {
 
     const data = await response.json();
     console.debug("Item get:", data);
+    return data;
   } catch (error) {
     console.error("Error during fetch:", error);
+    return [];
   }
 }
 

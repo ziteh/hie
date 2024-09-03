@@ -9,53 +9,19 @@ import {
 } from "@mui/material";
 import { Order, Data, HeadCell } from "@/app/database/databaseTable/types";
 
-const headCells: readonly HeadCell[] = [
-  {
-    id: "name",
-    numeric: false,
-    disablePadding: true,
-    label: "Name",
-  },
-  {
-    id: "calories",
-    numeric: true,
-    disablePadding: false,
-    label: "Type",
-  },
-  {
-    id: "fat",
-    numeric: true,
-    disablePadding: false,
-    label: "Parent",
-  },
-  {
-    id: "protein",
-    numeric: true,
-    disablePadding: false,
-    label: "Updated",
-  },
-  {
-    id: "carbs",
-    numeric: true,
-    disablePadding: false,
-    label: "Created",
-  },
-];
-
 interface Props {
+  heads: HeadCell[];
   numSelected: number;
   order: Order;
-  orderBy: string;
+  orderBy: number;
   rowCount: number;
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: number) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function DbTableHead(props: Props) {
   const {
+    heads,
     onSelectAllClick,
     order,
     orderBy,
@@ -64,7 +30,7 @@ export default function DbTableHead(props: Props) {
     onRequestSort,
   } = props;
   const createSortHandler =
-    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+    (property: number) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -82,11 +48,11 @@ export default function DbTableHead(props: Props) {
             }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
+        {heads.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
+            align={headCell.align}
+            padding="none"
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel

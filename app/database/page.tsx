@@ -4,8 +4,8 @@ import * as React from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import DatabaseTable from "./databaseTable";
 import { listTag } from "@/app/lib/tags";
-
-const TabItems = ["Tag", "Item", "Folder"];
+import { listItem } from "@/app/lib/items";
+import { HeadCell, TagRow, ItemRow } from "./databaseTable/types";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -29,37 +29,66 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-const data1: [number, string, number, number, number, number][] = [
-  [1, "tag1", 1, 1, 2, 3],
-  [2, "tag2", 2, 2, 39, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
-  [3, "tag3", 3, 3, 9, 1],
+const tagHeader: HeadCell[] = [
+  {
+    id: 0,
+    label: "Name",
+    align: "right",
+  },
+  {
+    id: 1,
+    label: "Type",
+    align: "right",
+  },
+  {
+    id: 2,
+    label: "Parent",
+    align: "right",
+  },
+  {
+    id: 3,
+    label: "Updated",
+    align: "right",
+  },
+  {
+    id: 4,
+    label: "Created",
+    align: "right",
+  },
+];
+
+const itemHeader: HeadCell[] = [
+  {
+    id: 0,
+    label: "Name",
+    align: "right",
+  },
+  {
+    id: 1,
+    label: "Path",
+    align: "right",
+  },
+  {
+    id: 2,
+    label: "Starred",
+    align: "right",
+  },
+  {
+    id: 3,
+    label: "Updated",
+    align: "right",
+  },
+  {
+    id: 4,
+    label: "Created",
+    align: "right",
+  },
 ];
 
 export default function Page() {
   const [tabIndex, setTabIndex] = React.useState(0);
-  const [tags, setTags] = React.useState<
-    [number, string, string, string, string, string][]
-  >([]);
+  const [tags, setTags] = React.useState<TagRow[]>([]);
+  const [items, setItems] = React.useState<ItemRow[]>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -67,26 +96,47 @@ export default function Page() {
 
   React.useEffect(() => {
     listTag(true, true, false).then((data) => {
-      const tagList: [number, string, string, string, string, string][] =
-        data.map((item) => {
-          const updateDate = item.updatedAt
-            ? new Date(item.updatedAt).toISOString()
-            : "N/A";
+      const tagList: TagRow[] = data.map((item) => {
+        const updateDate = item.updatedAt
+          ? new Date(item.updatedAt).toISOString()
+          : "N/A";
 
-          const createDate = item.createdAt
-            ? new Date(item.createdAt).toISOString()
-            : "N/A";
+        const createDate = item.createdAt
+          ? new Date(item.createdAt).toISOString()
+          : "N/A";
 
-          return [
-            item.id,
-            item.name,
-            item.type,
-            item.parent ? "Has parent" : "No parent",
-            updateDate,
-            createDate,
-          ];
-        });
+        return [
+          item.id,
+          item.name,
+          item.type,
+          item.parent ? "Has parent" : "No parent",
+          updateDate,
+          createDate,
+        ];
+      });
       setTags(tagList);
+    });
+
+    listItem().then((data) => {
+      const itemList: ItemRow[] = data.map((item) => {
+        const updateDate = item.updatedAt
+          ? new Date(item.updatedAt).toISOString()
+          : "N/A";
+
+        const createDate = item.createdAt
+          ? new Date(item.createdAt).toISOString()
+          : "N/A";
+
+        return [
+          item.id,
+          item.name || "N/A",
+          item.path,
+          item.starred ? "Starred" : "",
+          updateDate,
+          createDate,
+        ];
+      });
+      setItems(itemList);
     });
   }, []);
 
@@ -94,17 +144,21 @@ export default function Page() {
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tabIndex} onChange={handleChange}>
-          {TabItems.map((item, index) => (
-            <Tab label={item} key={index} />
-          ))}
+          <Tab label="Tag" key={0} />
+          <Tab label="Item" key={1} />
+          <Tab label="Folder" key={2} />
         </Tabs>
       </Box>
 
-      {TabItems.map((item, index) => (
-        <CustomTabPanel value={tabIndex} index={index} key={index}>
-          <DatabaseTable rows={tags} />
-        </CustomTabPanel>
-      ))}
+      <CustomTabPanel value={tabIndex} index={0} key={0}>
+        <DatabaseTable heads={tagHeader} rows={tags} />
+      </CustomTabPanel>
+      <CustomTabPanel value={tabIndex} index={1} key={1}>
+        <DatabaseTable heads={itemHeader} rows={items} />
+      </CustomTabPanel>
+      <CustomTabPanel value={tabIndex} index={2} key={2}>
+        <DatabaseTable heads={tagHeader} rows={tags} />
+      </CustomTabPanel>
     </Box>
   );
 }

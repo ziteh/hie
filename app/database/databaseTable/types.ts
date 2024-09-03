@@ -26,10 +26,14 @@ export function createData(
 }
 
 export interface HeadCell {
-  id: keyof Data;
+  id: number;
   label: string;
-  disablePadding: boolean;
-  numeric: boolean;
+  align: Align;
 }
 
+export type Align = "right" | "left";
+
 export type Order = "asc" | "desc";
+
+export type TagRow = [number, string, string, string, string, string];
+export type ItemRow = [number, string, string, string, string, string];
