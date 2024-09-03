@@ -15,6 +15,7 @@ import {
   TextField,
 } from "@mui/material";
 import { createTag } from "@/app/lib/tags";
+import { createTagRelation } from "@/app/lib/tagRelation";
 
 interface Props {
   existingTags: Tag[];
@@ -41,7 +42,12 @@ export default function TagFormDialog(props: Props) {
     const starred = formJson.starred === "on";
     const textColor = formJson.textColor || undefined;
     const backColor = formJson.backColor || undefined;
-    await createTag(name, type, starred, textColor, backColor);
+    const response = await createTag(name, type, starred, textColor, backColor);
+
+    const parentId = formJson.parent;
+    if (parentId && response) {
+      await createTagRelation(Number(parentId), response.id);
+    }
 
     handleClose();
   };
