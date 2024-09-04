@@ -78,6 +78,7 @@ export default function TagFormDialog(props: Props) {
               required
               autoFocus
               fullWidth
+              autoComplete="off"
             />
           </Grid>
           <Grid item xs={12}>
