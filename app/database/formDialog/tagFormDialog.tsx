@@ -85,6 +85,7 @@ export default function TagFormDialog(props: Props) {
               labelId="type-label"
               label="Type"
               name="type"
+              defaultValue={TagType.Normal}
               required
               fullWidth
             >
@@ -99,6 +100,7 @@ export default function TagFormDialog(props: Props) {
               name="parent"
               fullWidth
             >
+              <MenuItem value="">(None)</MenuItem>
               {existingTags.map((tag) => (
                 <MenuItem value={tag.id} key={tag.id}>
                   {tag.name}
