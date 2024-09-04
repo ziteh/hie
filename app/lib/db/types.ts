@@ -22,8 +22,8 @@ export interface Tag {
 export interface Item {
   id: number;
   path: string;
-  basePath?: Path;
-  basePathId: number;
+  folder?: Folder;
+  folderId: number;
   name?: string;
   starred: boolean;
   createdAt?: Date;
@@ -47,7 +47,7 @@ export interface ItemRelation {
   item: Item;
 }
 
-export interface Path {
+export interface Folder {
   id: number;
   name: string;
   path: string;
