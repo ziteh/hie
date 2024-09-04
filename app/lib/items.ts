@@ -4,6 +4,7 @@ const apiUrl = "/api/items";
 
 export async function createItem(
   path: string,
+  folderId: number,
   name?: string,
   starred?: boolean
 ): Promise<void> {
@@ -12,9 +13,10 @@ export async function createItem(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        path: path,
-        name: name,
-        starred: starred,
+        path,
+        folderId,
+        name,
+        starred,
       }),
     });
 

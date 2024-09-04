@@ -86,7 +86,7 @@ export async function getFolder(
   }
 }
 
-export async function listTag(includeItems: boolean): Promise<Folder[]> {
+export async function listFolder(includeItems: boolean): Promise<Folder[]> {
   let params: string = "";
   if (includeItems) {
     params = "items";

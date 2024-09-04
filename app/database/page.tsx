@@ -5,8 +5,11 @@ import { Box, Tabs, Tab, Button } from "@mui/material";
 import DatabaseTable from "./databaseTable";
 import { listTag } from "@/app/lib/tags";
 import { listItem } from "@/app/lib/items";
+import { listFolder } from "@/app/lib/folders";
 import { HeadCell, TagRow, ItemRow } from "./databaseTable/types";
 import TagFormDialog from "./formDialog/tagFormDialog";
+import ItemFormDialog from "./formDialog/itemFormDialog";
+import { Folder, Item, Tag } from "../lib/db/types";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -94,8 +97,10 @@ export default function Page() {
 
   const [tags, setTags] = React.useState<Tag[]>([]);
   const [items, setItems] = React.useState<Item[]>([]);
+  const [folders, setFolders] = React.useState<Folder[]>([]);
 
   const [tagFormOpen, setTagFormOpen] = React.useState(false);
+  const [itemFormOpen, setItemFormOpen] = React.useState(false);
 
   const handleTagFormOpen = () => {
     setTagFormOpen(true);
@@ -103,6 +108,14 @@ export default function Page() {
 
   const handleTagFormClose = () => {
     setTagFormOpen(false);
+  };
+
+  const handleItemFormOpen = () => {
+    setItemFormOpen(true);
+  };
+
+  const handleItemFormClose = () => {
+    setItemFormOpen(false);
   };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -157,6 +170,10 @@ export default function Page() {
       });
       setItemRows(itemList);
     });
+
+    listFolder(false).then((data) => {
+      setFolders(data);
+    });
   }, []);
 
   return (
@@ -171,11 +188,17 @@ export default function Page() {
 
       <CustomTabPanel value={tabIndex} index={0} key={0}>
         <Button onClick={handleTagFormOpen}>New Tag</Button>
-        <TagFormDialog existingTags={tags} open={tagFormOpen} onClose={handleTagFormClose} />
+        <TagFormDialog
+          existingTags={tags}
+          open={tagFormOpen}
+          onClose={handleTagFormClose}
+        />
         <DatabaseTable heads={tagHeader} rows={tagRows} />
       </CustomTabPanel>
 
       <CustomTabPanel value={tabIndex} index={1} key={1}>
+        <Button onClick={handleItemFormOpen}>New Item</Button>
+        <ItemFormDialog folders={folders} open={itemFormOpen} onClose={handleItemFormClose} />
         <DatabaseTable heads={itemHeader} rows={itemRows} />
       </CustomTabPanel>
 
