@@ -6,7 +6,7 @@ import DatabaseTable from "./databaseTable";
 import { listTag } from "@/app/lib/tags";
 import { listItem } from "@/app/lib/items";
 import { listFolder } from "@/app/lib/folders";
-import { HeadCell, TagRow, ItemRow } from "./databaseTable/types";
+import { HeadCell, TagRow, ItemRow, FolderRow } from "./databaseTable/types";
 import TagFormDialog from "./formDialog/tagFormDialog";
 import ItemFormDialog from "./formDialog/itemFormDialog";
 import { Folder, Item, Tag } from "../lib/db/types";
@@ -89,11 +89,25 @@ const itemHeader: HeadCell[] = [
   },
 ];
 
+const folderHeader: HeadCell[] = [
+  {
+    id: 0,
+    label: "Name",
+    align: "right",
+  },
+  {
+    id: 1,
+    label: "Path",
+    align: "right",
+  },
+];
+
 export default function Page() {
   const [tabIndex, setTabIndex] = React.useState(0);
 
   const [tagRows, setTagRows] = React.useState<TagRow[]>([]);
   const [itemRows, setItemRows] = React.useState<ItemRow[]>([]);
+  const [folderRows, setFolderRows] = React.useState<FolderRow[]>([]);
 
   const [tags, setTags] = React.useState<Tag[]>([]);
   const [items, setItems] = React.useState<Item[]>([]);
@@ -173,6 +187,11 @@ export default function Page() {
 
     listFolder(false).then((data) => {
       setFolders(data);
+
+      const list: FolderRow[] = data.map((item) => {
+        return [item.id, item.name, item.path];
+      });
+      setFolderRows(list);
     });
   }, []);
 
@@ -198,12 +217,16 @@ export default function Page() {
 
       <CustomTabPanel value={tabIndex} index={1} key={1}>
         <Button onClick={handleItemFormOpen}>New Item</Button>
-        <ItemFormDialog folders={folders} open={itemFormOpen} onClose={handleItemFormClose} />
+        <ItemFormDialog
+          folders={folders}
+          open={itemFormOpen}
+          onClose={handleItemFormClose}
+        />
         <DatabaseTable heads={itemHeader} rows={itemRows} />
       </CustomTabPanel>
 
       <CustomTabPanel value={tabIndex} index={2} key={2}>
-        <DatabaseTable heads={tagHeader} rows={tagRows} />
+        <DatabaseTable heads={folderHeader} rows={folderRows} />
       </CustomTabPanel>
     </Box>
   );
