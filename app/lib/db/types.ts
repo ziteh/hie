@@ -52,4 +52,6 @@ export interface Folder {
   name: string;
   path: string;
   items?: Item[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }

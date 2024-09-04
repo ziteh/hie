@@ -37,4 +37,4 @@ export type Order = "asc" | "desc";
 
 export type TagRow = [number, string, string, string, string, string];
 export type ItemRow = [number, string, string, string, string, string];
-export type FolderRow = [number, string, string];
+export type FolderRow = [number, string, string, string, string];

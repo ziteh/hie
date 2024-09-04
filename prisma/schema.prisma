@@ -64,4 +64,7 @@ model Folder {
   name  String @unique
   path  String @unique
   items Item[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

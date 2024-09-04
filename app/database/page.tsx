@@ -100,6 +100,16 @@ const folderHeader: HeadCell[] = [
     label: "Path",
     align: "right",
   },
+  {
+    id: 2,
+    label: "Updated",
+    align: "right",
+  },
+  {
+    id: 3,
+    label: "Created",
+    align: "right",
+  },
 ];
 
 export default function Page() {
@@ -140,7 +150,7 @@ export default function Page() {
     listTag(true, true, false).then((data) => {
       setTags(data);
 
-      const tagList: TagRow[] = data.map((item) => {
+      const list: TagRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()
           : "N/A";
@@ -158,13 +168,13 @@ export default function Page() {
           createDate,
         ];
       });
-      setTagRows(tagList);
+      setTagRows(list);
     });
 
     listItem().then((data) => {
       setItems(data);
 
-      const itemList: ItemRow[] = data.map((item) => {
+      const list: ItemRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()
           : "N/A";
@@ -182,14 +192,22 @@ export default function Page() {
           createDate,
         ];
       });
-      setItemRows(itemList);
+      setItemRows(list);
     });
 
     listFolder(false).then((data) => {
       setFolders(data);
 
       const list: FolderRow[] = data.map((item) => {
-        return [item.id, item.name, item.path];
+        const updateDate = item.updatedAt
+          ? new Date(item.updatedAt).toISOString()
+          : "N/A";
+
+        const createDate = item.createdAt
+          ? new Date(item.createdAt).toISOString()
+          : "N/A";
+
+        return [item.id, item.name, item.path, updateDate, createDate];
       });
       setFolderRows(list);
     });
