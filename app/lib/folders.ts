@@ -6,6 +6,11 @@ export async function createFolder(
   name: string,
   path: string
 ): Promise<Folder | null> {
+  path = path.replace(/\\/g, "/"); // Replace backslashes with forward
+  if (!path.endsWith("/")) {
+    path += "/"; // Always add trailing slash
+  }
+
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
