@@ -9,6 +9,7 @@ import { listFolder } from "@/app/lib/folders";
 import { HeadCell, TagRow, ItemRow, FolderRow } from "./databaseTable/types";
 import TagFormDialog from "./formDialog/tagFormDialog";
 import ItemFormDialog from "./formDialog/itemFormDialog";
+import FolderFormDialog from "./formDialog/folderFormDialog";
 import { Folder, Item, Tag } from "../lib/db/types";
 
 interface TabPanelProps {
@@ -125,6 +126,7 @@ export default function Page() {
 
   const [tagFormOpen, setTagFormOpen] = React.useState(false);
   const [itemFormOpen, setItemFormOpen] = React.useState(false);
+  const [folderFormOpen, setFolderFormOpen] = React.useState(false);
 
   const handleTagFormOpen = () => {
     setTagFormOpen(true);
@@ -140,6 +142,14 @@ export default function Page() {
 
   const handleItemFormClose = () => {
     setItemFormOpen(false);
+  };
+
+  const handleFolderFormOpen = () => {
+    setFolderFormOpen(true);
+  };
+
+  const handleFolderFormClose = () => {
+    setFolderFormOpen(false);
   };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -244,6 +254,11 @@ export default function Page() {
       </CustomTabPanel>
 
       <CustomTabPanel value={tabIndex} index={2} key={2}>
+        <Button onClick={handleFolderFormOpen}>New Folder</Button>
+        <FolderFormDialog
+          open={folderFormOpen}
+          onClose={handleFolderFormClose}
+        />
         <DatabaseTable heads={folderHeader} rows={folderRows} />
       </CustomTabPanel>
     </Box>

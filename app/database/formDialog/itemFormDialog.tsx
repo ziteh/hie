@@ -24,7 +24,7 @@ interface Props {
   onClose: () => void;
 }
 
-export default function FolderFormDialog(props: Props) {
+export default function ItemFormDialog(props: Props) {
   const { data, folders, open, onClose } = props;
 
   const handleClose = () => {
