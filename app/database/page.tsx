@@ -247,6 +247,7 @@ export default function Page() {
         <Button onClick={handleItemFormOpen}>New Item</Button>
         <ItemFormDialog
           folders={folders}
+          tags={tags}
           open={itemFormOpen}
           onClose={handleItemFormClose}
         />
