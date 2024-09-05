@@ -2,10 +2,12 @@
     "editor.tabSize": 2,
     "editor.insertSpaces": true,
     "workbench.editor.customLabels.patterns": {
-        "**/route.*": "${dirname}.${extname} (${filename})",
-        "**/index.*": "${dirname}.${extname} (${filename})"
+        "{**/index.*,**/route.*,**/layout.*,**/page.*}": "${dirname}.${extname} (${filename})"
     },
     "cSpell.words": [
+        "nextjs",
+        "tailwindcss",
+        "Topbar",
         "zustand"
     ]
 }

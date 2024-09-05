@@ -15,15 +15,17 @@ import {
   TextField,
 } from "@mui/material";
 import { createTag } from "@/app/lib/tags";
+import { createTagRelation } from "@/app/lib/tagRelation";
 
 interface Props {
-  open: boolean;
+  existingTags: Tag[];
   data?: Tag;
+  open: boolean;
   onClose: () => void;
 }
 
-export default function FormDialog(props: Props) {
-  const { open, data, onClose } = props;
+export default function TagFormDialog(props: Props) {
+  const { existingTags, data, open, onClose } = props;
 
   const handleClose = () => {
     onClose();
@@ -40,7 +42,12 @@ export default function FormDialog(props: Props) {
     const starred = formJson.starred === "on";
     const textColor = formJson.textColor || undefined;
     const backColor = formJson.backColor || undefined;
-    await createTag(name, type, starred, textColor, backColor);
+    const response = await createTag(name, type, starred, textColor, backColor);
+
+    const parentId = formJson.parent;
+    if (parentId && response) {
+      await createTagRelation(Number(parentId), response.id);
+    }
 
     handleClose();
   };
@@ -58,7 +65,10 @@ export default function FormDialog(props: Props) {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <FormControlLabel control={<Switch name="starred" />} label="Star" />
+            <FormControlLabel
+              control={<Switch name="starred" />}
+              label="Star"
+            />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -68,6 +78,7 @@ export default function FormDialog(props: Props) {
               required
               autoFocus
               fullWidth
+              autoComplete="off"
             />
           </Grid>
           <Grid item xs={12}>
@@ -75,11 +86,27 @@ export default function FormDialog(props: Props) {
               labelId="type-label"
               label="Type"
               name="type"
+              defaultValue={TagType.Normal}
               required
               fullWidth
             >
               <MenuItem value={TagType.Normal}>Normal</MenuItem>
               <MenuItem value={TagType.Category}>Category</MenuItem>
+            </Select>
+          </Grid>
+          <Grid item xs={12}>
+            <Select
+              labelId="parent-label"
+              label="Parent"
+              name="parent"
+              fullWidth
+            >
+              <MenuItem value="">(None)</MenuItem>
+              {existingTags.map((tag) => (
+                <MenuItem value={tag.id} key={tag.id}>
+                  {tag.name}
+                </MenuItem>
+              ))}
             </Select>
           </Grid>
           <Grid item xs={6}>

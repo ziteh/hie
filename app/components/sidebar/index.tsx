@@ -5,6 +5,7 @@ import {
   Box,
   Divider,
   Drawer,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -20,6 +21,12 @@ import { useTagTreeState } from "@/app/store/tagTree";
 
 const drawerWidth = 240;
 const collapsedWidth = 80;
+
+const NavList = [
+  { label: "Home", url: "/explorer" },
+  { label: "Database", url: "/database" },
+  { label: "Docs", url: "/api/docs" },
+];
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
@@ -59,12 +66,9 @@ export default function Sidebar() {
       <Toolbar />
       <Box sx={{ overflow: "auto", flexGrow: 1 }}>
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+          {NavList.map((item, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton href={item.url}>{item.label}</ListItemButton>
             </ListItem>
           ))}
         </List>

@@ -1,23 +1,16 @@
-import { Item } from "@/app/lib/db/types";
+import { Folder } from "@/app/lib/db/types";
 
-const apiUrl = "/api/items";
+const apiUrl = "http://localhost:3140/api/folders"; // TODO
 
-export async function createItem(
-  path: string,
-  folderId: number,
-  name?: string,
-  starred?: boolean
-): Promise<Item | null> {
+export async function createFolder(
+  name: string,
+  path: string
+): Promise<Folder | null> {
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        path,
-        folderId,
-        name,
-        starred,
-      }),
+      body: JSON.stringify({ name, path }),
     });
 
     if (!response.ok) {
@@ -31,7 +24,7 @@ export async function createItem(
       return null;
     }
 
-    const data = await response.json();
+    const data: Folder = await response.json();
     console.debug("Response data:", data);
     return data;
   } catch (error) {
@@ -40,22 +33,12 @@ export async function createItem(
   }
 }
 
-export async function updateItem(
-  id: number,
-  path: string,
-  name?: string,
-  starred?: boolean
-) {
+export async function updateFolder(id: number, name: string, path: string) {
   try {
     const response = await fetch(apiUrl, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: id,
-        path: path,
-        name: name,
-        starred: starred,
-      }),
+      body: JSON.stringify({ id, name, path }),
     });
 
     if (!response.ok) {
@@ -63,15 +46,24 @@ export async function updateItem(
     }
 
     const data = await response.json();
-    console.debug("Item update:", data);
+    console.debug("Folder update:", data);
   } catch (error) {
     console.error("Error during fetch:", error);
   }
 }
 
-export async function getItem(id: number): Promise<Item | null> {
+export async function getFolder(
+  id: number,
+  includeItems: boolean
+): Promise<Folder | null> {
+  let params: string = "";
+  if (includeItems) {
+    params = "items";
+  }
+  const url = `${apiUrl}/${id}?include=${params}`;
+
   try {
-    const response = await fetch(`${apiUrl}/${id}`, {
+    const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -80,8 +72,8 @@ export async function getItem(id: number): Promise<Item | null> {
       throw new Error("Network response was not ok");
     }
 
-    const data: Item = await response.json();
-    console.debug("Item get:", data);
+    const data: Folder = await response.json();
+    console.debug("Folder get:", data);
     return data;
   } catch (error) {
     console.error("Error during fetch:", error);
@@ -89,9 +81,15 @@ export async function getItem(id: number): Promise<Item | null> {
   }
 }
 
-export async function listItem(): Promise<Item[]> {
+export async function listFolder(includeItems: boolean): Promise<Folder[]> {
+  let params: string = "";
+  if (includeItems) {
+    params = "items";
+  }
+  const url = `${apiUrl}?include=${params}`;
+
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -100,8 +98,8 @@ export async function listItem(): Promise<Item[]> {
       throw new Error("Network response was not ok");
     }
 
-    const data = await response.json();
-    console.debug("Item get:", data);
+    const data: Folder[] = await response.json();
+    console.debug("Folder get:", data);
     return data;
   } catch (error) {
     console.error("Error during fetch:", error);
@@ -109,12 +107,12 @@ export async function listItem(): Promise<Item[]> {
   }
 }
 
-export async function removeItem(id: number): Promise<void> {
+export async function removeFolder(id: number): Promise<void> {
   try {
     const response = await fetch(apiUrl, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: id }),
+      body: JSON.stringify({ id }),
     });
 
     if (!response.ok) {
@@ -122,7 +120,7 @@ export async function removeItem(id: number): Promise<void> {
     }
 
     const data = await response.json();
-    console.debug("Item deleted:", data);
+    console.debug("Folder deleted:", data);
   } catch (error) {
     console.error("Error during fetch:", error);
   }

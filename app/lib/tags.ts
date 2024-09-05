@@ -8,7 +8,7 @@ export async function createTag(
   starred?: boolean,
   textColor?: string,
   backColor?: string
-): Promise<void> {
+): Promise<Tag | null> {
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -24,19 +24,21 @@ export async function createTag(
 
     if (!response.ok) {
       console.error("Network response was not ok:", response.statusText);
-      return;
+      return null;
     }
 
     const contentType = response.headers.get("Content-Type");
     if (!contentType?.includes("application/json")) {
       console.error("Expected JSON, got:", contentType);
-      return;
+      return null;
     }
 
     const data = await response.json();
     console.debug("Response data:", data);
+    return data;
   } catch (error) {
     console.error("Error during fetch:", error);
+    return null;
   }
 }
 
