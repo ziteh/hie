@@ -6,8 +6,11 @@ export async function POST(request: Request) {
     const { path, folderId, name, starred } = await request.json();
     console.debug("Received data:", { path, name, starred });
 
+    // Normalization
+    const fmtPath = path.replace(/\\/g, "/"); // Replace backslashes with forward
+
     const item = await prisma.item.create({
-      data: { path, folderId, name, starred },
+      data: { path: fmtPath, folderId, name, starred },
     });
 
     return NextResponse.json(item);
@@ -19,17 +22,14 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const {
-      id,
-      basePathId: folderId,
-      path,
-      name,
-      starred,
-    } = await request.json();
+    const { id, folderId, path, name, starred } = await request.json();
+
+    // Normalization
+    const fmtPath = path.replace(/\\/g, "/"); // Replace backslashes with forward
 
     const item = await prisma.item.update({
       where: { id },
-      data: { path, folderId, name, starred },
+      data: { path: fmtPath, folderId, name, starred },
     });
 
     return NextResponse.json(item);
