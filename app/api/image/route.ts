@@ -26,16 +26,8 @@ export async function GET(request: Request) {
     });
   }
 
-  const width = parseParam(
-    url.searchParams.get("width"),
-    defaultWidth,
-    defaultWidth
-  );
-  const height = parseParam(
-    url.searchParams.get("height"),
-    defaultHeight,
-    defaultHeight
-  );
+  const width = url.searchParams.get("width");
+  const height = url.searchParams.get("height");
   const quality = parseParam(
     url.searchParams.get("quality"),
     defaultQuality,
@@ -46,10 +38,15 @@ export async function GET(request: Request) {
   const fileName = path.basename(imagePath);
 
   try {
-    const imageBuffer = await sharp(imagePath)
-      .resize({ width, height })
-      .webp({ quality }) // Convert to WebP
-      .toBuffer();
+    const imageSharp = sharp(imagePath).webp({ quality });
+    let imageBuffer: Buffer;
+    if (width && height) {
+      imageBuffer = await imageSharp
+        .resize({ width: Number(width), height: Number(height) })
+        .toBuffer();
+    } else {
+      imageBuffer = await imageSharp.toBuffer();
+    }
 
     return new NextResponse(imageBuffer, {
       headers: {

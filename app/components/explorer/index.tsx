@@ -6,13 +6,30 @@ import ImageLoader from "./imageLoader";
 import { getTag } from "@/app/lib/tags";
 import { getItem } from "@/app/lib/items";
 import { Item } from "@/app/lib/db/types";
-import { ImageList, ImageListItem } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+} from "@mui/material";
 
 const size = 250;
 
 export default function Explorer() {
   const subscribeSelected = useTagTreeState((s) => s.subscribeSelected);
   const [imagePaths, setImagePaths] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+  const [selectedImagePath, setSelectedImagePath] = useState<string>("");
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = (path: string) => {
+    setSelectedImagePath(path);
+    setOpen(true);
+  };
 
   useEffect(() => {
     subscribeSelected(onSelected);
@@ -43,10 +60,21 @@ export default function Explorer() {
       <ImageList cols={4} gap={6}>
         {imagePaths.map((path, index) => (
           <ImageListItem key={index}>
-            <ImageLoader path={path} width={size} height={size} />
+            <Button onClick={() => handleOpen(path)}>
+              <ImageLoader path={path} width={size} height={size} />
+            </Button>
           </ImageListItem>
         ))}
       </ImageList>
+      <Dialog open={open} onClose={handleClose}>
+        <Button onClick={handleClose}>Close</Button>
+        <ImageLoader
+          path={selectedImagePath}
+          // width={size}
+          // height={size}
+          quality={100}
+        />
+      </Dialog>
     </div>
   );
 }
