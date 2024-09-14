@@ -33,6 +33,7 @@ export default function ImageLoader(props: Props) {
           width={width}
           height={height}
           loading="lazy"
+          style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain" }}
         />
       ) : (
         <Skeleton width={width} height={height} />

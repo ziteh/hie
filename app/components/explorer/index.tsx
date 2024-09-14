@@ -7,6 +7,7 @@ import { getTag } from "@/app/lib/tags";
 import { getItem } from "@/app/lib/items";
 import { Item } from "@/app/lib/db/types";
 import {
+  Backdrop,
   Button,
   Dialog,
   ImageList,
@@ -66,15 +67,19 @@ export default function Explorer() {
           </ImageListItem>
         ))}
       </ImageList>
-      <Dialog open={open} onClose={handleClose}>
-        <Button onClick={handleClose}>Close</Button>
+
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+        onClick={handleClose}
+      >
         <ImageLoader
           path={selectedImagePath}
           // width={size}
           // height={size}
           quality={100}
         />
-      </Dialog>
+      </Backdrop>
     </div>
   );
 }
