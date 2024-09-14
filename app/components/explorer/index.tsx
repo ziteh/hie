@@ -4,17 +4,7 @@ import { useState, useEffect } from "react";
 import { useTagTreeState } from "@/app/store/tagTree";
 import ImageLoader from "./imageLoader";
 import { getTag } from "@/app/lib/tags";
-import { getItem } from "@/app/lib/items";
-import { Item } from "@/app/lib/db/types";
-import {
-  Backdrop,
-  Button,
-  Dialog,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-} from "@mui/material";
-import { getFolder } from "@/app/lib/folders";
+import { Backdrop, Button, ImageList, ImageListItem } from "@mui/material";
 
 const size = 250;
 
@@ -23,6 +13,10 @@ export default function Explorer() {
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const [selectedImagePath, setSelectedImagePath] = useState<string>("");
+
+  useEffect(() => {
+    subscribeSelected(onSelected);
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -33,30 +27,34 @@ export default function Explorer() {
     setOpen(true);
   };
 
-  useEffect(() => {
-    subscribeSelected(onSelected);
-  }, []);
+  const getFullPath = async (id: number) => {
+    const url = `/api/items/${id}/path`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    if (!data.fullPath) {
+      return null;
+    }
+    return data.fullPath as string;
+  };
 
   const onSelected = async (id: number) => {
     const tag = await getTag(id, true, true, true);
-    if (tag === null) return;
-    if (!tag.items) return;
+    if (tag === null || !tag.items) return;
 
-    const itemIds = tag.items.map((i) => i.itemId);
     try {
-      let items: (Item | null)[] = await Promise.all(
-        itemIds.map(async (id) => {
-          const item = await getItem(id, true);
-          return item;
-        })
+      const paths = await Promise.all(
+        tag.items.map((ir) => getFullPath(ir.itemId))
       );
 
-      const paths = items.map((i) => {
-        if (i && i.folder) {
-          return `${i.folder.path}${i.path}`;
-        }
-      });
-      setImagePaths(paths);
+      setImagePaths(paths.filter((p): p is string => !!p));
     } catch (err) {}
   };
 
