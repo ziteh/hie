@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3140/api/image?path="; // TODO
+const apiUrl = "http://localhost:3140/api/image/"; // TODO
 
 export async function loadImage(
   path: string,
@@ -10,14 +10,18 @@ export async function loadImage(
 
   let url = apiUrl + encodeURIComponent(path);
 
-  if (quality) {
-    url += `&quality=${quality}`;
-  }
-  if (width) {
-    url += `&width=${width}`;
-  }
-  if (height) {
-    url += `&height=${height}`;
+  if (quality || width || height) {
+    url += "?";
+
+    if (quality) {
+      url += `&quality=${quality}`;
+    }
+    if (width) {
+      url += `&width=${width}`;
+    }
+    if (height) {
+      url += `&height=${height}`;
+    }
   }
 
   try {

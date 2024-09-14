@@ -4,30 +4,24 @@ import sharp from "sharp";
 import path from "path";
 import fs from "fs/promises";
 
-const defaultWidth = 200;
-const defaultHeight = 200;
 const defaultQuality = 80;
 
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const imagePath = url.searchParams.get("path");
-  if (!imagePath) {
-    return new NextResponse("Image path is required", {
-      status: StatusCodes.BAD_REQUEST,
-    });
-  }
-
+export async function GET(
+  request: Request,
+  { params }: { params: { path: string } }
+) {
   // Check if the image file exists
   try {
-    await fs.access(imagePath);
+    await fs.access(params.path);
   } catch (error) {
     return new NextResponse("File not found", {
       status: StatusCodes.NOT_FOUND,
     });
   }
 
-  const width = url.searchParams.get("width");
-  const height = url.searchParams.get("height");
+  const url = new URL(request.url);
+  let width = Number(url.searchParams.get("width")) || undefined;
+  let height = Number(url.searchParams.get("height")) || undefined;
   const quality = parseParam(
     url.searchParams.get("quality"),
     defaultQuality,
@@ -35,17 +29,21 @@ export async function GET(request: Request) {
     100
   );
 
-  const fileName = path.basename(imagePath);
+  const fileName = path.basename(params.path);
 
   try {
-    const imageSharp = sharp(imagePath).webp({ quality });
+    const imageSharp = sharp(params.path);
+    const metadata = await imageSharp.metadata();
+
+    width = clampSize(width, metadata.width);
+    height = clampSize(height, metadata.height);
+
+    const converted = imageSharp.webp({ quality });
     let imageBuffer: Buffer;
-    if (width && height) {
-      imageBuffer = await imageSharp
-        .resize({ width: Number(width), height: Number(height) })
-        .toBuffer();
+    if (width || height) {
+      imageBuffer = await converted.resize({ width, height }).toBuffer();
     } else {
-      imageBuffer = await imageSharp.toBuffer();
+      imageBuffer = await converted.toBuffer();
     }
 
     return new NextResponse(imageBuffer, {
@@ -60,6 +58,13 @@ export async function GET(request: Request) {
       status: StatusCodes.INTERNAL_SERVER_ERROR,
     });
   }
+}
+
+function clampSize(newSize?: number, oriSize?: number) {
+  if (newSize !== undefined && oriSize !== undefined && newSize > oriSize) {
+    return undefined;
+  }
+  return newSize;
 }
 
 const parseParam = (
