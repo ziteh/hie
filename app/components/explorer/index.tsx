@@ -65,7 +65,7 @@ export default function Explorer() {
       <ImageList cols={4} gap={6}>
         {imagePaths.map((path, index) => (
           <ImageListItem key={index}>
-            <Button onClick={() => handleOpen(path)}>
+            <Button variant="text" onClick={() => handleOpen(path)}>
               <ImageLoader path={path} width={size} height={size} />
             </Button>
           </ImageListItem>
