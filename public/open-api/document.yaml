@@ -8,15 +8,10 @@ servers:
     description: Local server
 tags:
   - name: Tags
-    description: Operations related to tags
   - name: Tags relation
-    description: Operations related to tag relation
   - name: Items
-    description: Operations related to items
   - name: Items relation
-    description: Operations related to item relation
   - name: Folders
-    description: Operations related to folders
 paths:
   /api/tags:
     $ref: "./tags.yaml"
@@ -34,3 +29,5 @@ paths:
 
   /api/folders:
     $ref: "./folders.yaml"
+  /api/folders/{id}:
+    $ref: "./folders_id.yaml"
