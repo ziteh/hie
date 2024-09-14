@@ -69,9 +69,17 @@ export async function updateItem(
   }
 }
 
-export async function getItem(id: number): Promise<Item | null> {
+export async function getItem(
+  id: number,
+  includeFolder: boolean
+): Promise<Item | null> {
+  let url = `${apiUrl}/${id}`;
+  if (includeFolder) {
+    url += "?include=folder";
+  }
+
   try {
-    const response = await fetch(`${apiUrl}/${id}`, {
+    const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

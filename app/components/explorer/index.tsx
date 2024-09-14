@@ -6,13 +6,32 @@ import ImageLoader from "./imageLoader";
 import { getTag } from "@/app/lib/tags";
 import { getItem } from "@/app/lib/items";
 import { Item } from "@/app/lib/db/types";
-import { ImageList, ImageListItem } from "@mui/material";
+import {
+  Backdrop,
+  Button,
+  Dialog,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+} from "@mui/material";
+import { getFolder } from "@/app/lib/folders";
 
 const size = 250;
 
 export default function Explorer() {
   const subscribeSelected = useTagTreeState((s) => s.subscribeSelected);
   const [imagePaths, setImagePaths] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+  const [selectedImagePath, setSelectedImagePath] = useState<string>("");
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = (path: string) => {
+    setSelectedImagePath(path);
+    setOpen(true);
+  };
 
   useEffect(() => {
     subscribeSelected(onSelected);
@@ -27,13 +46,16 @@ export default function Explorer() {
     try {
       let items: (Item | null)[] = await Promise.all(
         itemIds.map(async (id) => {
-          const item = await getItem(id);
+          const item = await getItem(id, true);
           return item;
         })
       );
 
-      items = items.filter((item) => item !== null);
-      const paths = items.map((i) => i!.path);
+      const paths = items.map((i) => {
+        if (i && i.folder) {
+          return `${i.folder.path}${i.path}`;
+        }
+      });
       setImagePaths(paths);
     } catch (err) {}
   };
@@ -43,10 +65,25 @@ export default function Explorer() {
       <ImageList cols={4} gap={6}>
         {imagePaths.map((path, index) => (
           <ImageListItem key={index}>
-            <ImageLoader path={path} width={size} height={size} />
+            <Button onClick={() => handleOpen(path)}>
+              <ImageLoader path={path} width={size} height={size} />
+            </Button>
           </ImageListItem>
         ))}
       </ImageList>
+
+      <Backdrop
+        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+        open={open}
+        onClick={handleClose}
+      >
+        <ImageLoader
+          path={selectedImagePath}
+          // width={size}
+          // height={size}
+          quality={100}
+        />
+      </Backdrop>
     </div>
   );
 }

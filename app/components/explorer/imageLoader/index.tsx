@@ -9,14 +9,15 @@ interface Props {
   alt?: string;
   width?: number;
   height?: number;
+  quality?: number;
 }
 
 export default function ImageLoader(props: Props) {
-  const { path, alt, width, height } = props;
+  const { path, alt, width, height, quality } = props;
   const [imageSrc, setImageSrc] = useState("");
 
   useEffect(() => {
-    loadImage(path).then((url) => {
+    loadImage(path, width, height, quality).then((url) => {
       if (url !== null) {
         setImageSrc(url);
       }
@@ -32,6 +33,7 @@ export default function ImageLoader(props: Props) {
           width={width}
           height={height}
           loading="lazy"
+          style={{ maxWidth: "80%", maxHeight: "80%", objectFit: "contain" }}
         />
       ) : (
         <Skeleton width={width} height={height} />

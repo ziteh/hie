@@ -27,6 +27,31 @@ export async function POST(request: Request) {
   }
 }
 
+export async function DELETE(request: Request) {
+  try {
+    const { id } = await request.json();
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID is required" },
+        { status: StatusCodes.BAD_REQUEST }
+      );
+    }
+
+    const deleted = await prisma.folder.delete({
+      where: { id },
+    });
+
+    return NextResponse.json(deleted);
+  } catch (error) {
+    console.error("Error deleting folder:", error);
+    return NextResponse.json(
+      { error: "Error deleting folder" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
+  }
+}
+
 export async function PATCH(request: Request) {
   try {
     const { id, name, path } = await request.json();
@@ -52,38 +77,18 @@ export async function PATCH(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const includeItems = url.searchParams.get("include") === "items";
+
   try {
-    const list = await prisma.folder.findMany();
+    const list = await prisma.folder.findMany({
+      include: { items: includeItems },
+    });
     return NextResponse.json(list);
   } catch (error) {
     return NextResponse.json(
       { error: "Error fetching folders" },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
-    );
-  }
-}
-
-export async function DELETE(request: Request) {
-  try {
-    const { id } = await request.json();
-
-    if (!id) {
-      return NextResponse.json(
-        { error: "ID is required" },
-        { status: StatusCodes.BAD_REQUEST }
-      );
-    }
-
-    const deleted = await prisma.folder.delete({
-      where: { id },
-    });
-
-    return NextResponse.json(deleted);
-  } catch (error) {
-    console.error("Error deleting folder:", error);
-    return NextResponse.json(
-      { error: "Error deleting folder" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }
