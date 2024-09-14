@@ -15,23 +15,23 @@ tags:
   - name: Image
 paths:
   /api/tags:
-    $ref: "./tags.yaml"
+    $ref: "./tags/index.yaml"
   /api/tags/{id}:
-    $ref: "./tags_id.yaml"
+    $ref: "./tags/id.yaml"
   /api/tags/relation:
-    $ref: "./tags_relation.yaml"
+    $ref: "./tags/relation.yaml"
 
   /api/items:
-    $ref: "./items.yaml"
+    $ref: "./items/index.yaml"
   /api/items{id}:
-    $ref: "./items_id.yaml"
+    $ref: "./items/id.yaml"
   /api/items/relation:
-    $ref: "./items_relation.yaml"
+    $ref: "./items/relation.yaml"
 
   /api/folders:
-    $ref: "./folders.yaml"
+    $ref: "./folders/index.yaml"
   /api/folders/{id}:
-    $ref: "./folders_id.yaml"
+    $ref: "./folders/id.yaml"
 
   /api/image/{path}:
-    $ref: "./image_path.yaml"
+    $ref: "./image/path.yaml"
