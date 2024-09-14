@@ -28,8 +28,13 @@ const NavList = [
   { label: "Docs", url: "/api/docs" },
 ];
 
-export default function Sidebar() {
-  const [open, setOpen] = React.useState(true);
+interface Props {
+  open: boolean;
+}
+
+export default function Sidebar(props: Props) {
+  const { open } = props;
+  // const [open, setOpen] = React.useState(true);
   const { tagTreeItems, updateTagTree, updateSelectedTagId } =
     useTagTreeState();
 
@@ -45,15 +50,11 @@ export default function Sidebar() {
     }
   };
 
-  const handleToggle = () => {
-    setOpen(!open);
-  };
-
   return (
     <Drawer
-      variant="permanent"
-      // variant="persistent"
-      // open={open}
+      // variant="permanent"
+      variant="persistent"
+      open={open}
       sx={{
         width: open ? drawerWidth : collapsedWidth,
         flexShrink: 0,
@@ -74,16 +75,6 @@ export default function Sidebar() {
         </List>
         <Divider />
         <TreeView items={tagTreeItems} onItemClick={handleTagSelect} />
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          p: 1,
-        }}
-      >
-        <IconButton onClick={handleToggle}>Open</IconButton>
       </Box>
     </Drawer>
   );
