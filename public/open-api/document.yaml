@@ -12,6 +12,7 @@ tags:
   - name: Items
   - name: Items relation
   - name: Folders
+  - name: Image
 paths:
   /api/tags:
     $ref: "./tags.yaml"
@@ -31,3 +32,6 @@ paths:
     $ref: "./folders.yaml"
   /api/folders/{id}:
     $ref: "./folders_id.yaml"
+
+  /api/image/{path}:
+    $ref: "./image_path.yaml"

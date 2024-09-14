@@ -1,0 +1,58 @@
+get:
+  summary: Retrieve and convert an image to WebP format.
+  tags:
+    - Image
+  parameters:
+    - name: path
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "images/sample.jpg"
+    - name: width
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    - name: height
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    - name: quality
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+      example: 80
+  responses:
+    "200":
+      description: The converted WebP image.
+      content:
+        image/webp:
+          schema:
+            type: string
+            format: binary
+      headers:
+        Content-Disposition:
+          description: Indicates that the image is an attachment with the specified filename.
+          schema:
+            type: string
+    "404":
+      description: File not found.
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: "File not found"
+    "500":
+      description: Error processing the image.
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: "Error processing image"
