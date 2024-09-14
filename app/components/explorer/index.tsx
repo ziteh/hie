@@ -58,13 +58,43 @@ export default function Explorer() {
     } catch (err) {}
   };
 
+  const getImageUrl = (path: string, quality: number, width?: number) => {
+    let url = `/api/image/${encodeURIComponent(path)}?quality=${quality}`;
+    if (width !== undefined) {
+      url += `&width=${width}`;
+    }
+    return url;
+  };
+
   return (
     <div>
-      <ImageList cols={4} gap={6}>
+      <ImageList cols={4} gap={1}>
         {imagePaths.map((path, index) => (
           <ImageListItem key={index}>
             <Button variant="text" onClick={() => handleOpen(path)}>
-              <ImageLoader path={path} width={size} height={size} />
+              <img
+                src={getImageUrl(path, 80)}
+                srcSet={
+                  getImageUrl(path, 80, 100) +
+                  " 100w, " +
+                  getImageUrl(path, 80, 300) +
+                  " 300w, " +
+                  getImageUrl(path, 80, 500) +
+                  " 500w, " +
+                  getImageUrl(path, 80, 1200) +
+                  " 1200w"
+                }
+                sizes="18vw"
+                alt="?"
+                // width={size}
+                // height={size}
+                loading="lazy"
+                style={{
+                  // maxWidth: "100%",
+                  // maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+              />
             </Button>
           </ImageListItem>
         ))}
