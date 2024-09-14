@@ -1,0 +1,36 @@
+patch:
+  summary: Update item
+  tags:
+    - Items
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            path:
+              type: string
+            folderId:
+              type: integer
+            name:
+              type: string
+            starred:
+              type: boolean
+  responses:
+    "200":
+      description: Item updated successfully
+
+delete:
+  summary: Delete a item
+  tags:
+    - Items
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+  responses:
+    "204":
+      description: Item deleted successfully

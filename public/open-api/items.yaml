@@ -20,46 +20,7 @@ post:
   responses:
     "201":
       description: Item created successfully
-patch:
-  summary: Update item
-  tags:
-    - Items
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            id:
-              type: integer
-            path:
-              type: string
-            folderId:
-              type: integer
-            name:
-              type: string
-            starred:
-              type: boolean
-  responses:
-    "200":
-      description: Item updated successfully
-delete:
-  summary: Delete a item
-  tags:
-    - Items
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            id:
-              type: integer
-  responses:
-    "204":
-      description: Item deleted successfully
+
 get:
   summary: List all items
   tags:

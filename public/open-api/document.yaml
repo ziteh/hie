@@ -20,14 +20,17 @@ tags:
 paths:
   /api/tags:
     $ref: "./tags.yaml"
-  /api/tags/{tagId}:
+  /api/tags/{id}:
     $ref: "./tags_id.yaml"
+  /api/tags/relation:
+    $ref: "./tags_relation.yaml"
 
   /api/items:
     $ref: "./items.yaml"
-  /api/tags/relation:
-    $ref: "./tags_relation.yaml"
+  /api/items{id}:
+    $ref: "./items_id.yaml"
   /api/items/relation:
     $ref: "./items_relation.yaml"
+
   /api/folders:
     $ref: "./folders.yaml"
