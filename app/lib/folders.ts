@@ -60,7 +60,8 @@ export async function getFolder(
   if (includeItems) {
     params = "items";
   }
-  const url = `${apiUrl}/${id}?include=${params}`;
+  // const url = `${apiUrl}/${id}?include=${params}`;
+  const url = `${apiUrl}/${id}`;
 
   try {
     const response = await fetch(url, {

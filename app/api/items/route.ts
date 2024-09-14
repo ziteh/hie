@@ -39,9 +39,16 @@ export async function PATCH(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const includeFolder = url.searchParams.get("include") === "folder";
+
   try {
-    const items = await prisma.item.findMany();
+    const items = await prisma.item.findMany({
+      include: {
+        folder: includeFolder,
+      },
+    });
     return NextResponse.json(items);
   } catch (error) {
     return NextResponse.json(

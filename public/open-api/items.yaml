@@ -64,6 +64,13 @@ get:
   summary: List all items
   tags:
     - Items
+  parameters:
+    - name: include
+      in: query
+      required: false
+      schema:
+        type: string
+        enum: [folder]
   responses:
     "200":
       description: A list of items

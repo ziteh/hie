@@ -14,6 +14,7 @@ import {
   ImageListItem,
   ImageListItemBar,
 } from "@mui/material";
+import { getFolder } from "@/app/lib/folders";
 
 const size = 250;
 
@@ -45,13 +46,16 @@ export default function Explorer() {
     try {
       let items: (Item | null)[] = await Promise.all(
         itemIds.map(async (id) => {
-          const item = await getItem(id);
+          const item = await getItem(id, true);
           return item;
         })
       );
 
-      items = items.filter((item) => item !== null);
-      const paths = items.map((i) => i!.path);
+      const paths = items.map((i) => {
+        if (i && i.folder) {
+          return `${i.folder.path}${i.path}`;
+        }
+      });
       setImagePaths(paths);
     } catch (err) {}
   };
