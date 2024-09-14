@@ -44,10 +44,9 @@ export async function createTag(
 
 export async function removeTag(tagId: number): Promise<void> {
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(apiUrl + `/${tagId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: tagId }),
     });
 
     if (!response.ok) {
@@ -70,11 +69,10 @@ export async function updateTag(
   textColor?: string
 ) {
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(apiUrl + `/${tagId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id: tagId,
         name: name,
         type: type,
         starred: starred,
