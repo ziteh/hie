@@ -38,21 +38,23 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV DATABASE_URL=file:/app/db/hie_sqlite.db
 
-# RUN corepack enable pnpm
-
-RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
-
 COPY --from=builder /app/public ./public
 
-# Set the correct permission for prerender cache
-RUN mkdir .next && chown nextjs:nodejs .next
+# TODO permissions related lines
+# RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+# RUN mkdir .next && chown nextjs:nodejs .next
 
-# COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/db/hie_sqlite.db /app/db/hie_sqlite.db
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# TODO permissions related lines
+# COPY --from=builder --chown=nextjs:nodejs /app/db/hie_sqlite.db /app/db/hie_sqlite.db
+# COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+# COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-USER nextjs
+COPY --from=builder /app/db/hie_sqlite.db /app/db/hie_sqlite.db
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+# TODO permissions related lines
+# USER nextjs
 
 EXPOSE 3000
 ENV PORT=3000
