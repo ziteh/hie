@@ -11,6 +11,8 @@ pnpm install
 pnpm run dev
 ```
 
+API docs at <http://localhost:3000/api/docs>, powered by [Swagger UI](https://github.com/swagger-api/swagger-ui).
+
 ### Docker
 
 Check [`Dockerfile`](./Dockerfile).
