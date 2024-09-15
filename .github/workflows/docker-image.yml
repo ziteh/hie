@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Print Docker version
+        run: docker version
+
+      - name: Build
+        run: docker build -t hie:${{ github.sha }} .
+
+      - name: Run
+        run: |
+          docker run -d --name hie -p 5888:3000 hie:${{ github.sha }}
+          sleep 10
+
+      - name: Test
+        run: |
+          curl --silent --fail http://localhost:5888 || exit 1
