@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/db/prisma";
+import { StatusCodes } from "http-status-codes";
 
 // Create a new item
 export async function POST(request: Request) {
@@ -8,7 +9,7 @@ export async function POST(request: Request) {
     console.debug("Received data:", { path, name, starred });
 
     // Normalization
-    const fmtPath = path.replace(/\\/g, "/"); // Replace backslashes with forward
+    const fmtPath = path.replace(/\\/g, "/").trim(); // Replace backslashes with forward
 
     const item = await prisma.item.create({
       data: { path: fmtPath, folderId, name, starred },

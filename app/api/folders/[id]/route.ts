@@ -31,7 +31,7 @@ export async function PATCH(
     const { name, path } = await request.json();
 
     // Normalization
-    let fmtPath = path.replace(/\\/g, "/"); // Replace backslashes with forward
+    let fmtPath = path.replace(/\\/g, "/").trim(); // Replace backslashes with forward
     if (!fmtPath.endsWith("/")) {
       fmtPath += "/"; // Always add trailing slash
     }

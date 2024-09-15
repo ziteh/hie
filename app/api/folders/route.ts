@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     console.debug("Received data:", { name, path });
 
     // Normalization
-    let fmtPath = path.replace(/\\/g, "/"); // Replace backslashes with forward
+    let fmtPath = path.replace(/\\/g, "/").trim(); // Replace backslashes with forward
     if (!fmtPath.endsWith("/")) {
       fmtPath += "/"; // Always add trailing slash
     }
