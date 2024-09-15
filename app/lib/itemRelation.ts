@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3140/api/items/relation"; // TODO
+const apiUrl = "/api/items/relation";
 
 export async function createItemRelation(
   tagId: number,

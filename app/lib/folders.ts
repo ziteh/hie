@@ -1,6 +1,6 @@
 import { Folder } from "@/app/lib/db/types";
 
-const apiUrl = "http://localhost:3140/api/folders"; // TODO
+const apiUrl = "/api/folders";
 
 export async function createFolder(
   name: string,

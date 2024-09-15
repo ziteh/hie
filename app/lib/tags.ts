@@ -1,6 +1,6 @@
 import { TagType, Tag } from "@/app/lib/db/types";
 
-const apiUrl = "http://localhost:3140/api/tags"; // TODO
+const apiUrl = "/api/tags";
 
 export async function createTag(
   name: string,
