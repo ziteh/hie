@@ -10,7 +10,8 @@ export default function Bar() {
   return (
     <div>
       <Topbar onClick={() => setOpen(!open)} />
-      <Sidebar open={open} />
+      {open && <Sidebar open={open} />}
+      {/* <Sidebar open={open} /> */}
     </div>
   );
 }
