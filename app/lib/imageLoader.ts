@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3140/api/image/"; // TODO
+const apiUrl = "/api/image/";
 
 export async function loadImage(
   path: string,

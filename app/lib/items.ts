@@ -47,11 +47,10 @@ export async function updateItem(
   starred?: boolean
 ) {
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(apiUrl + `/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        id: id,
         path: path,
         name: name,
         starred: starred,
@@ -119,10 +118,9 @@ export async function listItem(): Promise<Item[]> {
 
 export async function removeItem(id: number): Promise<void> {
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(apiUrl + `/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: id }),
     });
 
     if (!response.ok) {

@@ -4,17 +4,8 @@ import { useState, useEffect } from "react";
 import { useTagTreeState } from "@/app/store/tagTree";
 import ImageLoader from "./imageLoader";
 import { getTag } from "@/app/lib/tags";
-import { getItem } from "@/app/lib/items";
-import { Item } from "@/app/lib/db/types";
-import {
-  Backdrop,
-  Button,
-  Dialog,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-} from "@mui/material";
-import { getFolder } from "@/app/lib/folders";
+import { Backdrop, Button, ImageList, ImageListItem } from "@mui/material";
+import Showcase from "./showcase";
 
 const size = 250;
 
@@ -23,6 +14,10 @@ export default function Explorer() {
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const [selectedImagePath, setSelectedImagePath] = useState<string>("");
+
+  useEffect(() => {
+    subscribeSelected(onSelected);
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -33,57 +28,83 @@ export default function Explorer() {
     setOpen(true);
   };
 
-  useEffect(() => {
-    subscribeSelected(onSelected);
-  }, []);
+  const getFullPath = async (id: number) => {
+    const url = `/api/items/${id}/path`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    if (!data.fullPath) {
+      return null;
+    }
+    return data.fullPath as string;
+  };
 
   const onSelected = async (id: number) => {
     const tag = await getTag(id, true, true, true);
-    if (tag === null) return;
-    if (!tag.items) return;
+    if (tag === null || !tag.items) return;
 
-    const itemIds = tag.items.map((i) => i.itemId);
     try {
-      let items: (Item | null)[] = await Promise.all(
-        itemIds.map(async (id) => {
-          const item = await getItem(id, true);
-          return item;
-        })
+      const paths = await Promise.all(
+        tag.items.map((ir) => getFullPath(ir.itemId))
       );
 
-      const paths = items.map((i) => {
-        if (i && i.folder) {
-          return `${i.folder.path}${i.path}`;
-        }
-      });
-      setImagePaths(paths);
+      setImagePaths(paths.filter((p): p is string => !!p));
     } catch (err) {}
+  };
+
+  const getImageUrl = (path: string, quality: number, width?: number) => {
+    let url = `/api/image/${encodeURIComponent(path)}?quality=${quality}`;
+    if (width !== undefined) {
+      url += `&width=${width}`;
+    }
+    return url;
   };
 
   return (
     <div>
-      <ImageList cols={4} gap={6}>
+      <ImageList cols={4} gap={1}>
         {imagePaths.map((path, index) => (
           <ImageListItem key={index}>
-            <Button onClick={() => handleOpen(path)}>
-              <ImageLoader path={path} width={size} height={size} />
+            <Button variant="text" onClick={() => handleOpen(path)}>
+              <img
+                src={getImageUrl(path, 80)}
+                srcSet={
+                  getImageUrl(path, 80, 100) +
+                  " 100w, " +
+                  getImageUrl(path, 80, 300) +
+                  " 300w, " +
+                  getImageUrl(path, 80, 500) +
+                  " 500w, " +
+                  getImageUrl(path, 80, 1200) +
+                  " 1200w"
+                }
+                sizes="18vw"
+                alt="?"
+                // width={size}
+                // height={size}
+                loading="lazy"
+                style={{
+                  // maxWidth: "100%",
+                  // maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+              />
             </Button>
           </ImageListItem>
         ))}
       </ImageList>
-
-      <Backdrop
-        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+      <Showcase
+        imgSrc={getImageUrl(selectedImagePath, 100)}
         open={open}
         onClick={handleClose}
-      >
-        <ImageLoader
-          path={selectedImagePath}
-          // width={size}
-          // height={size}
-          quality={100}
-        />
-      </Backdrop>
+      />
     </div>
   );
 }

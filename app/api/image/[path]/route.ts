@@ -49,7 +49,7 @@ export async function GET(
     return new NextResponse(imageBuffer, {
       headers: {
         "Content-Type": "image/webp",
-        "Content-Disposition": `attachment; filename=${fileName}.webp`,
+        "Content-Disposition": `attachment; filename=${encodeURIComponent(fileName)}.webp`,
       },
     });
   } catch (error) {

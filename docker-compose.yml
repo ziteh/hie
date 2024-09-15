@@ -1,0 +1,11 @@
+version: "3"
+services:
+  app:
+    image: hie
+    build:
+      context: .  # Build the Docker image from the Dockerfile in the current directory
+    ports:
+      - "5888:3000"  # Map port 3000 inside the container to port 5888 on the host
+    volumes:
+      - HOST_DIR:/app/data  # Mount the host directory HOST_DIR to /app/data inside the container
+    # restart: always  # Uncomment this line to always restart the container unless explicitly stopped

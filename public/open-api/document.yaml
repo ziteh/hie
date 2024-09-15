@@ -4,71 +4,34 @@ info:
   description: API document of Hie
   version: 0.1.0
 servers:
-  - url: http://localhost:3140
+  - url: http://localhost:3000
     description: Local server
 tags:
   - name: Tags
-    description: Operations related to tags
   - name: Tags relation
-    description: Operations related to tag relation
   - name: Items
-    description: Operations related to items
   - name: Items relation
-    description: Operations related to item relation
   - name: Folders
-    description: Operations related to folders
+  - name: Image
 paths:
   /api/tags:
-    $ref: "./tags.yaml"
-  /api/tags/{tagId}:
-    get:
-      summary: Get a specific tag by ID
-      tags:
-        - Tags
-      parameters:
-        - name: tagId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: include
-          schema:
-            type: array
-            items:
-              type: string
-              enum: [children, parent, items]
-          required: false
-          description: Specify which related data to include (children, parent, items)
-          style: form
-          explode: false
-      responses:
-        "200":
-          description: A specific tag
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  type:
-                    type: string
-                  starred:
-                    type: boolean
-                  backColor:
-                    type: string
-                  textColor:
-                    type: string
-        "404":
-          description: Tag not found
-  /api/items:
-    $ref: "./items.yaml"
+    $ref: "./tags/index.yaml"
+  /api/tags/{id}:
+    $ref: "./tags/id.yaml"
   /api/tags/relation:
-    $ref: "./tags_relation.yaml"
+    $ref: "./tags/relation.yaml"
+
+  /api/items:
+    $ref: "./items/index.yaml"
+  /api/items{id}:
+    $ref: "./items/id.yaml"
   /api/items/relation:
-    $ref: "./items_relation.yaml"
+    $ref: "./items/relation.yaml"
+
   /api/folders:
-    $ref: "./folders.yaml"
+    $ref: "./folders/index.yaml"
+  /api/folders/{id}:
+    $ref: "./folders/id.yaml"
+
+  /api/image/{path}:
+    $ref: "./image/path.yaml"
