@@ -18,6 +18,7 @@ import TreeView from "./treeview";
 import { TreeViewBaseItem } from "@mui/x-tree-view";
 
 import { useTagTreeState } from "@/app/store/tagTree";
+import { useRouter } from "next/navigation";
 
 const drawerWidth = 240;
 const collapsedWidth = 80;
@@ -33,6 +34,7 @@ interface Props {
 }
 
 export default function Sidebar(props: Props) {
+  const router = useRouter();
   const { open } = props;
   // const [open, setOpen] = React.useState(true);
   const { tagTreeItems, updateTagTree, updateSelectedTagId } =
@@ -43,11 +45,12 @@ export default function Sidebar(props: Props) {
   }, []);
 
   const handleTagSelect = (event: React.SyntheticEvent, id: string) => {
-    try {
-      updateSelectedTagId(Number(id));
-    } catch (err) {
-      console.error(err);
-    }
+    router.push(`/explorer/${id}`);
+    // try {
+    //   updateSelectedTagId(Number(id));
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   return (

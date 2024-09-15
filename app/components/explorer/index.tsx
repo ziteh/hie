@@ -9,14 +9,19 @@ import Showcase from "./showcase";
 
 const size = 250;
 
-export default function Explorer() {
-  const subscribeSelected = useTagTreeState((s) => s.subscribeSelected);
+interface Props {
+  tagId: number;
+}
+
+export default function Explorer(props: Props) {
+  const { tagId } = props;
+
   const [imagePaths, setImagePaths] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const [selectedImagePath, setSelectedImagePath] = useState<string>("");
 
   useEffect(() => {
-    subscribeSelected(onSelected);
+    onSelected(tagId);
   }, []);
 
   const handleClose = () => {
