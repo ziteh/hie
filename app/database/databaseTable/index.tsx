@@ -131,9 +131,10 @@ export default function DatabaseTable<T extends readonly any[]>(
               heads={heads}
               numSelected={selected.length}
               order={order}
-              orderBy={orderBy}
+              orderBy={Number(orderBy)}
               onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
+              // onRequestSort={handleRequestSort}
+              onRequestSort={() => {}} // TODO
               rowCount={rows.length}
             />
             <TableBody>
