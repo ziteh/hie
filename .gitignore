@@ -40,3 +40,7 @@ next-env.d.ts
 /prisma/migrations/
 *.db
 *.db-journal
+
+# Docker
+.docker_temp_*
+*.tar

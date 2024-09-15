@@ -1,0 +1,11 @@
+version: "3"
+services:
+  app:
+    image: hie
+    build:
+      context: .
+    ports:
+      - "5888:3000"
+    volumes:
+      - HOST_DIR:/app/data
+    # restart: always

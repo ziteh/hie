@@ -1,24 +1,37 @@
-# Use Node.js 20 as the base image
-FROM node:20
+FROM node:20-alpine AS base
 
-# Set the working directory inside the container
+# Build stage
+FROM base AS build
+
 WORKDIR /app
 
-# Copy package.json and pnpm-lock.yaml (or package-lock.json)
-COPY package*.json ./
+ENV DATABASE_URL=file:/app/db/hie_sqlite.db
 
-# Install dependencies using pnpm
-RUN npm install -g pnpm
-RUN pnpm install
+COPY package.json pnpm-lock.yaml* ./
+RUN corepack enable pnpm && pnpm install --frozen-lockfile
 
-# Copy the rest of the application code
 COPY . .
+RUN pnpm run prisma:update && pnpm run build
 
-# Expose the port your Next.js app will run on
+# Remove dev dependencies
+RUN pnpm prune --prod
+
+# Production stage
+FROM base
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV DATABASE_URL=file:/app/db/hie_sqlite.db
+
+RUN npm install -g pnpm
+
+COPY --from=build /app/db/hie_sqlite.db /app/db/hie_sqlite.db
+COPY --from=build /app/.next /app/.next
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/public /app/public
+
 EXPOSE 3000
 
-# Build the Next.js app
-RUN pnpm run build
-
-# Start the app
-CMD ["pnpm", "start"]
+CMD ["pnpm", "run", "start"]
