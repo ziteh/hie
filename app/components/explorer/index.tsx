@@ -5,6 +5,7 @@ import { useTagTreeState } from "@/app/store/tagTree";
 import ImageLoader from "./imageLoader";
 import { getTag } from "@/app/lib/tags";
 import { Backdrop, Button, ImageList, ImageListItem } from "@mui/material";
+import Showcase from "./showcase";
 
 const size = 250;
 
@@ -99,19 +100,11 @@ export default function Explorer() {
           </ImageListItem>
         ))}
       </ImageList>
-
-      <Backdrop
-        sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+      <Showcase
+        imgSrc={getImageUrl(selectedImagePath, 100)}
         open={open}
         onClick={handleClose}
-      >
-        <ImageLoader
-          path={selectedImagePath}
-          // width={size}
-          // height={size}
-          quality={100}
-        />
-      </Backdrop>
+      />
     </div>
   );
 }
