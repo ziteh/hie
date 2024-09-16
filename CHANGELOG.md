@@ -20,6 +20,7 @@ Types of changes:
 
 - Add tag id to explorer route
 - Add breadcrumbs to explorer page
+- Add children tag button to explorer page
 
 ## [0.1.0-alpha.1] - 2024-09-15
 
