@@ -55,3 +55,14 @@ export interface Folder {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface SimpleTag {
+  id: number;
+  name: string;
+}
+
+export interface TagParents {
+  self: SimpleTag;
+  parents: SimpleTag[];
+  children: SimpleTag[];
+}
