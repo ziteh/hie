@@ -7,11 +7,11 @@ import { Tag, TagParents, SimpleTag } from "@/app/lib/db/types";
 import { getTag } from "@/app/lib/tags";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import { useTagTreeState } from "@/app/store/tagTree";
 
 export default function Page({ params }: { params: { tag: string } }) {
-  const [tag, setTag] = useState<SimpleTag | null>(null);
-  const [parents, setParents] = useState<SimpleTag[]>([]);
   const [children, setChildren] = useState<SimpleTag[]>([]);
+  const { updateSelectedTagId } = useTagTreeState();
 
   useEffect(() => {
     updateTag();
@@ -28,29 +28,11 @@ export default function Page({ params }: { params: { tag: string } }) {
     }
 
     const data: TagParents = await response.json();
-    setParents(data.parents);
     setChildren(data.children);
-    setTag(data.self);
   };
 
   return (
     <div>
-      <Breadcrumbs>
-        <Link underline="none" color="inherit" href="/explorer">
-          <HomeIcon fontSize="small" />
-        </Link>
-        {parents.map((p, i) => (
-          <Link
-            key={i}
-            underline="hover"
-            color="inherit"
-            href={`/explorer/${p.id}`}
-          >
-            {p.name}
-          </Link>
-        ))}
-        <Typography sx={{ color: "text.primary" }}>{tag?.name}</Typography>
-      </Breadcrumbs>
       {children.map((c, i) => (
         <Button
           key={i}

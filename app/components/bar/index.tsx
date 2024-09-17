@@ -6,7 +6,7 @@ import Topbar from "./topbar";
 import { useMediaQuery, useTheme } from "@mui/material";
 
 export default function Bar() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
