@@ -20,7 +20,6 @@ import {
 import { Item, ItemRelation, Folder, Tag } from "@/app/lib/types";
 import { createItem } from "@/app/lib/items";
 import { createFolder } from "@/app/lib/folders";
-import theme from "@/app/lib/theme";
 import React from "react";
 import { createItemRelation } from "@/app/lib/itemRelation";
 
