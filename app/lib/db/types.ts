@@ -40,8 +40,8 @@ export type Folder = Prisma.FolderGetPayload<{
 }>;
 
 export enum TagType {
-  Normal = "NORMAL",
-  Category = "CATEGORY",
+  Normal = "normal",
+  Category = "category",
 }
 
 export interface SimpleTag {
