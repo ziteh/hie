@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Explorer from "@/app/components/explorer";
 import { Breadcrumbs, Button, Link, Typography } from "@mui/material";
-import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/db/types";
+import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/types";
 import { getTag } from "@/app/lib/tags";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";

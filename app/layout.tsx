@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { Box, Toolbar } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Bar from "@/app/components/bar";
-import theme from "@/app/lib/theme";
+import theme from "@/app/lib/config/theme";
 // import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -9,7 +9,7 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import { Folder } from "@/app/lib/db/types";
+import { Folder } from "@/app/lib/types";
 import { createFolder } from "@/app/lib/folders";
 
 interface Props {

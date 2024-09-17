@@ -17,7 +17,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import { Item, ItemRelation, Folder, Tag } from "@/app/lib/db/types";
+import { Item, ItemRelation, Folder, Tag } from "@/app/lib/types";
 import { createItem } from "@/app/lib/items";
 import { createFolder } from "@/app/lib/folders";
 import theme from "@/app/lib/theme";

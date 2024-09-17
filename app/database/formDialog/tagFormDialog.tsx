@@ -1,6 +1,6 @@
 "use client";
 
-import { TagType, Tag } from "@/app/lib/db/types";
+import { TagType, Tag } from "@/app/lib/types";
 import {
   Button,
   Dialog,

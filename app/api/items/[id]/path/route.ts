@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/db/prisma";
+import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 export async function GET(

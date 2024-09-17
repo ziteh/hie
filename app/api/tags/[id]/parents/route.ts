@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/db/prisma";
+import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
-import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/db/types";
+import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/types";
 import { TagRelation } from "@prisma/client";
 
 export async function GET(
