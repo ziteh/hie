@@ -26,7 +26,7 @@ Check [`Dockerfile`](./Dockerfile).
 docker build -t hie .
 
 # Run and expose port 5888 on the host
-docker run -d --name hie -p 5888:3000 -v <HOST_DIR>:/app/data hie
+docker run -d --name hie -p 5888:3000 -v <HIE_VOLUME_DIR>:/app/volume hie
 
 # Save image
 docker save -o hie.tar hie
