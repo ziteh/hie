@@ -8,4 +8,6 @@ services:
       - "5888:3000"  # Map port 3000 inside the container to port 5888 on the host
     volumes:
       - HIE_VOLUME_DIR:/app/volume  # Mount the host directory HIE_VOLUME_DIR to /app/volume inside the container
+    environment:
+      - DEFAULT_IMG_QUALITY: "70" # Set the default image quality, in the range of 1 to 100
     # restart: always  # Uncomment this line to always restart the container unless explicitly stopped

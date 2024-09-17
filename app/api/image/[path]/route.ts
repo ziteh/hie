@@ -4,7 +4,7 @@ import sharp from "sharp";
 import path from "path";
 import fs from "fs/promises";
 
-const defaultQuality = 80; // TODO ENV
+const fallbackQuality = 80;
 const bashPath = "/app/volume";
 
 export async function GET(
@@ -30,7 +30,7 @@ export async function GET(
   let height = Number(url.searchParams.get("height")) || undefined;
   const quality = parseParam(
     url.searchParams.get("quality"),
-    defaultQuality,
+    Number(process.env.DEFAULT_IMG_QUALITY) || fallbackQuality,
     1,
     100
   );
