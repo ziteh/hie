@@ -9,7 +9,6 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  Grid,
   MenuItem,
   OutlinedInput,
   Select,
@@ -17,6 +16,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 import { Item, ItemRelation, Folder, Tag } from "@/app/lib/types";
 import { createItem } from "@/app/lib/items";
 import { createFolder } from "@/app/lib/folders";
@@ -96,13 +96,13 @@ export default function ItemFormDialog(props: Props) {
       <DialogTitle>Item</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <FormControlLabel
               control={<Switch name="starred" />}
               label="Star"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Select
               labelId="folder-label"
               label="Folder"
@@ -116,7 +116,7 @@ export default function ItemFormDialog(props: Props) {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <TextField
               label="Path"
               id="path"
@@ -126,7 +126,7 @@ export default function ItemFormDialog(props: Props) {
               autoComplete="off"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <TextField
               label="Name"
               id="name"
@@ -136,7 +136,7 @@ export default function ItemFormDialog(props: Props) {
               autoComplete="off"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Select
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"

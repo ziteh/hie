@@ -8,12 +8,13 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  Grid,
   MenuItem,
   Select,
   Switch,
   TextField,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+
 import { createTag } from "@/app/lib/tags";
 import { createTagRelation } from "@/app/lib/tagRelation";
 
@@ -64,13 +65,13 @@ export default function TagFormDialog(props: Props) {
       <DialogTitle>Tag</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <FormControlLabel
               control={<Switch name="starred" />}
               label="Star"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <TextField
               label="Name"
               id="name"
@@ -81,7 +82,7 @@ export default function TagFormDialog(props: Props) {
               autoComplete="off"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Select
               labelId="type-label"
               label="Type"
@@ -94,7 +95,7 @@ export default function TagFormDialog(props: Props) {
               <MenuItem value={TagType.Category}>Category</MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Select
               labelId="parent-label"
               label="Parent"
@@ -109,7 +110,7 @@ export default function TagFormDialog(props: Props) {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={6}>
             <TextField
               label="Text Color"
               id="text-color"
@@ -117,7 +118,7 @@ export default function TagFormDialog(props: Props) {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={6}>
             <TextField
               label="Back Color"
               id="back-color"
