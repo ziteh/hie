@@ -10,7 +10,7 @@ import { HeadCell, TagRow, ItemRow, FolderRow } from "./databaseTable/types";
 import TagFormDialog from "./formDialog/tagFormDialog";
 import ItemFormDialog from "./formDialog/itemFormDialog";
 import FolderFormDialog from "./formDialog/folderFormDialog";
-import { Folder, Item, Tag } from "../lib/types";
+import { Folder, Item, Tag } from "@/app/lib/types";
 
 interface TabPanelProps {
   children?: React.ReactNode;
