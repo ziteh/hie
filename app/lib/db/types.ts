@@ -1,59 +1,47 @@
-// refer to "schema.prisma"
+import { Prisma } from "@prisma/client";
+
+// Generate type from Prisma, refer to schema.prisma
+// https://github.com/prisma/prisma/discussions/10928#discussioncomment-1920961
+// https://stackoverflow.com/questions/73626300/how-to-get-prisma-client-to-generate-relationship-types
+
+export type Tag = Prisma.TagGetPayload<{
+  include: {
+    children: true;
+    parent: true;
+    items: true;
+  };
+}>;
+
+export type Item = Prisma.ItemGetPayload<{
+  include: {
+    folder: true;
+    tags: true;
+  };
+}>;
+
+export type TagRelation = Prisma.TagRelationGetPayload<{
+  include: {
+    parent: true;
+    child: true;
+  };
+}>;
+
+export type ItemRelation = Prisma.ItemRelationGetPayload<{
+  include: {
+    tag: true;
+    item: true;
+  };
+}>;
+
+export type Folder = Prisma.FolderGetPayload<{
+  include: {
+    items: true;
+  };
+}>;
 
 export enum TagType {
   Normal = "NORMAL",
   Category = "CATEGORY",
-}
-
-export interface Tag {
-  id: number;
-  name: string;
-  type: TagType;
-  starred: boolean;
-  backColor?: string;
-  textColor?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  children?: TagRelation[];
-  parent?: TagRelation[];
-  items?: ItemRelation[];
-}
-
-export interface Item {
-  id: number;
-  path: string;
-  folder?: Folder;
-  folderId: number;
-  name?: string;
-  starred: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-  itemRelations?: ItemRelation[];
-}
-
-export interface TagRelation {
-  id: number;
-  parentId: number;
-  parent: Tag;
-  childId: number;
-  child: Tag;
-}
-
-export interface ItemRelation {
-  id: number;
-  tagId: number;
-  tag: Tag;
-  itemId: number;
-  item: Item;
-}
-
-export interface Folder {
-  id: number;
-  name: string;
-  path: string;
-  items?: Item[];
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface SimpleTag {
