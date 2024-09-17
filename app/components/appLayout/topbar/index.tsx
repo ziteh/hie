@@ -18,6 +18,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
 import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/types";
 import { useTagTreeState } from "@/app/store/tagTree";
+import { useRouter } from "next/navigation";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,9 +69,10 @@ interface Props {
 
 export default function Topbar(props: Props) {
   const { isDesktop, onClick } = props;
-  const { selectedTagId } = useTagTreeState();
+  const { selectedTagId, updateSelectedTagId } = useTagTreeState();
   const [parents, setParents] = useState<SimpleTag[]>([]);
   const [tag, setTag] = useState<SimpleTag | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     updateTag(selectedTagId);
@@ -91,6 +93,11 @@ export default function Topbar(props: Props) {
     setTag(data.self);
   };
 
+  const onBreadcrumbNav = (id: number) => {
+    updateSelectedTagId(id);
+    router.push(`/explorer/${id}`);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -104,13 +111,21 @@ export default function Topbar(props: Props) {
                 <MenuIcon />
               </IconButton>
             )}
-            <Link underline="none" color="inherit" href="/explorer/1">
+            <Link
+              underline="none"
+              color="inherit"
+              onClick={() => onBreadcrumbNav(1)}
+            >
               Hie
             </Link>
           </Box>
           <Box sx={{ flexGrow: 1 }}>
             <Breadcrumbs>
-              <Link underline="none" color="inherit" href="/explorer">
+              <Link
+                underline="none"
+                color="inherit"
+                onClick={() => onBreadcrumbNav(1)}
+              >
                 <HomeIcon fontSize="small" />
               </Link>
               {parents.map((p, i) => (
@@ -118,7 +133,7 @@ export default function Topbar(props: Props) {
                   key={i}
                   underline="hover"
                   color="inherit"
-                  href={`/explorer/${p.id}`}
+                  onClick={() => onBreadcrumbNav(p.id)}
                 >
                   {p.name}
                 </Link>
