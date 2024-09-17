@@ -1,7 +1,7 @@
 get:
   summary: Retrieve and convert an image to WebP format.
   tags:
-    - Image
+    - Files
   parameters:
     - name: path
       in: path

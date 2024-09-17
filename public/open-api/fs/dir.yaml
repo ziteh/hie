@@ -1,0 +1,30 @@
+get:
+  summary: List files in a specified directory.
+  tags:
+    - Files
+  parameters:
+    - name: dir
+      in: path
+      required: true
+      schema:
+        type: string
+      example: "/app/volume"
+  responses:
+    "200":
+      description: Successful response with the list of files.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Error reading directory"
