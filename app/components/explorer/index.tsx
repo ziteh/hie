@@ -8,6 +8,7 @@ import { Backdrop, Button, ImageList, ImageListItem } from "@mui/material";
 import Showcase from "./showcase";
 
 const size = 250;
+const thumbnailQuantity = 60;
 
 interface Props {
   tagId: number;
@@ -79,15 +80,15 @@ export default function Explorer(props: Props) {
           <ImageListItem key={index}>
             <Button variant="text" onClick={() => handleOpen(path)}>
               <img
-                src={getImageUrl(path, 80)}
+                src={getImageUrl(path, thumbnailQuantity)}
                 srcSet={
-                  getImageUrl(path, 80, 100) +
+                  getImageUrl(path, thumbnailQuantity, 100) +
                   " 100w, " +
-                  getImageUrl(path, 80, 300) +
+                  getImageUrl(path, thumbnailQuantity, 300) +
                   " 300w, " +
-                  getImageUrl(path, 80, 500) +
+                  getImageUrl(path, thumbnailQuantity, 500) +
                   " 500w, " +
-                  getImageUrl(path, 80, 1200) +
+                  getImageUrl(path, thumbnailQuantity, 1200) +
                   " 1200w"
                 }
                 sizes="18vw"
