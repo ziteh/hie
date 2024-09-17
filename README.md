@@ -1,5 +1,9 @@
 # Hie
 
+[![GitHub Actions Workflow Status:build](https://img.shields.io/github/actions/workflow/status/ziteh/hie/build.yml?style=flat-square&label=Build)](https://github.com/ziteh/hie/actions/workflows/build.yml)
+[![GitHub Actions Workflow Status:docker-image](https://img.shields.io/github/actions/workflow/status/ziteh/hie/docker-image.yml?style=flat-square&label=Docker&logo=docker)](https://github.com/ziteh/hie/actions/workflows/docker-image.yml)
+[![Next JS](https://img.shields.io/badge/Next-black?style=flat-square&logo=next.js&logoColor=white)](https://nextjs.org/)
+
 Hie - ***Hi***erarchical tag-based image ***E***xplorer.
 
 ## Usage
