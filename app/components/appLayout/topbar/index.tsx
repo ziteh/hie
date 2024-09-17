@@ -16,8 +16,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import StorageIcon from "@mui/icons-material/Storage";
 import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
-import { Tag, TagParents, SimpleTag } from "@/app/lib/db/types";
+import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/types";
 import { useTagTreeState } from "@/app/store/tagTree";
+import { useRouter } from "next/navigation";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,14 +63,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 interface Props {
+  isDesktop: boolean;
   onClick?: () => void;
 }
 
 export default function Topbar(props: Props) {
-  const { onClick } = props;
-  const { selectedTagId } = useTagTreeState();
+  const { isDesktop, onClick } = props;
+  const { selectedTagId, updateSelectedTagId } = useTagTreeState();
   const [parents, setParents] = useState<SimpleTag[]>([]);
   const [tag, setTag] = useState<SimpleTag | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     updateTag(selectedTagId);
@@ -85,9 +88,19 @@ export default function Topbar(props: Props) {
       return;
     }
 
-    const data: TagParents = await response.json();
+    const data: TagRelationChain = await response.json();
     setParents(data.parents);
     setTag(data.self);
+  };
+
+  const onBreadcrumbNav = (id?: number) => {
+    if (id === undefined) {
+      router.push(`/explorer`);
+      return;
+    }
+
+    updateSelectedTagId(id);
+    router.push(`/explorer/${id}`);
   };
 
   return (
@@ -98,16 +111,26 @@ export default function Topbar(props: Props) {
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <IconButton onClick={onClick}>
-              <MenuIcon />
-            </IconButton>
-            <Link underline="none" color="inherit" href="/explorer/1">
+            {!isDesktop && (
+              <IconButton onClick={onClick}>
+                <MenuIcon />
+              </IconButton>
+            )}
+            <Link
+              underline="none"
+              color="inherit"
+              onClick={() => onBreadcrumbNav()}
+            >
               Hie
             </Link>
           </Box>
           <Box sx={{ flexGrow: 1 }}>
             <Breadcrumbs>
-              <Link underline="none" color="inherit" href="/explorer">
+              <Link
+                underline="none"
+                color="inherit"
+                onClick={() => onBreadcrumbNav()}
+              >
                 <HomeIcon fontSize="small" />
               </Link>
               {parents.map((p, i) => (
@@ -115,7 +138,7 @@ export default function Topbar(props: Props) {
                   key={i}
                   underline="hover"
                   color="inherit"
-                  href={`/explorer/${p.id}`}
+                  onClick={() => onBreadcrumbNav(p.id)}
                 >
                   {p.name}
                 </Link>

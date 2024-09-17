@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/db/prisma";
+import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 // Get an item
@@ -17,12 +17,19 @@ export async function GET(
     });
 
     if (!item) {
-      return NextResponse.json({ error: "Item not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Item not found" },
+        { status: StatusCodes.NOT_FOUND }
+      );
     }
 
     return NextResponse.json(item);
   } catch (error) {
-    return NextResponse.json({ error: "Error fetching item" }, { status: 500 });
+    console.error("Error fetching item:", error);
+    return NextResponse.json(
+      { error: "Error fetching item" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 }
 
@@ -39,7 +46,10 @@ export async function DELETE(
     return NextResponse.json(deleted);
   } catch (error) {
     console.error("Error deleting item:", error);
-    return NextResponse.json({ error: "Error deleting item" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error deleting item" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 }
 
@@ -62,6 +72,9 @@ export async function PATCH(
     return NextResponse.json(item);
   } catch (error) {
     console.error("Error update item:", error);
-    return NextResponse.json({ error: "Error deleting item" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error deleting item" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 }

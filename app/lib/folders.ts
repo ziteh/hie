@@ -1,4 +1,4 @@
-import { Folder } from "@/app/lib/db/types";
+import { Folder } from "@/app/lib/types";
 
 const apiUrl = "/api/folders";
 

@@ -12,8 +12,8 @@ export async function GET(
   try {
     const files = await fs.readdir(dirPath);
     return NextResponse.json(files);
-  } catch (err) {
-    console.error("Error reading directory:", err);
+  } catch (error) {
+    console.error("Error reading directory:", error);
     return NextResponse.json(
       { error: "Error reading directory" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

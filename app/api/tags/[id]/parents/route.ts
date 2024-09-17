@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/db/prisma";
+import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
-import { Tag, TagParents, SimpleTag } from "@/app/lib/db/types";
+import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/types";
 import { TagRelation } from "@prisma/client";
 
 export async function GET(
@@ -30,13 +30,14 @@ export async function GET(
     let parents = await getParentTags(Number(params.id));
     parents.reverse();
 
-    const tp: TagParents = {
+    const tp: TagRelationChain = {
       self: selfSimpleTag,
       parents,
       children: childrenTags,
     };
     return NextResponse.json(tp);
   } catch (error) {
+    console.error("Error fetching tag:", error);
     return NextResponse.json(
       { error: "Error fetching tag" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

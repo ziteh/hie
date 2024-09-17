@@ -4,8 +4,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import { Box, Toolbar } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import Bar from "@/app/components/bar";
-import theme from "@/app/lib/theme";
+import AppLayout from "@/app/components/appLayout";
+import theme from "@/app/lib/config/theme";
 // import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,7 +29,7 @@ export default function RootLayout({
             <CssBaseline />
 
             <Box sx={{ display: "flex" }}>
-              <Bar />
+              <AppLayout />
               <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <Toolbar />
                 {children}

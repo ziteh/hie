@@ -7,14 +7,11 @@ import { getTag } from "@/app/lib/tags";
 import { Backdrop, Button, ImageList, ImageListItem } from "@mui/material";
 import Showcase from "./showcase";
 
-const size = 250;
-const thumbnailQuantity = 60;
-
 interface Props {
   tagId: number;
 }
 
-export default function Explorer(props: Props) {
+export default function ItemGrid(props: Props) {
   const { tagId } = props;
 
   const [imagePaths, setImagePaths] = useState<string[]>([]);
@@ -65,10 +62,17 @@ export default function Explorer(props: Props) {
     } catch (err) {}
   };
 
-  const getImageUrl = (path: string, quality: number, width?: number) => {
-    let url = `/api/image/${encodeURIComponent(path)}?quality=${quality}`;
-    if (width !== undefined) {
-      url += `&width=${width}`;
+  const getImageUrl = (path: string, quality?: number, width?: number) => {
+    let url = `/api/image/${encodeURIComponent(path)}`;
+
+    if (quality !== undefined || width !== undefined) {
+      url += "?";
+      if (quality !== undefined) {
+        url += `&quality=${quality}`;
+      }
+      if (width !== undefined) {
+        url += `&width=${width}`;
+      }
     }
     return url;
   };
@@ -80,15 +84,15 @@ export default function Explorer(props: Props) {
           <ImageListItem key={index}>
             <Button variant="text" onClick={() => handleOpen(path)}>
               <img
-                src={getImageUrl(path, thumbnailQuantity)}
+                src={getImageUrl(path)}
                 srcSet={
-                  getImageUrl(path, thumbnailQuantity, 100) +
+                  getImageUrl(path, undefined, 100) +
                   " 100w, " +
-                  getImageUrl(path, thumbnailQuantity, 300) +
+                  getImageUrl(path, undefined, 300) +
                   " 300w, " +
-                  getImageUrl(path, thumbnailQuantity, 500) +
+                  getImageUrl(path, undefined, 500) +
                   " 500w, " +
-                  getImageUrl(path, thumbnailQuantity, 1200) +
+                  getImageUrl(path, undefined, 1200) +
                   " 1200w"
                 }
                 sizes="18vw"

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/db/prisma";
+import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 export async function POST(request: Request) {
@@ -45,6 +45,7 @@ export async function GET() {
     const relations = await prisma.itemRelation.findMany();
     return NextResponse.json(relations);
   } catch (error) {
+    console.error("Error fetching item relations:", error);
     return NextResponse.json(
       { error: "Error fetching item relations" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

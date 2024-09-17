@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/db/prisma";
+import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 // Create a new tag
@@ -21,7 +21,10 @@ export async function POST(request: Request) {
     return NextResponse.json(tag);
   } catch (error) {
     console.error("Error creating tag:", error);
-    return NextResponse.json({ error: "Error creating tag" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error creating tag" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 }
 
@@ -41,6 +44,10 @@ export async function GET(request: Request) {
     });
     return NextResponse.json(tags);
   } catch (error) {
-    return NextResponse.json({ error: "Error fetching tags" }, { status: 500 });
+    console.error("Error fetching tags:", error);
+    return NextResponse.json(
+      { error: "Error fetching tags" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 }

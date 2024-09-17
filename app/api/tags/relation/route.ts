@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/db/prisma";
+import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 export async function POST(request: Request) {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     console.error("Error creating tag relation:", error);
     return NextResponse.json(
       { error: "Error creating tag relation" },
-      { status: 500 }
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }
 }
@@ -49,7 +49,7 @@ export async function PATCH(request: Request) {
     console.error("Error update tag relation:", error);
     return NextResponse.json(
       { error: "Error updating tag relation" },
-      { status: 500 }
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }
 }
@@ -59,9 +59,10 @@ export async function GET() {
     const relations = await prisma.tagRelation.findMany();
     return NextResponse.json(relations);
   } catch (error) {
+    console.error("Error fetching tag relations:", error);
     return NextResponse.json(
       { error: "Error fetching tag relations" },
-      { status: 500 }
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }
 }
@@ -71,7 +72,10 @@ export async function DELETE(request: Request) {
     const { id } = await request.json();
 
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "ID is required" },
+        { status: StatusCodes.BAD_REQUEST }
+      );
     }
 
     const deleted = await prisma.tagRelation.delete({
@@ -81,6 +85,9 @@ export async function DELETE(request: Request) {
     return NextResponse.json(deleted);
   } catch (error) {
     console.error("Error deleting tag:", error);
-    return NextResponse.json({ error: "Error deleting tag" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error deleting tag" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 }
