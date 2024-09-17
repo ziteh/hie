@@ -18,7 +18,10 @@ export async function POST(request: Request) {
     return NextResponse.json(item);
   } catch (error) {
     console.error("Error creating item:", error);
-    return NextResponse.json({ error: "Error creating item" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error creating item" },
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 }
 
@@ -37,7 +40,7 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json(
       { error: "Error fetching items" },
-      { status: 500 }
+      { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }
 }
