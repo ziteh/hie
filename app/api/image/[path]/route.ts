@@ -4,15 +4,21 @@ import sharp from "sharp";
 import path from "path";
 import fs from "fs/promises";
 
-const defaultQuality = 80;
+const defaultQuality = 80; // TODO ENV
+const bashPath = "/app/volume";
 
 export async function GET(
   request: Request,
   { params }: { params: { path: string } }
 ) {
+  const imagePath =
+    process.env.NODE_ENV === "production"
+      ? path.join(bashPath, params.path)
+      : path.join(params.path);
+
   // Check if the image file exists
   try {
-    await fs.access(params.path);
+    await fs.access(imagePath);
   } catch (error) {
     return new NextResponse("File not found", {
       status: StatusCodes.NOT_FOUND,
@@ -29,10 +35,10 @@ export async function GET(
     100
   );
 
-  const fileName = path.basename(params.path);
+  const fileName = path.basename(imagePath);
 
   try {
-    const imageSharp = sharp(params.path);
+    const imageSharp = sharp(imagePath);
     const metadata = await imageSharp.metadata();
 
     width = clampSize(width, metadata.width);
