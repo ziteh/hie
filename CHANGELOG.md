@@ -16,6 +16,8 @@ Types of changes:
 
 ## Unreleased
 
+## [0.1.0-alpha.2] - 2024-09-17
+
 ### Added
 
 - Add tag ID to explorer route
@@ -32,4 +34,5 @@ Types of changes:
 
 First release.
 
+[0.1.0-alpha.2]: https://github.com/ziteh/hie/releases/tag/v0.1.0-alpha.2
 [0.1.0-alpha.1]: https://github.com/ziteh/hie/releases/tag/v0.1.0-alpha.1
