@@ -18,9 +18,15 @@ Types of changes:
 
 ### Added
 
-- Add tag id to explorer route
+- Add tag ID to explorer route
 - Add breadcrumbs to explorer page
 - Add children tag button to explorer page
+- Add `/api/tags/root` API for fetch root tags
+- Add `DEFAULT_IMG_QUALITY` env variable for `/api/image` API to control default image quality
+
+### Changed
+
+- Switched to client-side routing instead of using `href`
 
 ## [0.1.0-alpha.1] - 2024-09-15
 
