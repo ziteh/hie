@@ -17,6 +17,10 @@ import {
 import TreeView from "./treeview";
 import { TreeViewBaseItem } from "@mui/x-tree-view";
 
+import TagFormDialog from "./formDialog/tagFormDialog";
+import ItemFormDialog from "./formDialog/itemFormDialog";
+import FolderFormDialog from "./formDialog/folderFormDialog";
+
 import { useTagTreeState } from "@/app/store/tagTree";
 import { useRouter } from "next/navigation";
 
@@ -26,12 +30,6 @@ import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 
 const drawerWidth = 240;
 const collapsedWidth = 80;
-
-const NavList = [
-  { label: "Home", url: "/explorer" },
-  { label: "Database", url: "/database" },
-  { label: "Docs", url: "/api/docs" },
-];
 
 interface Props {}
 
@@ -52,6 +50,34 @@ export default function Sidebar(props: Props) {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const [tagFormOpen, setTagFormOpen] = React.useState(false);
+  const [itemFormOpen, setItemFormOpen] = React.useState(false);
+  const [folderFormOpen, setFolderFormOpen] = React.useState(false);
+
+  const handleTagFormOpen = () => {
+    setTagFormOpen(true);
+  };
+
+  const handleTagFormClose = () => {
+    setTagFormOpen(false);
+  };
+
+  const handleItemFormOpen = () => {
+    setItemFormOpen(true);
+  };
+
+  const handleItemFormClose = () => {
+    setItemFormOpen(false);
+  };
+
+  const handleFolderFormOpen = () => {
+    setFolderFormOpen(true);
+  };
+
+  const handleFolderFormClose = () => {
+    setFolderFormOpen(false);
   };
 
   return (
@@ -75,34 +101,46 @@ export default function Sidebar(props: Props) {
       <Divider />
       <Box>
         <List>
-          {/* {NavList.map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton href={item.url}>{item.label}</ListItemButton>
-            </ListItem>
-          ))} */}
           <ListItem disablePadding>
-            <ListItemButton href="/api/docs">
+            <ListItemButton onClick={handleTagFormOpen}>
               <ListItemIcon>
                 <BookmarkAddIcon />
                 New Tag
               </ListItemIcon>
             </ListItemButton>
+            <TagFormDialog
+              existingTags={[]}
+              open={tagFormOpen}
+              onClose={handleTagFormClose}
+            />
           </ListItem>
+
           <ListItem disablePadding>
-            <ListItemButton href="/api/docs">
+            <ListItemButton onClick={handleItemFormOpen}>
               <ListItemIcon>
                 <NoteAddIcon />
                 New Item
               </ListItemIcon>
             </ListItemButton>
+            <ItemFormDialog
+              folders={[]}
+              tags={[]}
+              open={itemFormOpen}
+              onClose={handleItemFormClose}
+            />
           </ListItem>
+
           <ListItem disablePadding>
-            <ListItemButton href="/api/docs">
+            <ListItemButton onClick={handleFolderFormOpen}>
               <ListItemIcon>
                 <CreateNewFolderIcon />
                 New Folder
               </ListItemIcon>
             </ListItemButton>
+            <FolderFormDialog
+              open={folderFormOpen}
+              onClose={handleFolderFormClose}
+            />
           </ListItem>
         </List>
       </Box>
