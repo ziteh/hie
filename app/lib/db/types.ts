@@ -49,7 +49,7 @@ export interface SimpleTag {
   name: string;
 }
 
-export interface TagParents {
+export interface TagRelationChain {
   self: SimpleTag;
   parents: SimpleTag[];
   children: SimpleTag[];

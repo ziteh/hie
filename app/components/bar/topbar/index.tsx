@@ -16,7 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import StorageIcon from "@mui/icons-material/Storage";
 import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
-import { Tag, TagParents, SimpleTag } from "@/app/lib/db/types";
+import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/db/types";
 import { useTagTreeState } from "@/app/store/tagTree";
 
 const Search = styled("div")(({ theme }) => ({
@@ -85,7 +85,7 @@ export default function Topbar(props: Props) {
       return;
     }
 
-    const data: TagParents = await response.json();
+    const data: TagRelationChain = await response.json();
     setParents(data.parents);
     setTag(data.self);
   };

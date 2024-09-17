@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Explorer from "@/app/components/explorer";
 import { Breadcrumbs, Button, Link, Typography } from "@mui/material";
-import { Tag, TagParents, SimpleTag } from "@/app/lib/db/types";
+import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/db/types";
 import { getTag } from "@/app/lib/tags";
 import HomeIcon from "@mui/icons-material/Home";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -27,7 +27,7 @@ export default function Page({ params }: { params: { tag: string } }) {
       return;
     }
 
-    const data: TagParents = await response.json();
+    const data: TagRelationChain = await response.json();
     setChildren(data.children);
   };
 

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/db/prisma";
 import { StatusCodes } from "http-status-codes";
-import { Tag, TagParents, SimpleTag } from "@/app/lib/db/types";
+import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/db/types";
 import { TagRelation } from "@prisma/client";
 
 export async function GET(
@@ -30,7 +30,7 @@ export async function GET(
     let parents = await getParentTags(Number(params.id));
     parents.reverse();
 
-    const tp: TagParents = {
+    const tp: TagRelationChain = {
       self: selfSimpleTag,
       parents,
       children: childrenTags,
