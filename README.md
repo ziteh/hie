@@ -12,6 +12,7 @@ Hie - ***Hi***erarchical tag-based image ***E***xplorer.
 
 ```sh
 pnpm install
+pnpm run prisma:update
 pnpm run dev
 ```
 
@@ -19,7 +20,7 @@ API docs at <http://localhost:3000/api/docs>, powered by [Swagger UI](https://gi
 
 ### Docker
 
-Check [`Dockerfile`](./Dockerfile).
+Check [`Dockerfile`](./Dockerfile) and [`docker-compose.yml`](./docker-compose.yml).
 
 ```sh
 # Build
