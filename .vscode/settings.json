@@ -5,7 +5,9 @@
         "{**/index.*,**/route.*,**/layout.*,**/page.*}": "${dirname}.${extname} (${filename})"
     },
     "cSpell.words": [
+        "hie",
         "nextjs",
+        "openapi",
         "tailwindcss",
         "Topbar",
         "zustand"
