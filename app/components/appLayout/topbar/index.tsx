@@ -93,7 +93,12 @@ export default function Topbar(props: Props) {
     setTag(data.self);
   };
 
-  const onBreadcrumbNav = (id: number) => {
+  const onBreadcrumbNav = (id?: number) => {
+    if (id === undefined) {
+      router.push(`/explorer`);
+      return;
+    }
+
     updateSelectedTagId(id);
     router.push(`/explorer/${id}`);
   };
@@ -114,7 +119,7 @@ export default function Topbar(props: Props) {
             <Link
               underline="none"
               color="inherit"
-              onClick={() => onBreadcrumbNav(1)}
+              onClick={() => onBreadcrumbNav()}
             >
               Hie
             </Link>
@@ -124,7 +129,7 @@ export default function Topbar(props: Props) {
               <Link
                 underline="none"
                 color="inherit"
-                onClick={() => onBreadcrumbNav(1)}
+                onClick={() => onBreadcrumbNav()}
               >
                 <HomeIcon fontSize="small" />
               </Link>
