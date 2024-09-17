@@ -4,7 +4,6 @@ import { StatusCodes } from "http-status-codes";
 import { Tag, TagParents, SimpleTag } from "@/app/lib/db/types";
 import { TagRelation } from "@prisma/client";
 
-
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -79,7 +78,11 @@ async function getParentTags(id: number, parents: SimpleTag[] = []) {
     include: { parent: true },
   });
 
-  const pTagSimple = await getSimpleTag(pTag?.id);
+  if (!pTag || !pTag.id) {
+    return parents;
+  }
+
+  const pTagSimple = await getSimpleTag(pTag.id);
   parents.push(pTagSimple);
   return getParentTags(parentId, parents);
 }
