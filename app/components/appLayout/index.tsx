@@ -5,7 +5,7 @@ import Sidebar from "./sidebar";
 import Topbar from "./topbar";
 import { useMediaQuery, useTheme } from "@mui/material";
 
-export default function Bar() {
+export default function AppLayout() {
   const [open, setOpen] = React.useState(true);
 
   const theme = useTheme();
