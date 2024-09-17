@@ -38,6 +38,7 @@ export async function GET(request: Request) {
     });
     return NextResponse.json(items);
   } catch (error) {
+    console.error("Error fetching items:", error);
     return NextResponse.json(
       { error: "Error fetching items" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

@@ -22,6 +22,7 @@ export async function GET(
     const fullPath = `${item.folder.path}${item.path}`;
     return NextResponse.json({ fullPath });
   } catch (error) {
+    console.error("Error fetching item:", error);
     return NextResponse.json(
       { error: "Error fetching item" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

@@ -66,6 +66,7 @@ export async function GET(
     });
     return NextResponse.json(list);
   } catch (error) {
+    console.error("Error fetching folders:", error);
     return NextResponse.json(
       { error: "Error fetching folders" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

@@ -59,6 +59,7 @@ export async function GET() {
     const relations = await prisma.tagRelation.findMany();
     return NextResponse.json(relations);
   } catch (error) {
+    console.error("Error fetching tag relations:", error);
     return NextResponse.json(
       { error: "Error fetching tag relations" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

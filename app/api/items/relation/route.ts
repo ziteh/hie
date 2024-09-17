@@ -45,6 +45,7 @@ export async function GET() {
     const relations = await prisma.itemRelation.findMany();
     return NextResponse.json(relations);
   } catch (error) {
+    console.error("Error fetching item relations:", error);
     return NextResponse.json(
       { error: "Error fetching item relations" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

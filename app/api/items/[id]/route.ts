@@ -25,6 +25,7 @@ export async function GET(
 
     return NextResponse.json(item);
   } catch (error) {
+    console.error("Error fetching item:", error);
     return NextResponse.json(
       { error: "Error fetching item" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }

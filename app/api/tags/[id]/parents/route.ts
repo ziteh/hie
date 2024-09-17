@@ -37,6 +37,7 @@ export async function GET(
     };
     return NextResponse.json(tp);
   } catch (error) {
+    console.error("Error fetching tag:", error);
     return NextResponse.json(
       { error: "Error fetching tag" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
