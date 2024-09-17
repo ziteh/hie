@@ -14,7 +14,7 @@ interface Props {
   tagId: number;
 }
 
-export default function Explorer(props: Props) {
+export default function ItemGrid(props: Props) {
   const { tagId } = props;
 
   const [imagePaths, setImagePaths] = useState<string[]>([]);

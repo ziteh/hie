@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Explorer from "@/app/components/explorer";
+import ItemGrid from "./itemGrid";
 import { Breadcrumbs, Button, Link, Typography } from "@mui/material";
 import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/types";
 import { getTag } from "@/app/lib/tags";
@@ -42,7 +42,7 @@ export default function Page({ params }: { params: { tag: string } }) {
           {c.name}
         </Button>
       ))}
-      <Explorer tagId={Number(params.tag)} />
+      <ItemGrid tagId={Number(params.tag)} />
     </div>
   );
 }
