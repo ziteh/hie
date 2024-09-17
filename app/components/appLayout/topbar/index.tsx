@@ -62,11 +62,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 interface Props {
+  isDesktop: boolean;
   onClick?: () => void;
 }
 
 export default function Topbar(props: Props) {
-  const { onClick } = props;
+  const { isDesktop, onClick } = props;
   const { selectedTagId } = useTagTreeState();
   const [parents, setParents] = useState<SimpleTag[]>([]);
   const [tag, setTag] = useState<SimpleTag | null>(null);
@@ -98,9 +99,11 @@ export default function Topbar(props: Props) {
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <IconButton onClick={onClick}>
-              <MenuIcon />
-            </IconButton>
+            {!isDesktop && (
+              <IconButton onClick={onClick}>
+                <MenuIcon />
+              </IconButton>
+            )}
             <Link underline="none" color="inherit" href="/explorer/1">
               Hie
             </Link>

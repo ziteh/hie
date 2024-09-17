@@ -33,14 +33,11 @@ const NavList = [
   { label: "Docs", url: "/api/docs" },
 ];
 
-interface Props {
-  open: boolean;
-}
+interface Props {}
 
 export default function Sidebar(props: Props) {
   const router = useRouter();
-  const { open } = props;
-  // const [open, setOpen] = React.useState(true);
+  const open = true;
   const { tagTreeItems, updateTagTree, updateSelectedTagId } =
     useTagTreeState();
 
@@ -59,9 +56,9 @@ export default function Sidebar(props: Props) {
 
   return (
     <Drawer
-      // variant="permanent"
-      variant="persistent"
-      open={open}
+      variant="permanent"
+      // variant="persistent"
+      // open={open}
       sx={{
         width: open ? drawerWidth : collapsedWidth,
         flexShrink: 0,

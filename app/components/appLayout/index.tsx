@@ -1,20 +1,23 @@
 "use client";
 
-import React from "react";
+import { useState } from "react";
+import { useMediaQuery, useTheme } from "@mui/material";
 import Sidebar from "./sidebar";
 import Topbar from "./topbar";
-import { useMediaQuery, useTheme } from "@mui/material";
 
 export default function AppLayout() {
-  const [open, setOpen] = React.useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   return (
     <div>
-      <Topbar onClick={() => setOpen(!open)} />
-      {(isDesktop || open) && <Sidebar open={open} />}
+      <Topbar
+        isDesktop={isDesktop}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      />
+      {(isDesktop || sidebarOpen) && <Sidebar />}
     </div>
   );
 }
