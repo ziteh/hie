@@ -16,6 +16,14 @@ Types of changes:
 
 ## Unreleased
 
+### Changed
+
+- Move "New Tag/Item/Folder" button from database page to sidebar
+
+### Security
+
+- Bump Next.js from `14.2.6` to `14.2.10`, refer to `CVE-2024-46982`
+
 ## [0.1.0-alpha.2] - 2024-09-17
 
 ### Added
