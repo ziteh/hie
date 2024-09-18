@@ -32,7 +32,7 @@ Hie can run on a NAS via Docker, allowing you to access and view your images con
 
 ```sh
 pnpm install
-pnpm run prisma:update
+pnpm run prisma:migration
 pnpm run dev
 ```
 

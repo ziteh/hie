@@ -23,7 +23,7 @@ COPY . .
 
 RUN \
   corepack enable pnpm && \
-  pnpm run prisma:update && \
+  pnpm run prisma:migration && \
   pnpm run build
 
 # Remove dev dependencies
