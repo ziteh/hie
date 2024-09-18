@@ -108,11 +108,7 @@ export default function Sidebar(props: Props) {
                 New Tag
               </ListItemIcon>
             </ListItemButton>
-            <TagFormDialog
-              existingTags={[]}
-              open={tagFormOpen}
-              onClose={handleTagFormClose}
-            />
+            <TagFormDialog open={tagFormOpen} onClose={handleTagFormClose} />
           </ListItem>
 
           <ListItem disablePadding>
@@ -122,12 +118,7 @@ export default function Sidebar(props: Props) {
                 New Item
               </ListItemIcon>
             </ListItemButton>
-            <ItemFormDialog
-              folders={[]}
-              tags={[]}
-              open={itemFormOpen}
-              onClose={handleItemFormClose}
-            />
+            <ItemFormDialog open={itemFormOpen} onClose={handleItemFormClose} />
           </ListItem>
 
           <ListItem disablePadding>
