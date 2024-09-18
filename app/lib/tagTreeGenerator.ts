@@ -4,7 +4,7 @@ import { Tag } from "@/app/lib/types";
 
 export async function generateTagTree(): Promise<TreeViewBaseItem[]> {
   let treeItems: TreeViewBaseItem[] = [];
-  const tags = await listTag(true, true, false);
+  const tags = await listTag(null, true, true, false);
 
   for (const tag of tags) {
     // Skip non-root tags

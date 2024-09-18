@@ -131,6 +131,7 @@ export async function getTag(
 }
 
 export async function listTag(
+  type: TagType | null,
   includeChildren: boolean,
   includeParent: boolean,
   includeItems: boolean
@@ -147,8 +148,15 @@ export async function listTag(
   }
   const paramsString = params.join(",");
 
+  let fmtType = "";
+  if (type !== null) {
+    fmtType = `type=${type}&`;
+  }
+
+  const url = `${apiUrl}?${fmtType}include=${paramsString}`;
+
   try {
-    const response = await fetch(`${apiUrl}?include=${paramsString}`, {
+    const response = await fetch(url, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

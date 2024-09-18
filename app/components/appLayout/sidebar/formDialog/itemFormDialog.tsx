@@ -17,7 +17,7 @@ import {
   TextField,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { Item, ItemRelation, Folder, Tag } from "@/app/lib/types";
+import { Item, ItemRelation, Folder, Tag, TagType } from "@/app/lib/types";
 import { createItem } from "@/app/lib/items";
 import { createFolder, listFolder } from "@/app/lib/folders";
 import { useState, useEffect } from "react";
@@ -57,7 +57,7 @@ export default function ItemFormDialog(props: Props) {
   }, [open]);
 
   const handleFetchTags = async () => {
-    const tags = await listTag(false, false, false);
+    const tags = await listTag(TagType.Normal, false, false, false);
     setTags(tags);
   };
 

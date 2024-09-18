@@ -121,7 +121,7 @@ export default function Page() {
   };
 
   React.useEffect(() => {
-    listTag(true, true, false).then((data) => {
+    listTag(null, true, true, false).then((data) => {
       const list: TagRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()

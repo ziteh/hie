@@ -35,7 +35,7 @@ export default function TagFormDialog(props: Props) {
   }, [open]);
 
   const handleFetchTags = async () => {
-    const tags = await listTag(false, false, false);
+    const tags = await listTag(null, false, false, false);
     setExistingTags(tags);
   };
 

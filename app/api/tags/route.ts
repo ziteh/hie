@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
+import { TagType } from "@/app/lib/types";
 
 // Create a new tag
 export async function POST(request: Request) {
@@ -34,8 +35,22 @@ export async function GET(request: Request) {
   const paramString = url.searchParams.get("include") || "";
   const params = paramString.split(",");
 
+  const type = url.searchParams.get("type") || undefined;
+
+  if (
+    type !== undefined &&
+    type !== TagType.Normal &&
+    type !== TagType.Category
+  ) {
+    return NextResponse.json(
+      { error: "Invalid tag type" },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
+
   try {
     const tags = await prisma.tag.findMany({
+      where: { type },
       include: {
         children: params.includes("children"),
         parent: params.includes("parent"),
