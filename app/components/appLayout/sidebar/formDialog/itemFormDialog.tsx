@@ -16,12 +16,13 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import Grid from '@mui/material/Grid2';
+import Grid from "@mui/material/Grid2";
 import { Item, ItemRelation, Folder, Tag } from "@/app/lib/types";
 import { createItem } from "@/app/lib/items";
-import { createFolder } from "@/app/lib/folders";
-import React from "react";
+import { createFolder, listFolder } from "@/app/lib/folders";
+import { useState, useEffect } from "react";
 import { createItemRelation } from "@/app/lib/itemRelation";
+import { listTag } from "@/app/lib/tags";
 
 const SEP = "\t";
 
@@ -38,15 +39,32 @@ const MenuProps = {
 
 interface Props {
   data?: Item;
-  folders: Folder[];
-  tags: Tag[];
   open: boolean;
   onClose: () => void;
 }
 
 export default function ItemFormDialog(props: Props) {
-  const { data, folders, tags, open, onClose } = props;
-  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const { data, open, onClose } = props;
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [folders, setFolders] = useState<Folder[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
+
+  useEffect(() => {
+    if (open) {
+      handleFetchTags();
+      handleFetchFolders();
+    }
+  }, [open]);
+
+  const handleFetchTags = async () => {
+    const tags = await listTag(false, false, false);
+    setTags(tags);
+  };
+
+  const handleFetchFolders = async () => {
+    const folders = await listFolder(false);
+    setFolders(folders);
+  };
 
   const handleClose = () => {
     onClose();

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { TagType, Tag } from "@/app/lib/types";
 import {
   Button,
@@ -14,19 +15,29 @@ import {
   TextField,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-
-import { createTag } from "@/app/lib/tags";
+import { createTag, listTag } from "@/app/lib/tags";
 import { createTagRelation } from "@/app/lib/tagRelation";
 
 interface Props {
-  existingTags: Tag[];
   data?: Tag;
   open: boolean;
   onClose: () => void;
 }
 
 export default function TagFormDialog(props: Props) {
-  const { existingTags, data, open, onClose } = props;
+  const { data, open, onClose } = props;
+  const [existingTags, setExistingTags] = useState<Tag[]>([]);
+
+  useEffect(() => {
+    if (open) {
+      handleFetchTags();
+    }
+  }, [open]);
+
+  const handleFetchTags = async () => {
+    const tags = await listTag(false, false, false);
+    setExistingTags(tags);
+  };
 
   const handleClose = () => {
     onClose();
