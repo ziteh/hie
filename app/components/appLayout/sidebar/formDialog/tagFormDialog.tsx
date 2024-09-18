@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { TagType, Tag } from "@/app/lib/types";
 import {
   Button,
@@ -8,24 +9,35 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  Grid,
   MenuItem,
   Select,
   Switch,
   TextField,
 } from "@mui/material";
-import { createTag } from "@/app/lib/tags";
+import Grid from "@mui/material/Grid2";
+import { createTag, listTag } from "@/app/lib/tags";
 import { createTagRelation } from "@/app/lib/tagRelation";
 
 interface Props {
-  existingTags: Tag[];
   data?: Tag;
   open: boolean;
   onClose: () => void;
 }
 
 export default function TagFormDialog(props: Props) {
-  const { existingTags, data, open, onClose } = props;
+  const { data, open, onClose } = props;
+  const [existingTags, setExistingTags] = useState<Tag[]>([]);
+
+  useEffect(() => {
+    if (open) {
+      handleFetchTags();
+    }
+  }, [open]);
+
+  const handleFetchTags = async () => {
+    const tags = await listTag(false, false, false);
+    setExistingTags(tags);
+  };
 
   const handleClose = () => {
     onClose();
@@ -64,13 +76,13 @@ export default function TagFormDialog(props: Props) {
       <DialogTitle>Tag</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <FormControlLabel
               control={<Switch name="starred" />}
               label="Star"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <TextField
               label="Name"
               id="name"
@@ -81,7 +93,7 @@ export default function TagFormDialog(props: Props) {
               autoComplete="off"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Select
               labelId="type-label"
               label="Type"
@@ -94,7 +106,7 @@ export default function TagFormDialog(props: Props) {
               <MenuItem value={TagType.Category}>Category</MenuItem>
             </Select>
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Select
               labelId="parent-label"
               label="Parent"
@@ -109,7 +121,7 @@ export default function TagFormDialog(props: Props) {
               ))}
             </Select>
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={6}>
             <TextField
               label="Text Color"
               id="text-color"
@@ -117,7 +129,7 @@ export default function TagFormDialog(props: Props) {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid size={6}>
             <TextField
               label="Back Color"
               id="back-color"

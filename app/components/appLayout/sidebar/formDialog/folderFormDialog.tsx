@@ -6,9 +6,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
   TextField,
 } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+
 import { Folder } from "@/app/lib/types";
 import { createFolder } from "@/app/lib/folders";
 
@@ -50,7 +51,7 @@ export default function FolderFormDialog(props: Props) {
       <DialogTitle>Folder</DialogTitle>
       <DialogContent>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <TextField
               label="Name"
               id="name"
@@ -61,7 +62,7 @@ export default function FolderFormDialog(props: Props) {
               autoComplete="off"
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <TextField
               label="Path"
               id="path"

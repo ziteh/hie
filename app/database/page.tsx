@@ -7,10 +7,6 @@ import { listTag } from "@/app/lib/tags";
 import { listItem } from "@/app/lib/items";
 import { listFolder } from "@/app/lib/folders";
 import { HeadCell, TagRow, ItemRow, FolderRow } from "./databaseTable/types";
-import TagFormDialog from "./formDialog/tagFormDialog";
-import ItemFormDialog from "./formDialog/itemFormDialog";
-import FolderFormDialog from "./formDialog/folderFormDialog";
-import { Folder, Item, Tag } from "@/app/lib/types";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -120,46 +116,12 @@ export default function Page() {
   const [itemRows, setItemRows] = React.useState<ItemRow[]>([]);
   const [folderRows, setFolderRows] = React.useState<FolderRow[]>([]);
 
-  const [tags, setTags] = React.useState<Tag[]>([]);
-  const [items, setItems] = React.useState<Item[]>([]);
-  const [folders, setFolders] = React.useState<Folder[]>([]);
-
-  const [tagFormOpen, setTagFormOpen] = React.useState(false);
-  const [itemFormOpen, setItemFormOpen] = React.useState(false);
-  const [folderFormOpen, setFolderFormOpen] = React.useState(false);
-
-  const handleTagFormOpen = () => {
-    setTagFormOpen(true);
-  };
-
-  const handleTagFormClose = () => {
-    setTagFormOpen(false);
-  };
-
-  const handleItemFormOpen = () => {
-    setItemFormOpen(true);
-  };
-
-  const handleItemFormClose = () => {
-    setItemFormOpen(false);
-  };
-
-  const handleFolderFormOpen = () => {
-    setFolderFormOpen(true);
-  };
-
-  const handleFolderFormClose = () => {
-    setFolderFormOpen(false);
-  };
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
   };
 
   React.useEffect(() => {
     listTag(true, true, false).then((data) => {
-      setTags(data);
-
       const list: TagRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()
@@ -182,8 +144,6 @@ export default function Page() {
     });
 
     listItem().then((data) => {
-      setItems(data);
-
       const list: ItemRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()
@@ -206,8 +166,6 @@ export default function Page() {
     });
 
     listFolder(false).then((data) => {
-      setFolders(data);
-
       const list: FolderRow[] = data.map((item) => {
         const updateDate = item.updatedAt
           ? new Date(item.updatedAt).toISOString()
@@ -234,32 +192,14 @@ export default function Page() {
       </Box>
 
       <CustomTabPanel value={tabIndex} index={0} key={0}>
-        <Button onClick={handleTagFormOpen}>New Tag</Button>
-        <TagFormDialog
-          existingTags={tags}
-          open={tagFormOpen}
-          onClose={handleTagFormClose}
-        />
         <DatabaseTable heads={tagHeader} rows={tagRows} />
       </CustomTabPanel>
 
       <CustomTabPanel value={tabIndex} index={1} key={1}>
-        <Button onClick={handleItemFormOpen}>New Item</Button>
-        <ItemFormDialog
-          folders={folders}
-          tags={tags}
-          open={itemFormOpen}
-          onClose={handleItemFormClose}
-        />
         <DatabaseTable heads={itemHeader} rows={itemRows} />
       </CustomTabPanel>
 
       <CustomTabPanel value={tabIndex} index={2} key={2}>
-        <Button onClick={handleFolderFormOpen}>New Folder</Button>
-        <FolderFormDialog
-          open={folderFormOpen}
-          onClose={handleFolderFormClose}
-        />
         <DatabaseTable heads={folderHeader} rows={folderRows} />
       </CustomTabPanel>
     </Box>
