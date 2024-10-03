@@ -18,6 +18,7 @@ Types of changes:
 
 ### Changed
 
+- Updated the API of items/{id}, items/relation, tags/relation
 - Move "New Tag/Item/Folder" button from database page to sidebar
 
 ### Security
