@@ -29,7 +29,7 @@ export async function GET(
 
       if (stat.isDirectory()) {
         result.dir.push(item);
-      } else if (stat.isFile()) {
+      } else if (stat.isFile() && fileFilter(item)) {
         result.files.push(item);
       }
     }
@@ -42,4 +42,9 @@ export async function GET(
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }
+}
+
+function fileFilter(file: string): boolean {
+  const excludedFiles = new Set([".DS_Store", "Thumbs.db", "desktop.ini"]);
+  return !excludedFiles.has(file);
 }
