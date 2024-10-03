@@ -25,30 +25,18 @@ export default function Showcase(props: Props) {
       open={open}
       onClick={onClick}
     >
-      <Grid container spacing={2}>
-        {/* <Grid size={12}>
-          <IconButton onClick={onClickHandler}>
-            <InfoOutlinedIcon />
-          </IconButton>
-          <IconButton onClick={onClick}>
-            <CloseIcon />
-          </IconButton>
-        </Grid> */}
-        <Grid size={12}>
-          <img
-            src={imgSrc}
-            alt="?"
-            // width={size}
-            // height={size}
-            loading="lazy"
-            style={{
-              maxWidth: "90%",
-              maxHeight: "90%",
-              objectFit: "contain",
-            }}
-          />
-        </Grid>
-      </Grid>
+      <img
+        src={imgSrc}
+        alt="?"
+        // width={size}
+        // height={size}
+        loading="lazy"
+        style={{
+          maxWidth: "90%",
+          maxHeight: "90%",
+          objectFit: "contain",
+        }}
+      />
     </Backdrop>
   );
 }

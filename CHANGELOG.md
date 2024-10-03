@@ -19,6 +19,7 @@ Types of changes:
 ### Changed
 
 - Updated the API of items/{id}, items/relation, tags/relation
+- Updated the layout of explorer showcase
 - Move "New Tag/Item/Folder" button from database page to sidebar
 
 ### Security
