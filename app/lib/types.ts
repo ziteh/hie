@@ -54,3 +54,8 @@ export interface TagRelationChain {
   parents: SimpleTag[];
   children: SimpleTag[];
 }
+
+export interface FileStructure {
+  files: string[];
+  dir: string[];
+}

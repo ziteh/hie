@@ -1,47 +1,51 @@
 {
-	"folders": [
-		{
-			"name": "Page: Database",
-			"path": "app/database"
-		},
-		{
-			"name": "Page: Explorer",
-			"path": "app/explorer"
-		},
-		{
-			"name": "Components",
-			"path": "app/components"
-		},
-		{
-			"name": "Lib",
-			"path": "app/lib"
-		},
-		{
-			"name": "API: Server",
-			"path": "app/api"
-		},
-		{
-			"name": "API: OpenAPI",
-			"path": "public/openapi"
-		},
-		{
-			"name": "Root",
-			"path": "."
-		}
-	],
-	"settings": {
-		"editor.tabSize": 2,
-		"editor.insertSpaces": true,
-		"workbench.editor.customLabels.patterns": {
-			"{**/index.*,**/route.*,**/layout.*,**/page.*}": "${dirname}.${extname} (${filename})"
-		},
-		"cSpell.words": [
-			"hie",
-			"nextjs",
-			"openapi",
-			"tailwindcss",
-			"Topbar",
-			"zustand"
-		]
-	}
+  "folders": [
+    {
+      "name": "Page: Database",
+      "path": "app/database",
+    },
+    {
+      "name": "Page: Explorer",
+      "path": "app/explorer",
+    },
+    {
+      "name": "Page: Filesystem",
+      "path": "app/filesystem",
+    },
+    {
+      "name": "Components",
+      "path": "app/components",
+    },
+    {
+      "name": "Lib",
+      "path": "app/lib",
+    },
+    {
+      "name": "API: Server",
+      "path": "app/api",
+    },
+    {
+      "name": "API: OpenAPI",
+      "path": "public/openapi",
+    },
+    {
+      "name": "Root",
+      "path": ".",
+    },
+  ],
+  "settings": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "workbench.editor.customLabels.patterns": {
+      "{**/index.*,**/route.*,**/layout.*,**/page.*}": "${dirname}.${extname} (${filename})",
+    },
+    "cSpell.words": [
+      "hie",
+      "nextjs",
+      "openapi",
+      "tailwindcss",
+      "Topbar",
+      "zustand",
+    ],
+  },
 }
