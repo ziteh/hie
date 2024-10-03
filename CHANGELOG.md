@@ -14,7 +14,9 @@ Types of changes:
 - **Fixed** for any bug fixes.
 - **Security** in case of vulnerabilities.
 
-## Unreleased
+<!-- ## Unreleased -->
+
+## [0.1.0] - 2024-10-03
 
 ### Changed
 
@@ -44,5 +46,6 @@ Types of changes:
 
 First release.
 
+[0.1.0]: https://github.com/ziteh/hie/releases/tag/v0.1.0
 [0.1.0-alpha.2]: https://github.com/ziteh/hie/releases/tag/v0.1.0-alpha.2
 [0.1.0-alpha.1]: https://github.com/ziteh/hie/releases/tag/v0.1.0-alpha.1
