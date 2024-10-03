@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, ReactNode } from "react";
+import ItemFormDialog from "@/app/components/appLayout/sidebar/formDialog/itemFormDialog";
 import {
   Breadcrumbs,
   Button,
@@ -10,7 +11,7 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import { Tag, TagRelationChain, SimpleTag } from "@/app/lib/types";
+import { Tag, TagRelationChain, SimpleTag, Item } from "@/app/lib/types";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import { useTagTreeState } from "@/app/store/tagTree";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,9 @@ export default function Page() {
   const [fileStructureSet, setFileStructureSet] =
     useState<FileStructure | null>(null);
   const [subFolders, setSubFolders] = useState<string[]>([]);
+
+  const [itemFormDialogOpen, setItemFormDialogOpen] = useState(false);
+  const [existingPath, setExistingPath] = useState<string>("");
 
   const router = useRouter();
 
@@ -73,6 +77,12 @@ export default function Page() {
     setSubFolders(subFolders);
   };
 
+  const handleFileClick = async (file: string) => {
+    const path = subFolders.concat(file).join("/");
+    setExistingPath(path);
+    setItemFormDialogOpen(true);
+  };
+
   return (
     <div>
       <Button onClick={() => handleSubFolderRemove()}>Back</Button>
@@ -89,7 +99,20 @@ export default function Page() {
           {d}
         </Button>
       ))}
-      {fileStructureSet?.files.map((file) => <p key={file}>{file}</p>)}
+      <p>==</p>
+      {fileStructureSet?.files.map((file) => (
+        <Button key={file} onClick={() => handleFileClick(file)}>
+          {file}
+        </Button>
+      ))}
+      <ItemFormDialog
+        existingPath={existingPath}
+        existingFolderId={selectedFolder?.id}
+        open={itemFormDialogOpen}
+        onClose={() => {
+          setItemFormDialogOpen(false);
+        }}
+      />
     </div>
   );
 }

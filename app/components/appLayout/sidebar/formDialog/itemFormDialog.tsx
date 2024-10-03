@@ -38,13 +38,14 @@ const MenuProps = {
 };
 
 interface Props {
-  data?: Item;
+  existingPath?: string;
+  existingFolderId?: number;
   open: boolean;
   onClose: () => void;
 }
 
 export default function ItemFormDialog(props: Props) {
-  const { data, open, onClose } = props;
+  const { existingPath, existingFolderId, open, onClose } = props;
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -125,6 +126,7 @@ export default function ItemFormDialog(props: Props) {
               labelId="folder-label"
               label="Folder"
               name="folder"
+              value={existingFolderId || ""}
               fullWidth
             >
               {folders.map((f) => (
@@ -142,6 +144,7 @@ export default function ItemFormDialog(props: Props) {
               required
               fullWidth
               autoComplete="off"
+              value={existingPath || ""}
             />
           </Grid>
           <Grid size={12}>
