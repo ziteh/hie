@@ -4,6 +4,7 @@ import {
   AppBar,
   Box,
   Breadcrumbs,
+  Button,
   IconButton,
   InputBase,
   Link,
@@ -103,6 +104,10 @@ export default function Topbar(props: Props) {
     router.push(`/explorer/${id}`);
   };
 
+  const handleFsClick = () => {
+    router.push(`/filesystem`);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -157,6 +162,7 @@ export default function Topbar(props: Props) {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          <Button onClick={handleFsClick}>FS</Button>
           <IconButton
             href="/database"
             sx={{ display: { xs: "none", sm: "none", md: "block" } }}
