@@ -3,11 +3,18 @@ import { StatusCodes } from "http-status-codes";
 import path from "path";
 import fs from "fs/promises";
 
+const bashPath = "/app/volume";
+
 export async function GET(
   _request: Request,
   { params }: { params: { dir: string } }
 ) {
-  const dirPath = path.resolve(params.dir);
+  const target =
+    process.env.NODE_ENV === "production"
+      ? path.join(bashPath, params.dir)
+      : path.join(params.dir);
+
+  const dirPath = path.resolve(target);
 
   try {
     const items = await fs.readdir(dirPath);
