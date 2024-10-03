@@ -2,6 +2,14 @@ patch:
   summary: Update a folder
   tags:
     - Folders
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+      description: ID of the folder to update
   requestBody:
     required: true
     content:
@@ -21,12 +29,14 @@ delete:
   summary: Delete a folder
   tags:
     - Folders
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+      description: ID of the folder to delete
   responses:
     "204":
       description: Folder deleted successfully
