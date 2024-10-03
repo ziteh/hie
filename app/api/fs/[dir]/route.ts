@@ -10,8 +10,24 @@ export async function GET(
   const dirPath = path.resolve(params.dir);
 
   try {
-    const files = await fs.readdir(dirPath);
-    return NextResponse.json(files);
+    const items = await fs.readdir(dirPath);
+    const result: { files: string[]; dir: string[] } = {
+      files: [],
+      dir: [],
+    };
+
+    for (const item of items) {
+      const itemPath = path.join(dirPath, item);
+      const stat = await fs.lstat(itemPath);
+
+      if (stat.isDirectory()) {
+        result.dir.push(item);
+      } else if (stat.isFile()) {
+        result.files.push(item);
+      }
+    }
+
+    return NextResponse.json(result);
   } catch (error) {
     console.error("Error reading directory:", error);
     return NextResponse.json(
