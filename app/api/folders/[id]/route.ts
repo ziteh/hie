@@ -27,18 +27,33 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  let name: string | undefined;
+  let path: string | undefined;
   try {
-    const { name, path } = await request.json();
+    const json = await request.json();
+    name = json.name;
+    let rawPath = json.path;
 
-    // Normalization
-    let fmtPath = path.replace(/\\/g, "/").trim(); // Replace backslashes with forward
-    if (!fmtPath.endsWith("/")) {
-      fmtPath += "/"; // Always add trailing slash
+    if (rawPath === undefined) {
+      path = undefined;
+    } else {
+      // Normalization
+      path = rawPath.replace(/\\/g, "/").trim(); // Replace backslashes with forward
+      if (path !== undefined && !path.endsWith("/")) {
+        path += "/"; // Always add trailing slash
+      }
     }
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
+  try {
     const updated = await prisma.folder.update({
       where: { id: Number(params.id) },
-      data: { name, path: fmtPath },
+      data: { name, path },
     });
 
     return NextResponse.json(updated);

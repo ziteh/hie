@@ -18,3 +18,10 @@ repos:
     rev: v0.19.1
     hooks:
       - id: gitlint
+  - repo: local
+    hooks:
+      - id: prettify
+        name: prettify
+        entry: bash ./prettify-pre-commit.sh
+        language: system
+        files: \.(js|ts|jsx|tsx|css|html)$

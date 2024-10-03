@@ -39,11 +39,15 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    await prisma.itemRelation.deleteMany({
+      where: { itemId: Number(params.id) },
+    });
+
     const deleted = await prisma.item.delete({
       where: { id: Number(params.id) },
     });
 
-    return NextResponse.json(deleted);
+    return NextResponse.json(deleted); // TODO change to 204?
   } catch (error) {
     console.error("Error deleting item:", error);
     return NextResponse.json(
@@ -58,22 +62,36 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  let path: string | undefined;
+  let folderId: number | undefined;
+  let name: string | undefined;
+  let starred: boolean | undefined;
   try {
-    const { folderId, path, name, starred } = await request.json();
+    const json = await request.json();
+    let rawPath = json.path;
+    folderId = json.folderId;
+    name = json.name;
+    starred = json.starred;
 
-    // Normalization
-    const fmtPath = path.replace(/\\/g, "/"); // Replace backslashes with forward
+    path = rawPath === undefined ? undefined : rawPath.replace(/\\/g, "/"); // Replace backslashes with forward
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
+  try {
     const item = await prisma.item.update({
       where: { id: Number(params.id) },
-      data: { path: fmtPath, folderId, name, starred },
+      data: { path, folderId, name, starred },
     });
 
     return NextResponse.json(item);
   } catch (error) {
     console.error("Error update item:", error);
     return NextResponse.json(
-      { error: "Error deleting item" },
+      { error: "Error update item" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }

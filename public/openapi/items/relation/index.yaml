@@ -16,42 +16,7 @@ post:
   responses:
     "200":
       description: Item relation created successfully
-patch:
-  summary: Update item relation
-  tags:
-    - Items relation
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            id:
-              type: integer
-            tagId:
-              type: number
-            itemId:
-              type: number
-  responses:
-    "200":
-      description: Item relation updated successfully
-delete:
-  summary: Delete a item relation
-  tags:
-    - Items relation
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            id:
-              type: integer
-  responses:
-    "204":
-      description: Item relation deleted successfully
+
 get:
   summary: List all item relations
   tags:

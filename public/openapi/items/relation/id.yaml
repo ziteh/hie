@@ -1,7 +1,7 @@
 patch:
-  summary: Update a folder
+  summary: Update item relation
   tags:
-    - Folders
+    - Items relation
   parameters:
     - name: id
       in: path
@@ -9,7 +9,6 @@ patch:
       schema:
         type: integer
       example: 1
-      description: ID of the folder to update
   requestBody:
     required: true
     content:
@@ -17,18 +16,17 @@ patch:
         schema:
           type: object
           properties:
-            name:
-              type: string
-            path:
-              type: string
+            tagId:
+              type: number
+            itemId:
+              type: number
   responses:
     "200":
-      description: Folder updated successfully
-
+      description: Item relation updated successfully
 delete:
-  summary: Delete a folder
+  summary: Delete a item relation
   tags:
-    - Folders
+    - Items relation
   parameters:
     - name: id
       in: path
@@ -36,7 +34,6 @@ delete:
       schema:
         type: integer
       example: 1
-      description: ID of the folder to delete
   responses:
     "204":
-      description: Folder deleted successfully
+      description: Item relation deleted successfully

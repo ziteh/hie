@@ -3,9 +3,41 @@ import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 export async function POST(request: Request) {
+  let tagId: number;
+  let itemId: number;
   try {
-    const { tagId, itemId } = await request.json();
+    const json = await request.json();
+    tagId = json.tagId;
+    itemId = json.itemId;
+
     console.debug("Received data:", { tagId, itemId });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
+
+  try {
+    const tag = await prisma.tag.findUnique({
+      where: { id: tagId },
+    });
+    if (tag === null) {
+      return NextResponse.json(
+        { error: "Tag not found" },
+        { status: StatusCodes.NOT_FOUND }
+      );
+    }
+
+    const item = await prisma.item.findUnique({
+      where: { id: itemId },
+    });
+    if (item === null) {
+      return NextResponse.json(
+        { error: "Item not found" },
+        { status: StatusCodes.NOT_FOUND }
+      );
+    }
 
     const created = await prisma.itemRelation.create({
       data: { tagId, itemId },
@@ -21,25 +53,6 @@ export async function POST(request: Request) {
   }
 }
 
-export async function PATCH(request: Request) {
-  try {
-    const { id, tagId, itemId } = await request.json();
-
-    const updated = await prisma.itemRelation.update({
-      where: { id },
-      data: { tagId, itemId },
-    });
-
-    return NextResponse.json(updated);
-  } catch (error) {
-    console.error("Error update item relation:", error);
-    return NextResponse.json(
-      { error: "Error updating item relation" },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
-    );
-  }
-}
-
 export async function GET() {
   try {
     const relations = await prisma.itemRelation.findMany();
@@ -48,31 +61,6 @@ export async function GET() {
     console.error("Error fetching item relations:", error);
     return NextResponse.json(
       { error: "Error fetching item relations" },
-      { status: StatusCodes.INTERNAL_SERVER_ERROR }
-    );
-  }
-}
-
-export async function DELETE(request: Request) {
-  try {
-    const { id } = await request.json();
-
-    if (!id) {
-      return NextResponse.json(
-        { error: "ID is required" },
-        { status: StatusCodes.BAD_REQUEST }
-      );
-    }
-
-    const deleted = await prisma.tagRelation.delete({
-      where: { id },
-    });
-
-    return NextResponse.json(deleted);
-  } catch (error) {
-    console.error("Error deleting tag:", error);
-    return NextResponse.json(
-      { error: "Error deleting tag" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
+import { TagType } from "@/app/lib/types";
 
 // Get a tag
 export async function GET(
@@ -63,9 +64,45 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  let name: string | undefined;
+  let type: string | undefined;
+  let starred: boolean | undefined;
+  let backColor: string | undefined;
+  let textColor: string | undefined;
   try {
-    const { name, type, starred, backColor, textColor } = await request.json();
+    const json = await request.json();
+    name = json.name;
+    type = json.type;
+    starred = json.starred;
+    backColor = json.backColor;
+    textColor = json.textColor;
 
+    if (
+      type !== undefined &&
+      type !== TagType.Normal &&
+      type !== TagType.Category
+    ) {
+      return NextResponse.json(
+        { error: "Invalid tag type" },
+        { status: StatusCodes.BAD_REQUEST }
+      );
+    }
+
+    console.debug("Received data:", {
+      name,
+      type,
+      starred,
+      backColor,
+      textColor,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
+
+  try {
     const tag = await prisma.tag.update({
       where: { id: Number(params.id) },
       data: {

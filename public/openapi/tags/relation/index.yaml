@@ -16,42 +16,7 @@ post:
   responses:
     "400":
       description: Parent cannot be equal to Child
-patch:
-  summary: Update tag relation
-  tags:
-    - Tags relation
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            id:
-              type: integer
-            parentId:
-              type: number
-            childId:
-              type: number
-  responses:
-    "200":
-      description: Tag relation updated successfully
-delete:
-  summary: Delete a tag relation
-  tags:
-    - Tags relation
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            id:
-              type: integer
-  responses:
-    "204":
-      description: Tag relation deleted successfully
+
 get:
   summary: List all tag relations
   tags:

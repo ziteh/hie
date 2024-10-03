@@ -7,6 +7,8 @@ import { getTag } from "@/app/lib/tags";
 import { Backdrop, Button, ImageList, ImageListItem } from "@mui/material";
 import Showcase from "./showcase";
 
+const SHOW_CASE_QUANTITY = 85;
+
 interface Props {
   tagId: number;
 }
@@ -111,7 +113,7 @@ export default function ItemGrid(props: Props) {
         ))}
       </ImageList>
       <Showcase
-        imgSrc={getImageUrl(selectedImagePath, 100)}
+        imgSrc={getImageUrl(selectedImagePath, SHOW_CASE_QUANTITY)}
         open={open}
         onClick={handleClose}
       />
