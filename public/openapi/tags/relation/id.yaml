@@ -1,0 +1,40 @@
+patch:
+  summary: Update tag relation
+  tags:
+    - Tags relation
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            parentId:
+              type: number
+            childId:
+              type: number
+  responses:
+    "200":
+      description: Tag relation updated successfully
+
+delete:
+  summary: Delete a tag relation
+  tags:
+    - Tags relation
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+  responses:
+    "200":
+      description: Tag relation deleted successfully

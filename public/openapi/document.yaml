@@ -21,14 +21,18 @@ paths:
   /api/tags/{id}:
     $ref: "./tags/id.yaml"
   /api/tags/relation:
-    $ref: "./tags/relation.yaml"
+    $ref: "./tags/relation/index.yaml"
+  /api/tags/relation/{id}:
+    $ref: "./tags/relation/id.yaml"
 
   /api/items:
     $ref: "./items/index.yaml"
-  /api/items{id}:
+  /api/items/{id}:
     $ref: "./items/id.yaml"
   /api/items/relation:
-    $ref: "./items/relation.yaml"
+    $ref: "./items/relation/index.yaml"
+  /api/items/relation/{id}:
+    $ref: "./items/relation/id.yaml"
 
   /api/folders:
     $ref: "./folders/index.yaml"

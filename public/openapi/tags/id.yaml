@@ -2,6 +2,14 @@ patch:
   summary: Update a tag
   tags:
     - Tags
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+      description: ID of the tag to update
   requestBody:
     required: true
     content:
@@ -11,36 +19,49 @@ patch:
           properties:
             name:
               type: string
+              description: Optional name, omit to leave unchanged
+              example: "MyTag"
             type:
               type: string
+              enum: [normal, category]
+              description: Optional type, omit to leave unchanged
+              example: "normal"
             starred:
               type: boolean
+              description: Optional starred state, omit to leave unchanged
+              example: true
             backColor:
               type: string
+              description: Optional background color, omit to leave unchanged
             textColor:
               type: string
+              description: Optional text color, omit to leave unchanged
   responses:
     "200":
       description: Tag updated successfully
+
 delete:
   summary: Delete a tag
   tags:
     - Tags
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+      description: ID of the tag to delete
   responses:
-    "204":
+    "200":
       description: Tag deleted successfully
+
 get:
   summary: Get a specific tag by ID
   tags:
     - Tags
   parameters:
-    - name: tagId
+    - name: id
       in: path
       required: true
       schema:

@@ -39,11 +39,15 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    await prisma.itemRelation.deleteMany({
+      where: { itemId: Number(params.id) },
+    });
+
     const deleted = await prisma.item.delete({
       where: { id: Number(params.id) },
     });
 
-    return NextResponse.json(deleted);
+    return NextResponse.json(deleted); // TODO change to 204?
   } catch (error) {
     console.error("Error deleting item:", error);
     return NextResponse.json(
@@ -62,7 +66,7 @@ export async function PATCH(
     const { folderId, path, name, starred } = await request.json();
 
     // Normalization
-    const fmtPath = path.replace(/\\/g, "/"); // Replace backslashes with forward
+    const fmtPath = path === undefined ? undefined : path.replace(/\\/g, "/"); // Replace backslashes with forward
 
     const item = await prisma.item.update({
       where: { id: Number(params.id) },
@@ -73,7 +77,7 @@ export async function PATCH(
   } catch (error) {
     console.error("Error update item:", error);
     return NextResponse.json(
-      { error: "Error deleting item" },
+      { error: "Error update item" },
       { status: StatusCodes.INTERNAL_SERVER_ERROR }
     );
   }

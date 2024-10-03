@@ -2,6 +2,14 @@ patch:
   summary: Update item
   tags:
     - Items
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+      description: ID of the item to update
   requestBody:
     required: true
     content:
@@ -11,26 +19,35 @@ patch:
           properties:
             path:
               type: string
+              description: Optional path, omit to leave unchanged
+              example: "my-img.jpg"
             folderId:
               type: integer
+              description: Optional folder ID, omit to leave unchanged
+              example: 1
             name:
               type: string
+              description: Optional name, omit to leave unchanged
+              example: "MyImage"
             starred:
               type: boolean
+              description: Optional starred status, omit to leave unchanged
   responses:
     "200":
       description: Item updated successfully
 
 delete:
-  summary: Delete a item
+  summary: Delete an item
   tags:
     - Items
-  requestBody:
-    required: true
-    content:
-      application/json:
-        schema:
-          type: object
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      example: 1
+      description: ID of the item to delete
   responses:
-    "204":
+    "200":
       description: Item deleted successfully
