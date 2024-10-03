@@ -31,7 +31,7 @@ RUN \
 
 
 # Production stage
-FROM base as runner
+FROM base AS runner
 
 WORKDIR /app
 
