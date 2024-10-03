@@ -14,7 +14,11 @@ Types of changes:
 - **Fixed** for any bug fixes.
 - **Security** in case of vulnerabilities.
 
-<!-- ## Unreleased -->
+## Unreleased
+
+### Added
+
+- Added `filesystem` page, used to add tags to files/items more easily
 
 ## [0.1.0] - 2024-10-03
 
