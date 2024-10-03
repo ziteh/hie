@@ -123,6 +123,34 @@ export default function ItemFormDialog(props: Props) {
           </Grid>
           <Grid size={12}>
             <Select
+              labelId="demo-multiple-chip-label"
+              id="demo-multiple-chip"
+              multiple
+              fullWidth
+              value={selectedTags}
+              onChange={handleChange}
+              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip
+                      key={value.split(SEP)[0]}
+                      label={value.split(SEP)[1]}
+                    />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {tags.map((t) => (
+                <MenuItem key={t.id} value={`${t.id}${SEP}${t.name}`}>
+                  {t.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid size={12}>
+            <Select
               labelId="folder-label"
               label="Folder"
               name="folder"
@@ -156,34 +184,6 @@ export default function ItemFormDialog(props: Props) {
               fullWidth
               autoComplete="off"
             />
-          </Grid>
-          <Grid size={12}>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              fullWidth
-              value={selectedTags}
-              onChange={handleChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip
-                      key={value.split(SEP)[0]}
-                      label={value.split(SEP)[1]}
-                    />
-                  ))}
-                </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {tags.map((t) => (
-                <MenuItem key={t.id} value={`${t.id}${SEP}${t.name}`}>
-                  {t.name}
-                </MenuItem>
-              ))}
-            </Select>
           </Grid>
         </Grid>
       </DialogContent>
