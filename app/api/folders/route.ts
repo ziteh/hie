@@ -4,18 +4,27 @@ import { StatusCodes } from "http-status-codes";
 
 // Create a folder
 export async function POST(request: Request) {
+  let name: string;
+  let path: string;
   try {
-    const { name, path } = await request.json();
-    console.debug("Received data:", { name, path });
+    const json = await request.json();
+    name = json.name;
 
     // Normalization
-    let fmtPath = path.replace(/\\/g, "/").trim(); // Replace backslashes with forward
-    if (!fmtPath.endsWith("/")) {
-      fmtPath += "/"; // Always add trailing slash
+    path = json.path.replace(/\\/g, "/").trim(); // Replace backslashes with forward
+    if (!path.endsWith("/")) {
+      path += "/"; // Always add trailing slash
     }
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
+  try {
     const created = await prisma.folder.create({
-      data: { name, path: fmtPath },
+      data: { name, path },
     });
 
     return NextResponse.json(created);

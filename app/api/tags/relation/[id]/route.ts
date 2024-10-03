@@ -6,16 +6,29 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  let parentId: number | undefined;
+  let childId: number | undefined;
   try {
-    const { parentId, childId } = await request.json();
+    const json = await request.json();
+    parentId = json.parentId;
+    childId = json.childId;
 
-    if (parentId === childId) {
-      return NextResponse.json(
-        { error: "Parent cannot be equal to Child" },
-        { status: StatusCodes.BAD_REQUEST }
-      );
-    }
+    console.debug("Received data:", { parentId, childId });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
+  if (parentId === childId) {
+    return NextResponse.json(
+      { error: "Parent cannot be equal to Child" },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
+
+  try {
     if (parentId !== undefined) {
       const parentTag = await prisma.tag.findUnique({
         where: { id: parentId },

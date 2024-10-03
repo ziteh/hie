@@ -6,9 +6,22 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  let tagId: number | undefined;
+  let itemId: number | undefined;
   try {
-    const { tagId, itemId } = await request.json();
+    const json = await request.json();
+    tagId = json.tagId;
+    itemId = json.itemId;
 
+    console.debug("Received data:", { tagId, itemId });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
+
+  try {
     if (tagId !== undefined) {
       const tag = await prisma.tag.findUnique({
         where: { id: tagId },

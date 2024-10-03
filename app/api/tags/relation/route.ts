@@ -3,17 +3,29 @@ import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 export async function POST(request: Request) {
+  let parentId: number;
+  let childId: number;
   try {
-    const { parentId, childId } = await request.json();
+    const json = await request.json();
+    parentId = json.parentId;
+    childId = json.childId;
+
     console.debug("Received data:", { parentId, childId });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
-    if (parentId === childId) {
-      return NextResponse.json(
-        { error: "Parent cannot be equal to Child" },
-        { status: StatusCodes.BAD_REQUEST }
-      );
-    }
+  if (parentId === childId) {
+    return NextResponse.json(
+      { error: "Parent cannot be equal to Child" },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
+  try {
     const parentTag = await prisma.tag.findUnique({
       where: { id: parentId },
     });

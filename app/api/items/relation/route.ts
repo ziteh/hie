@@ -3,10 +3,22 @@ import { prisma } from "@/app/lib/config/prisma";
 import { StatusCodes } from "http-status-codes";
 
 export async function POST(request: Request) {
+  let tagId: number;
+  let itemId: number;
   try {
-    const { tagId, itemId } = await request.json();
-    console.debug("Received data:", { tagId, itemId });
+    const json = await request.json();
+    tagId = json.tagId;
+    itemId = json.itemId;
 
+    console.debug("Received data:", { tagId, itemId });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
+
+  try {
     const tag = await prisma.tag.findUnique({
       where: { id: tagId },
     });

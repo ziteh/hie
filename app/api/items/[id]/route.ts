@@ -62,15 +62,29 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
+  let path: string | undefined;
+  let folderId: number | undefined;
+  let name: string | undefined;
+  let starred: boolean | undefined;
   try {
-    const { folderId, path, name, starred } = await request.json();
+    const json = await request.json();
+    let rawPath = json.path;
+    folderId = json.folderId;
+    name = json.name;
+    starred = json.starred;
 
-    // Normalization
-    const fmtPath = path === undefined ? undefined : path.replace(/\\/g, "/"); // Replace backslashes with forward
+    path = rawPath === undefined ? undefined : rawPath.replace(/\\/g, "/"); // Replace backslashes with forward
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
+  try {
     const item = await prisma.item.update({
       where: { id: Number(params.id) },
-      data: { path: fmtPath, folderId, name, starred },
+      data: { path, folderId, name, starred },
     });
 
     return NextResponse.json(item);

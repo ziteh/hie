@@ -5,8 +5,26 @@ import { TagType } from "@/app/lib/types";
 
 // Create a new tag
 export async function POST(request: Request) {
+  let name: string;
+  let type: string;
+  let starred: boolean;
+  let backColor: string;
+  let textColor: string;
   try {
-    const { name, type, starred, backColor, textColor } = await request.json();
+    const json = await request.json();
+    name = json.name;
+    type = json.type;
+    starred = json.starred;
+    backColor = json.backColor;
+    textColor = json.textColor;
+
+    if (type !== TagType.Normal && type !== TagType.Category) {
+      return NextResponse.json(
+        { error: "Invalid tag type" },
+        { status: StatusCodes.BAD_REQUEST }
+      );
+    }
+
     console.debug("Received data:", {
       name,
       type,
@@ -14,7 +32,14 @@ export async function POST(request: Request) {
       backColor,
       textColor,
     });
+  } catch (error) {
+    return NextResponse.json(
+      { error: `Error parsing request body, ${error}` },
+      { status: StatusCodes.BAD_REQUEST }
+    );
+  }
 
+  try {
     const tag = await prisma.tag.create({
       data: { name, type, starred, backColor, textColor },
     });
