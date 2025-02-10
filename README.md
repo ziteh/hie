@@ -1,3 +1,10 @@
+
+> [!IMPORTANT]
+> This project is currently discontinued, because I think [immich](https://immich.app/) can replace it.
+>
+> Its [Tags](https://immich.app/docs/features/tags) support nested tags to form a hierarchical structure,  
+> and its [External Libraries](https://immich.app/docs/features/libraries) can use the original folder structure to manage image and video files.
+
 # Hie
 
 [![GitHub Actions Workflow Status:build](https://img.shields.io/github/actions/workflow/status/ziteh/hie/build.yml?style=flat-square&label=Build)](https://github.com/ziteh/hie/actions/workflows/build.yml)
